@@ -3,88 +3,128 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="welcomeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" stylesheets="@Css/css.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.WelcomeController">
+<BorderPane fx:id="welcomeBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Css/css.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.WelcomeController">
    <left>
       <VBox alignment="CENTER_LEFT" prefHeight="527.0" prefWidth="244.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnContinue" alignment="BOTTOM_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="140.0" style="-fx-background-color: Transparent;" text="continue" textFill="WHITE">
-               <font>
-                  <Font name="HotelDeParis" size="25.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="53.0" prefWidth="237.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="221.0" stylesheets="@Css/css.css">
                <children>
-                  <Label fx:id="lbNewGameHover" alignment="TOP_CENTER" contentDisplay="BOTTOM" layoutY="9.0" onMousePressed="#onHandlePlayNewGame" prefHeight="32.0" prefWidth="148.0" style="-fx-text-fill: transparent;" text="New game" textFill="#7d3434">
+                  <ImageView fx:id="img1" fitHeight="30.0" fitWidth="25.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/button_hover_desing.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnContinue" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="142.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="continue" textFill="WHITE" wrapText="true">
                      <font>
-                        <Font name="HotelDeParis" size="26.0" />
+                        <Font name="HotelDeParis" size="30.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Label>
-                  <Label fx:id="lbNewGame" alignment="TOP_CENTER" contentDisplay="BOTTOM" layoutX="1.0" layoutY="10.0" onMousePressed="#onHandlePlayNewGame" prefHeight="32.0" prefWidth="148.0" text="New game" textFill="WHITE">
-                     <font>
-                        <Font name="HotelDeParis" size="25.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <effect>
-                        <ColorAdjust />
-                     </effect>
-                  </Label>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Button>
                </children>
-            </Pane>
-            <Button fx:id="btnOptions" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="48.0" prefWidth="132.0" style="-fx-background-color: Transparent;" text="OPTIONS" textFill="WHITE">
-               <font>
-                  <Font name="HotelDeParis" size="25.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="btnCredits" alignment="BOTTOM_LEFT" mnemonicParsing="false" prefHeight="48.0" prefWidth="135.0" style="-fx-background-color: Transparent;" text="Credits" textFill="WHITE">
-               <font>
-                  <Font name="HotelDeParis" size="25.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="221.0" stylesheets="@Css/css.css">
+               <children>
+                  <ImageView fx:id="img2" fitHeight="30.0" fitWidth="25.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/button_hover_desing.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnNewGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="New Game" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="HotelDeParis" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="221.0" stylesheets="@Css/css.css">
+               <children>
+                  <ImageView fx:id="img3" fitHeight="30.0" fitWidth="25.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/button_hover_desing.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnOptions" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="48.0" prefWidth="123.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="OPTIONS" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="HotelDeParis" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="48.0" prefWidth="221.0" stylesheets="@Css/css.css">
+               <children>
+                  <ImageView fx:id="img4" fitHeight="30.0" fitWidth="25.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Image/button_hover_desing.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnCredits" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="48.0" prefWidth="123.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="credits" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="HotelDeParis" size="30.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <BorderPane.margin>
-            <Insets left="30.0" top="200.0" />
+            <Insets left="25.0" top="200.0" />
          </BorderPane.margin>
       </VBox>
    </left>
    <bottom>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="106.0" prefWidth="1183.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnQuitGame" alignment="BOTTOM_LEFT" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleQuitGame" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: Transparent;" text="quit game" textFill="WHITE">
+            <ImageView fx:id="img5" fitHeight="30.0" fitWidth="25.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/button_hover_desing.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </ImageView>
+            <Button fx:id="btnQuitGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleQuitGame" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: Transparent;" styleClass="label-hover" text="quit game" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="HotelDeParis" size="25.0" />
+                  <Font name="HotelDeParis" size="30.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <HBox.margin>
+                  <Insets left="-15.0" />
+               </HBox.margin>
             </Button>
          </children>
          <BorderPane.margin>
-            <Insets left="30.0" />
+            <Insets left="25.0" />
          </BorderPane.margin>
       </HBox>
    </bottom>
