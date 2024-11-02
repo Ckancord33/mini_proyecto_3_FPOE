@@ -6,8 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class WelcomeStage extends Stage {
 
@@ -16,7 +18,9 @@ public class WelcomeStage extends Stage {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         setResizable(false);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
         setTitle("BattleShip");
+        initStyle(StageStyle.UNDECORATED);
         setScene(scene);
         show();
     }

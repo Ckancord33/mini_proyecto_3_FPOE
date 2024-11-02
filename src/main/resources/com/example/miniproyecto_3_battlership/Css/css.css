@@ -1,0 +1,7 @@
+.border-pane {
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-min-width: 800px;
+    -fx-min-height: 600px;
+}
