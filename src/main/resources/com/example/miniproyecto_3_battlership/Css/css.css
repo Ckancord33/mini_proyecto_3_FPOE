@@ -1,0 +1,22 @@
+.border-pane {
+    -fx-background-color: red;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-min-width: 800px;
+    -fx-min-height: 600px;
+}
+
+
+.label-hover:hover{
+    -fx-opacity: 1;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(125, 52, 52), 3, 5, 0, 0);
+}
+
+.label-hover {
+    -fx-text-fill: white;
+    -fx-effect: none;
+}
+
+
