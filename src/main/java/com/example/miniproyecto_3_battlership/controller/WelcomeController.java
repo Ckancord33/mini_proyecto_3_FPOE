@@ -1,5 +1,6 @@
 package com.example.miniproyecto_3_battlership.controller;
 
+import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
@@ -48,13 +49,15 @@ public class WelcomeController {
     @FXML
     private ImageView img5;
 
-
     @FXML
     private BorderPane welcomeBorderPane;
+
+
+
     @FXML
     public void initialize() {
 
-        btnContinue.setDisable(false);
+
 
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());

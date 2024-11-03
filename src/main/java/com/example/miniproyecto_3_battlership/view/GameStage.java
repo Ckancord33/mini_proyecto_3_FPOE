@@ -3,7 +3,9 @@ package com.example.miniproyecto_3_battlership.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -14,6 +16,11 @@ public class GameStage extends Stage {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         setResizable(false);
+        initStyle(StageStyle.UNDECORATED);
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        setWidth(screenWidth * 0.8);
+        setHeight(screenHeight * 0.8);
         setTitle("BattleShip");
         setScene(scene);
         show();
@@ -37,4 +44,6 @@ public class GameStage extends Stage {
         GameStage.GameStageHolder.INSTANCE.close();
         GameStage.GameStageHolder.INSTANCE = null;
     }
+
+
 }
