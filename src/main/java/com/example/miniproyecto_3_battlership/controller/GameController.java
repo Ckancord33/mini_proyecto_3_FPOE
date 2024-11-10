@@ -5,6 +5,8 @@ import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -14,51 +16,33 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameController {
 
-    @FXML
-    private Rectangle fragataShip1;
-
-    @FXML
-    private Rectangle fragataShip2;
-
-    @FXML
-    private Rectangle fragataShip3;
-
-    @FXML
-    private Rectangle fragataShip4;
-
-    @FXML
-    private Rectangle destructorShip1;
-
-    @FXML
-    private Rectangle destructorShip2;
-
-    @FXML
-    private Rectangle destructorShip3;
-
-    @FXML
-    private Rectangle submarino1;
-
-    @FXML
-    private Rectangle submarino2;
-
-    @FXML
-    private Rectangle portaaviones;
-
-    @FXML
-    private GridPane gridPane;
-
-    @FXML
-    private HBox hBox;
-
     private Game game;
 
     @FXML
+    private CheckBox check1;
+
+    @FXML
+    private CheckBox check2;
+
+    @FXML
+    private CheckBox check3;
+
+    @FXML
+    private CheckBox check4;
+
+    private int size;
+
+    @FXML
     private GridPane gridPaneGame;
+
+    @FXML
+    private GridPane gridPaneShips;
 
     private double startX, startY;
 
@@ -66,17 +50,7 @@ public class GameController {
 
 
     public void initialize() {
-        eventStartMovement(fragataShip1);
-        eventStartMovement(fragataShip2);
-        eventStartMovement(fragataShip3);
-        eventStartMovement(fragataShip4);
-        eventStartMovement(destructorShip1);
-        eventStartMovement(destructorShip2);
-        eventStartMovement(destructorShip3);
-        eventStartMovement(submarino1);
-        eventStartMovement(submarino2);
-        eventStartMovement(portaaviones);
-
+        createShips();
         game = new Game();
         game.setMatrix();
         boolean error = true;
@@ -106,42 +80,41 @@ public class GameController {
 
     }
 
-    public void eventStartMovement(Rectangle rectangle) {
-        rectangle.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                rectangle.setX(event.getSceneX() - startX);
-                rectangle.setY(event.getSceneY() - startY);
-            }
-        });
 
-        rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double finalX = event.getSceneX();
-                double finalY = event.getSceneY();
-                System.out.println(finalX + " " + finalY + "me soltaste");
-            }
-        });
+//    public void eventStartMovement(Rectangle rectangle) {
+//        rectangle.setOnMouseDragged(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                rectangle.setX(event.getSceneX() - startX);
+//                rectangle.setY(event.getSceneY() - startY);
+//            }
+//        });
+//
+//        rectangle.setOnMouseReleased(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                double finalX = event.getSceneX();
+//                double finalY = event.getSceneY();
+//                System.out.println(finalX + " " + finalY + "me soltaste");
+//            }
+//        });
+//
+//        rectangle.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                startX = event.getSceneX() - rectangle.getX();
+//                startY = event.getSceneY() - rectangle.getY();
+//            }
+//        });
+//    }
 
-        rectangle.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                startX = event.getSceneX() - rectangle.getX();
-                startY = event.getSceneY() - rectangle.getY();
-            }
-        });
-    }
-
-    @FXML
-    void onDragDetected(MouseEvent event) {
-        System.out.println("Drag Detected");
-    }
 
     @FXML
     void onHandleMousePressedGame(MouseEvent event) {
         double cellWidth = gridPaneGame.getWidth() / gridPaneGame.getColumnCount();
         double cellHeight = gridPaneGame.getHeight() / gridPaneGame.getRowCount();
+
+        System.out.println(cellWidth + " " + cellHeight);
 
         double x = event.getX();
         double y = event.getY();
@@ -189,9 +162,160 @@ public class GameController {
     }
 
     @FXML
+    void createShips() {
+        double cellWidth = 37.7;
+        double cellHeight = 37.8;
+
+
+        for (int rows = 1; rows <= 10; rows++) {
+            for (int col = 1; col <= 10; col++) {
+                Rectangle cell = new Rectangle(cellWidth, cellHeight);
+                cell.setFill(Color.TRANSPARENT); // Color por defecto
+
+                int finalRows = rows;
+                int finalCol = col;
+                cell.setOnMouseEntered(e -> onHandleMouseEnteredShips(e, cell, finalRows, finalCol));
+                cell.setOnMouseExited(e -> onHandleMouseExitedShips(e, cell, finalRows, finalCol));
+
+                gridPaneShips.add(cell, col, rows);
+            }
+        }
+    }
+
+    private void onHandleMouseEnteredShips(MouseEvent e, Rectangle cell, int finalRows, int finalCol) {
+        if (size == 1){
+            cell.setFill(Color.rgb(0,0,0,0.3));
+        }else if(size == 2){
+            cell.setFill(Color.rgb(0,0,0,0.5));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                }
+            }
+        }else if(size == 3){
+            cell.setFill(Color.rgb(0,0,0,0.5));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                    cell3.setFill(Color.rgb(0,0,0,0.5));
+                }
+            }
+        } else if (size == 4){
+            cell.setFill(Color.rgb(0,0,0,0.5));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                    cell3.setFill(Color.rgb(0,0,0,0.5));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
+                    cell4.setFill(Color.rgb(0,0,0,0.5));
+                }
+
+            }
+        }
+
+
+    }
+
+    private void onHandleMouseExitedShips(MouseEvent e, Rectangle cell, int finalRows, int finalCol) {
+        if (size == 1){
+            cell.setFill(Color.rgb(0,0,0,0));
+        }else if(size == 2){
+            cell.setFill(Color.rgb(0,0,0,0));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0));
+                }
+            }
+        }else if(size == 3){
+            cell.setFill(Color.rgb(0,0,0,0));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                    cell3.setFill(Color.rgb(0,0,0,0));
+                }
+            }
+        }else if (size == 4){
+            cell.setFill(Color.rgb(0,0,0,0));
+            for (var node : gridPaneShips.getChildren()) {
+                Integer rowIndex = GridPane.getRowIndex(node);
+                Integer colIndex = GridPane.getColumnIndex(node);
+                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                    cell2.setFill(Color.rgb(0,0,0,0));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                    cell3.setFill(Color.rgb(0,0,0,0));
+                }
+                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
+                    cell4.setFill(Color.rgb(0,0,0,0));
+                }
+
+            }
+        }
+    }
+
+    @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         GameStage.deleteInstance();
         WelcomeStage.getInstance();
         game.setMatrix();
+    }
+
+    public void checkSelection(javafx.event.ActionEvent actionEvent) {
+        if(check1.isSelected()) {
+            check2.setSelected(false);
+            check3.setSelected(false);
+            check4.setSelected(false);
+            size = 1;
+        }else if(check2.isSelected()) {
+            check1.setSelected(false);
+            check3.setSelected(false);
+            check4.setSelected(false);
+            size = 2;
+        }else if(check3.isSelected()) {
+            check1.setSelected(false);
+            check2.setSelected(false);
+            check4.setSelected(false);
+            size = 3;
+        }else if(check4.isSelected()) {
+            check1.setSelected(false);
+            check2.setSelected(false);
+            check3.setSelected(false);
+            size = 4;
+        }
     }
 }

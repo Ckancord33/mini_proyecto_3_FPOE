@@ -2,12 +2,41 @@
 
 .dialog-pane {
     -fx-background-color: #231f20; /* Color de fondo */
+    -fx-border-color: #443f40; /* Color marrón oscuro para el borde */
+    -fx-border-width: 5px; /* Grosor del borde */
+    -fx-border-style: double; /* Borde sólido */
 }
 
 .dialog-pane .content.label {
     -fx-text-fill: #ffffff; /* Color de las letras */
     -fx-font-family: "Jacquard 12"; /* Fuente */
     -fx-font-size: 35px; /* Tamaño de la fuente */
+    -fx-translate-y: 60;
+}
+.dialog-pane .content.label:hover {
+    -fx-cursor: hand;
+}
+
+.vbox-child{
+    -fx-text-fill: #ffffff; /* Color de las letras */
+    -fx-font-family: "Jacquard 12"; /* Fuente */
+    -fx-font-size: 35px; /* Tamaño de la fuente */
+    -fx-translate-y: 60;
+    -fx-underline: false;
+    -fx-border-width: 0px;
+}
+
+.vbox-child:hover {
+    -fx-cursor: hand;
+    -fx-underline: false;
+    -fx-border-width: 0px;
+    -fx-opacity: 1;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(125, 52, 52), 3, 5, 0, 0);
+}
+
+.dialog-pane .graphic-container {
+    -fx-padding: 50 0 0 30; /* Margen alrededor de la imagen */
 }
 
 .dialog-pane .button {

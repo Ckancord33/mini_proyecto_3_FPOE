@@ -1,13 +1,13 @@
 package com.example.miniproyecto_3_battlership.controller;
 
 import com.example.miniproyecto_3_battlership.model.game.Game;
+import com.example.miniproyecto_3_battlership.model.sound.Sounds;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,7 +57,7 @@ public class WelcomeController {
     @FXML
     private BorderPane welcomeBorderPane;
 
-
+    private Sounds samuelVoice;
 
     @FXML
     public void initialize() {
@@ -86,6 +86,9 @@ public class WelcomeController {
         btnHoverStyle(btnCredits, 4);
         btnHoverStyle(btnQuitGame, 5);
 
+        samuelVoice = new Sounds();
+        samuelVoice.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mivoice2.wav");
+
 
     }
     @FXML
@@ -100,23 +103,44 @@ public class WelcomeController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Credits");
         alert.setHeaderText(null);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(
-                new Image(this.getClass().getResource("/com/example/miniproyecto_3_battlership/Image/button_hover_desing.png").toString()));
-
 
         alert.setGraphic(new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/skulk_pixel_2.png")))));
+
         alert.getDialogPane().getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/alert-styless.css")).toExternalForm());
 
-        alert.setContentText("""
-            Developed by:
-            - Samuel Arenas
-            - Nicolas Cordoba
-            - Juan Manuel Ampudia
-        """);
+        Label contentText = new Label("Developed by:");
+
+        Hyperlink samuelLink = new Hyperlink("- Samuel Arenas");
+        Hyperlink nicolasLink = new Hyperlink("- Nicolas Cordoba");
+        Hyperlink juanLink = new Hyperlink("- Juan Manuel Ampudia");
+
+        samuelLink.setOnAction(e -> {
+            System.out.println("Acción para Samuel");
+            samuelVoice.playSound();
+            alert.setContentText("Samuel Arenas.");
+        });
+
+        nicolasLink.setOnAction(e -> {
+            System.out.println("Acción para Nicolas");
+            alert.setContentText("Nicolas Cordoba.");
+        });
+
+        juanLink.setOnAction(e -> {
+            System.out.println("Acción para Juan Manuel");
+            alert.setContentText("Juan Manuel Ampudia.");
+        });
+
+        VBox contentBox = new VBox(1);
+        contentBox.getChildren().addAll(contentText,samuelLink, nicolasLink, juanLink);
+        contentBox.getChildren().forEach(child -> child.getStyleClass().add("vbox-child"));
+
+
+
+        alert.getDialogPane().setContent(contentBox);
         Stage stageCredits = (Stage) alert.getDialogPane().getScene().getWindow();
         stageCredits.initStyle(StageStyle.UNDECORATED);
-        alert.setWidth(1200);
+        alert.setWidth(1000);
+
         alert.showAndWait();
 
     }
