@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+12&family=Rubik+Wet+Paint&display=swap');
+
+.dialog-pane {
+    -fx-background-color: #231f20; /* Color de fondo */
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: #ffffff; /* Color de las letras */
+    -fx-font-family: "Jacquard 12"; /* Fuente */
+    -fx-font-size: 35px; /* Tamaño de la fuente */
+}
+
+.dialog-pane .button {
+    -fx-font-family: "Jacquard 12"; /* Fuente */
+    -fx-font-size: 20px; /* Tamaño de la fuente */
+    -fx-text-fill: #ffffff; /* Color del texto */
+    -fx-background-color: #1d1f3e; /* Color de fondo */
+    -fx-background-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 10px; /* Espaciado interno */
+}
+
+.dialog-pane .button:hover {
+    -fx-font-family: "Jacquard 12"; /* Fuente */
+    -fx-font-size: 20px; /* Tamaño de la fuente */
+    -fx-text-fill: #ffffff; /* Color del texto */
+    -fx-background-color: #335577; /* Color de fondo */
+    -fx-background-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-cursor: "hand"; /* Cambiar cursor al pasar el mouse */
+}

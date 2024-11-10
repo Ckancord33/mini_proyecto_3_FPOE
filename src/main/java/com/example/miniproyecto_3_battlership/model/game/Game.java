@@ -10,10 +10,10 @@ public class Game extends AGame {
     private final ArrayList<ArrayList<Integer>> matriz = new ArrayList<>();
 
     public void generateGameBot(){
-        int fargataNumbers = 0;
+        int fragataNumbers = 0;
         int destroyerNumbers = 0;
         int submarineNumbers = 0;
-        int portaavionesNumbers = 0;
+        int airportCarrierNumbers = 0;
         int randomRow;
         int randomCol;
         int direction;
@@ -22,9 +22,9 @@ public class Game extends AGame {
             randomCol = (int)(Math.random()*9);
             if(matriz.get(randomRow).get(randomCol)==0){
                 matriz.get(randomRow).set(randomCol,1);
-                fargataNumbers++;
+                fragataNumbers++;
             }
-        }while (fargataNumbers < 4);
+        }while (fragataNumbers < 4);
 
         do{
             randomRow = (int)(Math.random()*8);
@@ -115,7 +115,7 @@ public class Game extends AGame {
                         matriz.get(randomRow-1).set(randomCol,4);
                         matriz.get(randomRow-2).set(randomCol,4);
                         matriz.get(randomRow-3).set(randomCol,4);
-                        portaavionesNumbers++;
+                        airportCarrierNumbers++;
                     }
                     break;
                 case 1:
@@ -124,7 +124,7 @@ public class Game extends AGame {
                         matriz.get(randomRow).set(randomCol+1,4);
                         matriz.get(randomRow).set(randomCol+2,4);
                         matriz.get(randomRow).set(randomCol+3,4);
-                        portaavionesNumbers++;
+                        airportCarrierNumbers++;
                     }
                     break;
                 case 2:
@@ -133,7 +133,7 @@ public class Game extends AGame {
                         matriz.get(randomRow+1).set(randomCol,4);
                         matriz.get(randomRow+2).set(randomCol,4);
                         matriz.get(randomRow+3).set(randomCol,4);
-                        portaavionesNumbers++;
+                        airportCarrierNumbers++;
                     }
                     break;
                 case 3:
@@ -142,12 +142,12 @@ public class Game extends AGame {
                         matriz.get(randomRow).set(randomCol-1,4);
                         matriz.get(randomRow).set(randomCol-2,4);
                         matriz.get(randomRow).set(randomCol-3,4);
-                        portaavionesNumbers++;
+                        airportCarrierNumbers++;
                     }
 
             }
 
-        }while (portaavionesNumbers < 1);
+        }while (airportCarrierNumbers < 1);
 
 
     };
@@ -156,7 +156,7 @@ public class Game extends AGame {
         return matriz;
     }
 
-    public void setMatriz() {
+    public void setMatrix() {
         int filas = 10;
         int columnas = 10;
         for (int i = 0; i < filas; i++) {
@@ -172,5 +172,9 @@ public class Game extends AGame {
         for (ArrayList<Integer> fila : matriz) {
             Collections.fill(fila, 0);
         }
+        Integer[][] matriz = new Integer[10][10];
+
+
     }
+
 }

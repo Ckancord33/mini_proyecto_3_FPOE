@@ -5,19 +5,15 @@ import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -82,7 +78,7 @@ public class GameController {
         eventStartMovement(portaaviones);
 
         game = new Game();
-        game.setMatriz();
+        game.setMatrix();
         boolean error = true;
         do {
             try {
@@ -196,6 +192,6 @@ public class GameController {
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         GameStage.deleteInstance();
         WelcomeStage.getInstance();
-        game.setMatriz();
+        game.setMatrix();
     }
 }

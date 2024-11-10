@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Jacquard+12&family=Rubik+Wet+Paint&display=swap');
+
 .border-pane {
     -fx-background-color: red;
     -fx-background-repeat: no-repeat;
@@ -5,6 +7,12 @@
     -fx-background-position: center center;
     -fx-min-width: 800px;
     -fx-min-height: 600px;
+}
+
+.button{
+    -fx-font-family: "Jacquard 12";
+    -fx-font-size: 40px;
+    -fx-font-weight: "bold";
 }
 
 

@@ -21,7 +21,7 @@
                         <Image url="@Image/button_hover_desing.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnContinue" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="142.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="continue" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btnContinue" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="Continue" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="HotelDeParis" size="30.0" />
                      </font>
@@ -41,7 +41,7 @@
                         <Image url="@Image/button_hover_desing.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnNewGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="150.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="New Game" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btnNewGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="48.0" prefWidth="295.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="New Game" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="HotelDeParis" size="30.0" />
                      </font>
@@ -61,7 +61,7 @@
                         <Image url="@Image/button_hover_desing.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnOptions" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="48.0" prefWidth="123.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="OPTIONS" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btnOptions" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="48.0" prefWidth="271.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="Options" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="HotelDeParis" size="30.0" />
                      </font>
@@ -81,7 +81,7 @@
                         <Image url="@Image/button_hover_desing.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnCredits" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="48.0" prefWidth="123.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="credits" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btnCredits" contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleCredits" prefHeight="48.0" prefWidth="296.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="Credits" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="HotelDeParis" size="30.0" />
                      </font>
@@ -111,7 +111,7 @@
                   <Insets top="15.0" />
                </HBox.margin>
             </ImageView>
-            <Button fx:id="btnQuitGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleQuitGame" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: Transparent;" styleClass="label-hover" text="quit game" textFill="WHITE" wrapText="true">
+            <Button fx:id="btnQuitGame" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleQuitGame" prefHeight="75.0" prefWidth="230.0" style="-fx-background-color: Transparent;" styleClass="label-hover" text="Quit Game" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="HotelDeParis" size="30.0" />
                </font>
