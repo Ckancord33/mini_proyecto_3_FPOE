@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.GameController">
+<BorderPane fx:id="gameBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.GameController">
    <center>
-      <HBox fx:id="hBox" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="416.0" prefWidth="885.0" spacing="50.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hBox" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="501.0" prefWidth="1000.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="gridPaneShips" gridLinesVisible="true" prefHeight="405.0" prefWidth="420.0">
+            <GridPane fx:id="gridPaneShips" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="500.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -46,102 +46,102 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="A" GridPane.columnIndex="1">
+                  <Label text="A" textFill="#111f3f" GridPane.columnIndex="1">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="B" GridPane.columnIndex="2">
+                  <Label text="B" textFill="#111f3f" GridPane.columnIndex="2">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="C" GridPane.columnIndex="3">
+                  <Label text="C" textFill="#111f3f" GridPane.columnIndex="3">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="d" GridPane.columnIndex="4">
+                  <Label text="d" textFill="#111f3f" GridPane.columnIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="E" GridPane.columnIndex="5">
+                  <Label text="E" textFill="#111f3f" GridPane.columnIndex="5">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="F" GridPane.columnIndex="6">
+                  <Label text="F" textFill="#111f3f" GridPane.columnIndex="6">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="G" GridPane.columnIndex="7">
+                  <Label text="G" textFill="#111f3f" GridPane.columnIndex="7">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="H" GridPane.columnIndex="8">
+                  <Label text="H" textFill="#111f3f" GridPane.columnIndex="8">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="I" GridPane.columnIndex="9">
+                  <Label text="I" textFill="#111f3f" GridPane.columnIndex="9">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="J" GridPane.columnIndex="10">
+                  <Label text="J" textFill="#111f3f" GridPane.columnIndex="10">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="1" GridPane.rowIndex="1">
+                  <Label text="1" textFill="#111f3f" GridPane.rowIndex="1">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="2" GridPane.rowIndex="2">
+                  <Label text="2" textFill="#111f3f" GridPane.rowIndex="2">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="3" GridPane.rowIndex="3">
+                  <Label text="3" textFill="#111f3f" GridPane.rowIndex="3">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="4" GridPane.rowIndex="4">
+                  <Label text="4" textFill="#111f3f" GridPane.rowIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="5" GridPane.rowIndex="5">
+                  <Label text="5" textFill="#111f3f" GridPane.rowIndex="5">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="6" GridPane.rowIndex="6">
+                  <Label text="6" textFill="#111f3f" GridPane.rowIndex="6">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="7" GridPane.rowIndex="7">
+                  <Label text="7" textFill="#111f3f" GridPane.rowIndex="7">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="8" GridPane.rowIndex="8">
+                  <Label text="8" textFill="#111f3f" GridPane.rowIndex="8">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="9" GridPane.rowIndex="9">
+                  <Label text="9" textFill="#111f3f" GridPane.rowIndex="9">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="10" GridPane.rowIndex="10">
+                  <Label text="10" textFill="#111f3f" GridPane.rowIndex="10">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
@@ -150,8 +150,11 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
             </GridPane>
-            <GridPane fx:id="gridPaneGame" gridLinesVisible="true" onMousePressed="#onHandleMousePressedGame" prefHeight="405.0" prefWidth="414.0">
+            <GridPane fx:id="gridPaneGame" gridLinesVisible="true" onMousePressed="#onHandleMousePressedGame" prefHeight="500.0" prefWidth="500.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -179,102 +182,102 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="A" GridPane.columnIndex="1">
+                  <Label text="A" textFill="#111f3f" GridPane.columnIndex="1">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="B" GridPane.columnIndex="2">
+                  <Label text="B" textFill="#111f3f" GridPane.columnIndex="2">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="C" GridPane.columnIndex="3">
+                  <Label text="C" textFill="#111f3f" GridPane.columnIndex="3">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="d" GridPane.columnIndex="4">
+                  <Label text="d" textFill="#111f3f" GridPane.columnIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="E" GridPane.columnIndex="5">
+                  <Label text="E" textFill="#111f3f" GridPane.columnIndex="5">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="F" GridPane.columnIndex="6">
+                  <Label text="F" textFill="#111f3f" GridPane.columnIndex="6">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="G" GridPane.columnIndex="7">
+                  <Label text="G" textFill="#111f3f" GridPane.columnIndex="7">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="H" GridPane.columnIndex="8">
+                  <Label text="H" textFill="#111f3f" GridPane.columnIndex="8">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="I" GridPane.columnIndex="9">
+                  <Label text="I" textFill="#111f3f" GridPane.columnIndex="9">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="J" GridPane.columnIndex="10">
+                  <Label text="J" textFill="#111f3f" GridPane.columnIndex="10">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="1" GridPane.rowIndex="1">
+                  <Label text="1" textFill="#111f3f" GridPane.rowIndex="1">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="2" GridPane.rowIndex="2">
+                  <Label text="2" textFill="#111f3f" GridPane.rowIndex="2">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="3" GridPane.rowIndex="3">
+                  <Label text="3" textFill="#111f3f" GridPane.rowIndex="3">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="4" GridPane.rowIndex="4">
+                  <Label text="4" textFill="#111f3f" GridPane.rowIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="5" GridPane.rowIndex="5">
+                  <Label text="5" textFill="#111f3f" GridPane.rowIndex="5">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="6" GridPane.rowIndex="6">
+                  <Label text="6" textFill="#111f3f" GridPane.rowIndex="6">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="7" GridPane.rowIndex="7">
+                  <Label text="7" textFill="#111f3f" GridPane.rowIndex="7">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="8" GridPane.rowIndex="8">
+                  <Label text="8" textFill="#111f3f" GridPane.rowIndex="8">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="9" GridPane.rowIndex="9">
+                  <Label text="9" textFill="#111f3f" GridPane.rowIndex="9">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="10" GridPane.rowIndex="10">
+                  <Label text="10" textFill="#111f3f" GridPane.rowIndex="10">
                      <font>
                         <Font name="HotelDeParisXe" size="24.0" />
                      </font>
@@ -294,29 +297,44 @@
       <AnchorPane prefHeight="421.0" prefWidth="69.0" BorderPane.alignment="CENTER" />
    </right>
    <bottom>
-      <HBox alignment="CENTER" fillHeight="false" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="49.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" fillHeight="false" focusTraversable="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="94.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#onHandleReturn" prefHeight="31.0" prefWidth="112.0" text="devolverse">
                <font>
                   <Font name="HotelDeParisXe" size="16.0" />
                </font>
                <HBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="40.0" />
                </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>
    </bottom>
    <left>
-      <VBox alignment="CENTER" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="116.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="119.0" spacing="20.0" style="-fx-border-color: #373F51; -fx-border-radius: 30; -fx-border-width: 5; -fx-background-radius: 30; -fx-background-color: #111F3F; -fx-opacity: 0.5;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets left="20.0" />
          </BorderPane.margin>
          <children>
-            <CheckBox fx:id="check1" mnemonicParsing="false" onAction="#checkSelection" text="barco 1" />
-            <CheckBox fx:id="check2" mnemonicParsing="false" onAction="#checkSelection" text="barco 2" />
-            <CheckBox fx:id="check3" mnemonicParsing="false" onAction="#checkSelection" text="barco 3" />
-            <CheckBox fx:id="check4" mnemonicParsing="false" onAction="#checkSelection" text="barco 4" />
+            <CheckBox fx:id="check1" mnemonicParsing="false" onAction="#checkSelection" text="barco 1" textFill="WHITE">
+               <font>
+                  <Font name="HotelDeParis" size="12.0" />
+               </font></CheckBox>
+            <CheckBox fx:id="check2" mnemonicParsing="false" onAction="#checkSelection" text="barco 2" textFill="WHITE">
+               <font>
+                  <Font name="HotelDeParis" size="12.0" />
+               </font></CheckBox>
+            <CheckBox fx:id="check3" mnemonicParsing="false" onAction="#checkSelection" text="barco 3" textFill="WHITE">
+               <font>
+                  <Font name="HotelDeParisXe" size="12.0" />
+               </font></CheckBox>
+            <CheckBox fx:id="check4" mnemonicParsing="false" onAction="#checkSelection" text="barco 4" textFill="WHITE">
+               <font>
+                  <Font name="HotelDeParis" size="12.0" />
+               </font></CheckBox>
          </children>
       </VBox>
    </left>

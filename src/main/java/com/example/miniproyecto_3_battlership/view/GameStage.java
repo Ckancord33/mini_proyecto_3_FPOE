@@ -19,8 +19,8 @@ public class GameStage extends Stage {
         initStyle(StageStyle.UNDECORATED);
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
-        setWidth(screenWidth * 0.8);
-        setHeight(screenHeight * 0.8);
+        setWidth(screenWidth * 1);
+        setHeight(screenHeight * 1);
         setTitle("BattleShip");
         setScene(scene);
         show();
