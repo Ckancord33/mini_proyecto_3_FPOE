@@ -24,16 +24,13 @@ public class WelcomeStage extends Stage {
         initStyle(StageStyle.UNDECORATED);
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
-        setWidth(screenWidth * 0.8);
-        setHeight(screenHeight * 0.8);
+        setWidth(screenWidth * 1);
+        setHeight(screenHeight * 1);
         setScene(scene);
         show();
     }
 
     private static class WelcomeStageHolder {
-        /**
-         * The unique instance of {@code WelcomeStage}.
-         */
         private static WelcomeStage INSTANCE;
     }
 
