@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController {
 
@@ -65,9 +67,9 @@ public class GameController {
                 new BackgroundSize(100, 100, true, true, true, false)
         );
 
-//        gameBorderPane.setBackground(new Background(background));
+        gameBorderPane.setBackground(new Background(background));
 
-        createShips();
+        createShips();createBorders();
         game = new Game();
         game.setMatrix();
         boolean error = true;
@@ -180,14 +182,15 @@ public class GameController {
 
     @FXML
     void createShips() {;
-        double cellWidth = 41.9;
-        double cellHeight = 45.6;
-
+        double cellWidth = 63.7;
+        double cellHeight = 63.7;
+        gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
 
         for (int rows = 1; rows <= 10; rows++) {
             for (int col = 1; col <= 10; col++) {
                 Rectangle cell = new Rectangle(cellWidth, cellHeight);
                 cell.setFill(Color.TRANSPARENT);
+                cell.getStyleClass().add("cell");
                 int finalRows = rows;
                 int finalCol = col;
                 cell.setOnMouseEntered(e -> onHandleMouseEnteredShips(e, cell, finalRows, finalCol));
@@ -198,8 +201,10 @@ public class GameController {
         }
     }
 
+
+
     private void onHandleMouseEnteredShips(MouseEvent e, Rectangle cell, int finalRows, int finalCol) {
-        Color colorhover = Color.rgb(0,0,0,0.3 );
+        Color colorhover = Color.rgb(0,0,0,0.5 );
         if (size == 1){
             cell.setFill(colorhover);
         }else if(size == 2){
@@ -302,6 +307,21 @@ public class GameController {
                     cell4.setFill(colorDefault);
                 }
 
+            }
+        }
+    }
+
+    void createBorders() {
+        double cellWidth = 38.18;
+        double cellHeight = 38.18;
+        gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
+
+        for (int rows = 1; rows <= 10; rows++) {
+            for (int col = 1; col <= 10; col++) {
+                Rectangle cell = new Rectangle(cellWidth, cellHeight);
+                cell.setFill(Color.TRANSPARENT);
+                cell.getStyleClass().add("cell");
+                gridPaneGame.add(cell, col, rows);
             }
         }
     }
