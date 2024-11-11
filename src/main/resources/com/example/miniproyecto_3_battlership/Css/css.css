@@ -22,9 +22,72 @@
     -fx-effect: dropshadow(three-pass-box, rgba(125, 52, 52), 3, 5, 0, 0);
 }
 
+.labelCharacter{
+    -fx-font-family: "Jacquard 12";
+}
+
 .label-hover {
     -fx-text-fill: white;
     -fx-effect: none;
 }
+
+.cell{
+    -fx-stroke: white;
+    -fx-fill: transparent;
+}
+
+.choice-box{
+    -fx-text-fill: #ffffff;
+    -fx-background-color: rgb(19, 35, 60, 0.6);
+    -fx-padding: 0;
+    -fx-border-color: #808080;
+    -fx-border-width: 5px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+
+}
+
+.choice-box .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Jacquard 12";
+    -fx-font-size: 37px;
+}
+
+#choice-box-menu-item * {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 37px;
+    -fx-cursor: hand;
+
+}
+
+/* Change the background color of the popup */
+#choice-box-popup-menu {
+    -fx-background-color:  rgb(19, 35, 60, 0.6);
+    -fx-cursor: hand;
+}
+
+.choice-box .arrow {
+    -fx-background-color:  white;
+   -fx-background-size: 10px 10px;
+}
+
+.buttonReturn{
+    -fx-font-family: "Berlin Sans FB";
+    -fx-font-size: 25;
+    -fx-background-color: #0f2f42;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+    -fx-border-width: 3;
+    -fx-border-color: #373F51;
+}
+
+.buttonReturn:hover{
+    -fx-background-color: rgba(15, 47, 66, 0.6);
+}
+
+
+
+
+
 
 

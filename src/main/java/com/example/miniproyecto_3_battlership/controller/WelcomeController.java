@@ -57,11 +57,23 @@ public class WelcomeController {
     @FXML
     private BorderPane welcomeBorderPane;
 
+    @FXML
+    private ChoiceBox<String> choiceBox;
+
+    @FXML
+    private ImageView imgCharacter;
+
     private Sounds samuelVoice;
 
     @FXML
     public void initialize() {
 
+        Image character1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter1.png")));
+        Image character2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter2.png")));
+        Image character3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter3.png")));
+        Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter4.png")));
+        Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter5.png")));
+        Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter6.png")));
 
 
         //IMAGEN DE FONDO
@@ -77,6 +89,28 @@ public class WelcomeController {
         );
 
         welcomeBorderPane.setBackground(new Background(background));
+
+        choiceBox.getItems().addAll("Coronel sander","Coronel chapalin", "Coronela Flora", "Coronela Patricia", "????", "???");
+
+        choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+
+            if ( newValue == "Coronel sander") {
+                imgCharacter.setImage(character1);
+                System.out.println("entre1");
+            }else if (newValue == "Coronel chapalin") {
+                imgCharacter.setImage(character2);
+                System.out.println("entre2");
+            }else if (newValue == "Coronela Flora") {
+                imgCharacter.setImage(character3);
+            } else if (newValue == "Coronela Patricia") {
+                imgCharacter.setImage(character4);
+            }else if (newValue == "????") {
+                imgCharacter.setImage(character5);
+            }
+            else if (newValue == "???") {
+                imgCharacter.setImage(character6);
+            }
+        });
 
 
         // METODO QUE COLOCA LA CALAVERA

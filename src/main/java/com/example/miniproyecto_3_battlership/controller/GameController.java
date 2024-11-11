@@ -7,10 +7,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameController {
 
@@ -44,13 +45,31 @@ public class GameController {
     @FXML
     private GridPane gridPaneShips;
 
+    @FXML
+    private BorderPane gameBorderPane;
+
     private double startX, startY;
 
     private ArrayList<ArrayList<Integer>> matriz;
 
 
     public void initialize() {
-        createShips();
+
+        //IMAGEN DE FONDO
+        Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
+
+
+        BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, false)
+        );
+
+        gameBorderPane.setBackground(new Background(background));
+
+        createShips();createBorders();
         game = new Game();
         game.setMatrix();
         boolean error = true;
@@ -162,16 +181,16 @@ public class GameController {
     }
 
     @FXML
-    void createShips() {
-        double cellWidth = 37.7;
-        double cellHeight = 37.8;
-
+    void createShips() {;
+        double cellWidth = 63.7;
+        double cellHeight = 63.7;
+        gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
 
         for (int rows = 1; rows <= 10; rows++) {
             for (int col = 1; col <= 10; col++) {
                 Rectangle cell = new Rectangle(cellWidth, cellHeight);
-                cell.setFill(Color.TRANSPARENT); // Color por defecto
-
+                cell.setFill(Color.TRANSPARENT);
+                cell.getStyleClass().add("cell");
                 int finalRows = rows;
                 int finalCol = col;
                 cell.setOnMouseEntered(e -> onHandleMouseEnteredShips(e, cell, finalRows, finalCol));
@@ -182,11 +201,14 @@ public class GameController {
         }
     }
 
+
+
     private void onHandleMouseEnteredShips(MouseEvent e, Rectangle cell, int finalRows, int finalCol) {
+        Color colorhover = Color.rgb(0,0,0,0.5 );
         if (size == 1){
-            cell.setFill(Color.rgb(0,0,0,0.3));
+            cell.setFill(colorhover);
         }else if(size == 2){
-            cell.setFill(Color.rgb(0,0,0,0.5));
+            cell.setFill(colorhover);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -194,11 +216,11 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                    cell2.setFill(colorhover);
                 }
             }
         }else if(size == 3){
-            cell.setFill(Color.rgb(0,0,0,0.5));
+            cell.setFill(colorhover);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -206,14 +228,14 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                    cell2.setFill(colorhover);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
-                    cell3.setFill(Color.rgb(0,0,0,0.5));
+                    cell3.setFill(colorhover);
                 }
             }
         } else if (size == 4){
-            cell.setFill(Color.rgb(0,0,0,0.5));
+            cell.setFill(colorhover);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -221,13 +243,13 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0.5));
+                    cell2.setFill(colorhover);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
-                    cell3.setFill(Color.rgb(0,0,0,0.5));
+                    cell3.setFill(colorhover);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
-                    cell4.setFill(Color.rgb(0,0,0,0.5));
+                    cell4.setFill(colorhover);
                 }
 
             }
@@ -237,10 +259,11 @@ public class GameController {
     }
 
     private void onHandleMouseExitedShips(MouseEvent e, Rectangle cell, int finalRows, int finalCol) {
+        Color colorDefault = Color.TRANSPARENT;
         if (size == 1){
-            cell.setFill(Color.rgb(0,0,0,0));
+            cell.setFill(colorDefault);
         }else if(size == 2){
-            cell.setFill(Color.rgb(0,0,0,0));
+            cell.setFill(colorDefault);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -248,11 +271,11 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0));
+                    cell2.setFill(colorDefault);
                 }
             }
         }else if(size == 3){
-            cell.setFill(Color.rgb(0,0,0,0));
+            cell.setFill(colorDefault);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -260,14 +283,14 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0));
+                    cell2.setFill(colorDefault);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
-                    cell3.setFill(Color.rgb(0,0,0,0));
+                    cell3.setFill(colorDefault);
                 }
             }
         }else if (size == 4){
-            cell.setFill(Color.rgb(0,0,0,0));
+            cell.setFill(colorDefault);
             for (var node : gridPaneShips.getChildren()) {
                 Integer rowIndex = GridPane.getRowIndex(node);
                 Integer colIndex = GridPane.getColumnIndex(node);
@@ -275,15 +298,30 @@ public class GameController {
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
                 if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
-                    cell2.setFill(Color.rgb(0,0,0,0));
+                    cell2.setFill(colorDefault);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
-                    cell3.setFill(Color.rgb(0,0,0,0));
+                    cell3.setFill(colorDefault);
                 }
                 if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
-                    cell4.setFill(Color.rgb(0,0,0,0));
+                    cell4.setFill(colorDefault);
                 }
 
+            }
+        }
+    }
+
+    void createBorders() {
+        double cellWidth = 38.18;
+        double cellHeight = 38.18;
+        gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
+
+        for (int rows = 1; rows <= 10; rows++) {
+            for (int col = 1; col <= 10; col++) {
+                Rectangle cell = new Rectangle(cellWidth, cellHeight);
+                cell.setFill(Color.TRANSPARENT);
+                cell.getStyleClass().add("cell");
+                gridPaneGame.add(cell, col, rows);
             }
         }
     }
