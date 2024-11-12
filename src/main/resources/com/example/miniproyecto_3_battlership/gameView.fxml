@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,6 +10,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -203,26 +203,7 @@
                </cursor>
             </Button>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3737" height="239.0" layoutX="109.0" layoutY="770.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="263.0" />
-            <CheckBox fx:id="check1" layoutX="164.0" layoutY="800.0" mnemonicParsing="false" onAction="#checkSelection" text="Barco1" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="check2" layoutX="164.0" layoutY="850.0" mnemonicParsing="false" onAction="#checkSelection" text="Barco2" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="check3" layoutX="164.0" layoutY="900.0" mnemonicParsing="false" onAction="#checkSelection" text="Barco3" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="check4" layoutX="164.0" layoutY="950.0" mnemonicParsing="false" onAction="#checkSelection" text="Barco4" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="25.0" />
-               </font>
-            </CheckBox>
+            <VBox fx:id="shipSelectVbox" alignment="CENTER" layoutX="122.0" layoutY="790.0" opacity="0.28" prefHeight="200.0" prefWidth="239.0" />
          </children>
       </AnchorPane>
    </left>
@@ -230,7 +211,7 @@
       <AnchorPane prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="195.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
-            <GridPane fx:id="gridPaneShips" layoutX="131.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="700.0">
+            <GridPane fx:id="gridPaneShips" layoutX="131.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onHandleGridPaneShips" prefHeight="700.0" prefWidth="700.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -273,7 +254,7 @@
                         <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
-                  <Label text="d" textFill="#f2f2f2" GridPane.columnIndex="4">
+                  <Label text="D" textFill="#f2f2f2" GridPane.columnIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="30.0" />
                      </font>
