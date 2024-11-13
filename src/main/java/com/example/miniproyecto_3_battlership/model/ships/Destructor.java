@@ -8,6 +8,7 @@ public class Destructor implements Ship {
 
     StackPane Destructor = new StackPane();
     private Rectangle body;
+    private boolean isHorizontal;
 
     public Destructor() {
         // Cuerpo del barco
@@ -25,6 +26,7 @@ public class Destructor implements Ship {
 
         // Agregar todas las partes al Pane
         this.Destructor.getChildren().addAll(body);
+        isHorizontal = b;
     }
 
     public StackPane getDestructor() {
@@ -40,7 +42,14 @@ public class Destructor implements Ship {
     }
 
     @Override
+    public boolean getOrientation() {
+        return isHorizontal;
+    }
+
+    @Override
     public void rotateShip() {
+        isHorizontal = !isHorizontal;
+        Destructor.setRotate(90);
 
     }
 

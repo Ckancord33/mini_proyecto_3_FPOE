@@ -8,6 +8,7 @@ public class Portaaviones implements Ship {
 
     StackPane Portaaviones = new StackPane();
     private Rectangle body;
+    private boolean isHorizontal;
 
     public Portaaviones() {
         // Cuerpo del barco
@@ -23,6 +24,7 @@ public class Portaaviones implements Ship {
         body = new Rectangle(63.63*4, 63.63);
         body.setFill(Color.VIOLET);
         this.Portaaviones.getChildren().addAll(body);
+        isHorizontal = b;
     }
 
     public StackPane getPortaaviones() {
@@ -38,8 +40,14 @@ public class Portaaviones implements Ship {
     }
 
     @Override
-    public void rotateShip() {
+    public boolean getOrientation() {
+        return isHorizontal;
+    }
 
+    @Override
+    public void rotateShip() {
+        isHorizontal = !isHorizontal;
+        Portaaviones.setRotate(90);
     }
 
     @Override

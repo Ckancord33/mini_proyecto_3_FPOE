@@ -8,6 +8,7 @@ public class Fragata implements Ship {
 
     StackPane fragata = new StackPane();
     private Rectangle body;
+    private boolean isHorizontal;
 
     public Fragata() {
         // Cuerpo del barco
@@ -26,7 +27,12 @@ public class Fragata implements Ship {
 
         // Agregar todas las partes al Pane
         this.fragata.getChildren().addAll(body);
+        isHorizontal = b;
     }
+    public boolean getOrientation() {
+        return isHorizontal;
+    }
+
 
     public StackPane getFragata() {
         return fragata;
@@ -42,7 +48,8 @@ public class Fragata implements Ship {
 
     @Override
     public void rotateShip() {
-
+        isHorizontal = !isHorizontal;
+        fragata.setRotate(90);
     }
 
     @Override

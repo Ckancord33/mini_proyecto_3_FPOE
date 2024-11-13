@@ -204,6 +204,7 @@
             </Button>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3737" height="239.0" layoutX="109.0" layoutY="770.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="263.0" />
             <VBox fx:id="shipSelectVbox" alignment="CENTER" layoutX="122.0" layoutY="790.0" opacity="0.28" prefHeight="200.0" prefWidth="239.0" />
+            <Button layoutX="196.0" layoutY="1021.0" mnemonicParsing="false" onAction="#onHandleRotateButton" text="Rotar" />
          </children>
       </AnchorPane>
    </left>

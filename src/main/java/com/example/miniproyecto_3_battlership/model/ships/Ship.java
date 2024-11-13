@@ -9,4 +9,5 @@ public interface Ship{
     StackPane getShip();
     void selectDesing();
     void originDesing();
+    boolean getOrientation();
 }

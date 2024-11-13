@@ -4,12 +4,15 @@ import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,7 +22,6 @@ import javafx.scene.shape.Rectangle;
 import org.w3c.dom.css.Rect;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -97,6 +99,12 @@ public class GameController {
 
         vBoxSelectShips();
 
+        shipGame[0] = new Fragata(true);
+        shipGame[1] = new Destructor(true);
+        shipGame[2] = new Submarino(true);
+        shipGame[3] = new Portaaviones(true);
+
+
     }
 
     public void vBoxSelectShips(){
@@ -117,6 +125,15 @@ public class GameController {
         portaaviones.getPortaaviones().setOnMouseClicked(e -> shipSelect(4));
 
     }
+    @FXML
+    void onHandleRotateButton(ActionEvent event) {
+        if(size != 0){
+            shipGame[size - 1].rotateShip();
+            System.out.println("Rotando");
+        }
+    }
+
+
 
     public void shipSelect(int type){
 
@@ -264,6 +281,8 @@ public class GameController {
 
     @FXML
     void onHandleGridPaneShips(MouseEvent event) {
+
+
         double cellWidth = gridPaneShips.getWidth() / gridPaneShips.getColumnCount();
         double cellHeight = gridPaneShips.getHeight() / gridPaneShips.getRowCount();
 
@@ -273,30 +292,58 @@ public class GameController {
         int column = (int) (x / cellWidth);
         int row = (int) (y / cellHeight);
 
-        shipGame[0] = new Fragata(true);
-        shipGame[1] = new Destructor(true);
-        shipGame[2] = new Submarino(true);
-        shipGame[3] = new Portaaviones(true);
-
 
         if (row != 0 && column != 0){
             System.out.println("Clic en la celda: columna " + column + ", fila " + row);
-            if (size == 1 && shipsNumbers[0] != 0){
-                gridPaneShips.add(shipGame[0].getShip(), column, row);
-                shipsNumbers[0]--;
-            }else if(size == 2 && shipsNumbers[1] != 0 && column != 1){
-                GridPane.setColumnSpan(shipGame[1].getShip(), 2);
-                gridPaneShips.add(shipGame[1].getShip(), column-1, row);
-                shipsNumbers[1]--;
-            }else if(size == 3 && shipsNumbers[2] != 0 && column != 1 && column != 10){
-                GridPane.setColumnSpan(shipGame[2].getShip(), 3);
-                gridPaneShips.add(shipGame[2].getShip(), column-1, row);
-                shipsNumbers[2]--;
-            }else if(size == 4 && shipsNumbers[3] != 0 && column > 2 && column != 10){
-                GridPane.setColumnSpan(shipGame[3].getShip(), 4);
-                gridPaneShips.add(shipGame[3].getShip(), column-2, row);
-                shipsNumbers[3]--;
+            switch (size){
+                case 1: if (shipsNumbers[0] != 0 && shipGame[0].getOrientation()){
+                            gridPaneShips.add(shipGame[0].getShip(), column, row);
+                            shipsNumbers[0]--;
+                        }
+                        if(shipsNumbers[0] != 0 && !shipGame[0].getOrientation()){
+                            gridPaneShips.add(shipGame[0].getShip(), column, row);
+                            shipsNumbers[0]--;
+                        }
+                        break;
+
+                case 2: if (shipsNumbers[1] != 0 && column != 1 && shipGame[1].getOrientation()){
+                            GridPane.setColumnSpan(shipGame[1].getShip(), 2);
+                            gridPaneShips.add(shipGame[1].getShip(), column-1, row);
+                            shipsNumbers[1]--;
+                        }
+                        if(shipsNumbers[1] != 0 && row != 1 && !shipGame[1].getOrientation()){
+                            GridPane.setRowSpan(shipGame[1].getShip(), 2);
+                            gridPaneShips.add(shipGame[1].getShip(), column, row-1);
+                            shipsNumbers[1]--;
+                        }
+                        break;
+
+                case 3: if (shipsNumbers[2] != 0 && column != 1 && column != 10 && shipGame[2].getOrientation()){
+                            GridPane.setColumnSpan(shipGame[2].getShip(), 3);
+                            gridPaneShips.add(shipGame[2].getShip(), column-1, row);
+                            shipsNumbers[2]--;
+                        }
+                        if(shipsNumbers[2] != 0 && row != 1 && row != 10 && !shipGame[2].getOrientation()){
+                            GridPane.setRowSpan(shipGame[2].getShip(), 3);
+                            gridPaneShips.add(shipGame[2].getShip(), column, row-1);
+                            shipsNumbers[2]--;
+                        }
+                        break;
+
+                case 4: if (shipsNumbers[3] != 0 && column > 2 && column != 10 && shipGame[3].getOrientation()){
+                            GridPane.setColumnSpan(shipGame[3].getShip(), 4);
+                            gridPaneShips.add(shipGame[3].getShip(), column-2, row);
+                            shipsNumbers[3]--;
+                        }
+                        if(shipsNumbers[3] != 0 && row > 2 && row != 10 && !shipGame[3].getOrientation()){
+                            GridPane.setRowSpan(shipGame[3].getShip(), 4);
+                            gridPaneShips.add(shipGame[3].getShip(), column, row-2);
+                            shipsNumbers[3]--;
+                        }
+                        break;
+
             }
+
         }
 
 
@@ -316,8 +363,11 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[1].getOrientation()) {
                     cell2.setFill(colorhover);
+                }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell3 && !shipGame[1].getOrientation()){
+                    cell3.setFill(colorhover);
                 }
             }
         }else if(size == 3){
@@ -328,11 +378,17 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[2].getOrientation()) {
                     cell2.setFill(colorhover);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3 && shipGame[2].getOrientation()){
                     cell3.setFill(colorhover);
+                }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell4 && !shipGame[2].getOrientation()){
+                    cell4.setFill(colorhover);
+                }
+                if(rowIndex == finalRows+1 && colIndex == finalCol && node instanceof Rectangle cell5 && !shipGame[2].getOrientation()){
+                    cell5.setFill(colorhover);
                 }
             }
         } else if (size == 4){
@@ -343,13 +399,22 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[3].getOrientation()) {
                     cell2.setFill(colorhover);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3 && shipGame[3].getOrientation()){
                     cell3.setFill(colorhover);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
+                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4 && shipGame[3].getOrientation()){
+                    cell4.setFill(colorhover);
+                }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell2 && !shipGame[3].getOrientation()){
+                    cell2.setFill(colorhover);
+                }
+                if(rowIndex == finalRows+1 && colIndex == finalCol && node instanceof Rectangle cell3 && !shipGame[3].getOrientation()){
+                    cell3.setFill(colorhover);
+                }
+                if(rowIndex == finalRows-2 && colIndex == finalCol && node instanceof Rectangle cell4 && !shipGame[3].getOrientation()){
                     cell4.setFill(colorhover);
                 }
 
@@ -371,9 +436,13 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[1].getOrientation()) {
                     cell2.setFill(colorDefault);
                 }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell3 && !shipGame[1].getOrientation()){
+                    cell3.setFill(colorDefault);
+                }
+
             }
         }else if(size == 3){
             cell.setFill(colorDefault);
@@ -383,11 +452,17 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[2].getOrientation()) {
                     cell2.setFill(colorDefault);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3 && shipGame[2].getOrientation()){
                     cell3.setFill(colorDefault);
+                }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell4 && !shipGame[2].getOrientation()){
+                    cell4.setFill(colorDefault);
+                }
+                if(rowIndex == finalRows+1 && colIndex == finalCol && node instanceof Rectangle cell5 && !shipGame[2].getOrientation()) {
+                    cell5.setFill(colorDefault);
                 }
             }
         }else if (size == 4){
@@ -398,13 +473,22 @@ public class GameController {
                 rowIndex = (rowIndex == null) ? 0 : rowIndex;
                 colIndex = (colIndex == null) ? 0 : colIndex;
 
-                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2) {
+                if (rowIndex == finalRows && colIndex == finalCol-1 && node instanceof Rectangle cell2 && shipGame[3].getOrientation()) {
                     cell2.setFill(colorDefault);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3){
+                if (rowIndex == finalRows && colIndex == finalCol+1 && node instanceof Rectangle cell3 && shipGame[3].getOrientation()){
                     cell3.setFill(colorDefault);
                 }
-                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4){
+                if (rowIndex == finalRows && colIndex == finalCol-2 && node instanceof Rectangle cell4 && shipGame[3].getOrientation()){
+                    cell4.setFill(colorDefault);
+                }
+                if(rowIndex == finalRows-1 && colIndex == finalCol && node instanceof Rectangle cell2 && !shipGame[3].getOrientation()){
+                    cell2.setFill(colorDefault);
+                }
+                if(rowIndex == finalRows+1 && colIndex == finalCol && node instanceof Rectangle cell3 && !shipGame[3].getOrientation()){
+                    cell3.setFill(colorDefault);
+                }
+                if(rowIndex == finalRows-2 && colIndex == finalCol && node instanceof Rectangle cell4 && !shipGame[3].getOrientation()){
                     cell4.setFill(colorDefault);
                 }
 

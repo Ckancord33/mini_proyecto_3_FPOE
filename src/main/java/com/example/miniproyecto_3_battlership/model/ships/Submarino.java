@@ -8,6 +8,7 @@ public class Submarino implements Ship {
 
     StackPane submarino = new StackPane();
     private Rectangle body;
+    private boolean isHorizontal = true;
 
     public Submarino() {
         // Cuerpo del barco
@@ -27,6 +28,7 @@ public class Submarino implements Ship {
 
         // Agregar todas las partes al Pane
         this.submarino.getChildren().addAll(body);
+        isHorizontal = b;
     }
 
 
@@ -43,10 +45,16 @@ public class Submarino implements Ship {
         body.setFill(Color.DARKGRAY);
     }
 
+    @Override
+    public boolean getOrientation() {
+        return false;
+    }
+
 
     @Override
     public void rotateShip() {
-
+        isHorizontal = !isHorizontal;
+        submarino.setRotate(90);
     }
 
     @Override
