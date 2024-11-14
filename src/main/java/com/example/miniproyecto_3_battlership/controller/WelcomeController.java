@@ -1,9 +1,7 @@
 package com.example.miniproyecto_3_battlership.controller;
 
-import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.sound.Sounds;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
-import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,16 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WelcomeController {
     @FXML
@@ -65,6 +60,7 @@ public class WelcomeController {
     private ImageView imgCharacter;
 
     private Sounds samuelVoice;
+    private int easterEgg;
 
     @FXML
     public void initialize() {
@@ -75,6 +71,7 @@ public class WelcomeController {
         Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter4.png")));
         Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter5.png")));
         Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter6.png")));
+        Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter7.png")));
 
 
         //IMAGEN DE FONDO
@@ -91,25 +88,27 @@ public class WelcomeController {
 
         welcomeBorderPane.setBackground(new Background(background));
 
-        choiceBox.getItems().addAll("Coronel sander","Coronel chapalin", "Coronela Flora", "Coronela Patricia", "????", "???");
+        choiceBox.getItems().addAll("Coronel sander","ArchiAlmirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
             if ( newValue == "Coronel sander") {
                 imgCharacter.setImage(character1);
                 System.out.println("entre1");
-            }else if (newValue == "Coronel chapalin") {
+            }else if (newValue == "ArchiAlmirante Zemansky") {
                 imgCharacter.setImage(character2);
                 System.out.println("entre2");
-            }else if (newValue == "Coronela Flora") {
+            }else if (newValue == "Mayor Lovelace") {
                 imgCharacter.setImage(character3);
-            } else if (newValue == "Coronela Patricia") {
+            } else if (newValue == "Coronela Rosalind") {
                 imgCharacter.setImage(character4);
             }else if (newValue == "????") {
                 imgCharacter.setImage(character5);
             }
             else if (newValue == "???") {
                 imgCharacter.setImage(character6);
+            }else if(newValue == "Teniente Ampudia"){
+                imgCharacter.setImage(characterEasterEgg);
             }
         });
 
@@ -134,7 +133,7 @@ public class WelcomeController {
 
     @FXML
     public void onHandleCredits(ActionEvent event){
-        System.out.println("alerta manito");
+        easterEgg = 0;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Credits");
         alert.setHeaderText(null);
@@ -161,8 +160,11 @@ public class WelcomeController {
         });
 
         juanLink.setOnAction(e -> {
-            System.out.println("Acción para Juan Manuel");
-            alert.setContentText("Juan Manuel Ampudia.");
+            easterEgg += 1;
+            if(easterEgg == 8){
+                choiceBox.getItems().add("Teniente Ampudia");
+            }
+
         });
 
         VBox contentBox = new VBox(1);

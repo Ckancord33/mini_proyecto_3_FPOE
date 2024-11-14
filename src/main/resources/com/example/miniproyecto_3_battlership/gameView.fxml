@@ -185,7 +185,7 @@
                   <Image url="@Image/character1.png" />
                </image>
             </ImageView>
-            <Button layoutX="101.0" layoutY="538.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #7D3434; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-width: 3; -fx-border-color: #373F51;" text="Flota Lista!" textFill="WHITE">
+            <Button layoutX="101.0" layoutY="538.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #7D3434; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-width: 3; -fx-border-color: #373F51;" text="Reiniciar flota!" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="30.0" />
                </font>
@@ -208,7 +208,7 @@
       <AnchorPane prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="195.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
-            <GridPane fx:id="gridPaneShips" layoutX="131.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onHandleGridPaneShips" prefHeight="700.0" prefWidth="700.0">
+            <GridPane fx:id="gridPaneShips" layoutX="131.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="700.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
