@@ -4,48 +4,38 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Destructor implements Ship {
-
-    StackPane Destructor = new StackPane();
-    private Rectangle body;
+public class Destructor extends Ship {
 
     public Destructor() {
-        // Cuerpo del barco
-        body = new Rectangle(31.8, 31.8);
-        body.setFill(Color.DARKGRAY);
-
-
-        // Agregar todas las partes al Pane
-        this.Destructor.getChildren().addAll(body);
+        this.setStyle("-fx-border-color: black;" +
+                "-fx-border-width: 1;" +
+                "-fx-border-style: solid;");
+        body = new Rectangle(0, 0, 127, 63.5);
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        this.getChildren().add(body);
+        isSelect = false;
+        size = 2;
     }
+
     public Destructor(boolean b) {
-        body = new Rectangle(63.63*2,63.63);
-        body.setFill(Color.BLUE);
-
-
-        // Agregar todas las partes al Pane
-        this.Destructor.getChildren().addAll(body);
+        this.setStyle("-fx-border-color: black;" +
+                "-fx-border-width: 1;" +
+                "-fx-border-style: solid;");
+        body = new Rectangle(0, 0, 127, 63.5);
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        this.getChildren().add(body);
+        isSelect = false;
+        size = 2;
     }
 
-    public StackPane getDestructor() {
-        return Destructor;
+
+    public void selectDesing() {
+        body.setFill(javafx.scene.paint.Color.BLACK);
+        isSelect = true;
     }
 
-    public void selectDesing(){
-        body.setFill(Color.BLACK);
-    }
-
-    public void originDesing(){
-        body.setFill(Color.DARKGRAY);
-    }
-
-    @Override
-    public void rotateShip() {
-
-    }
-
-    @Override
-    public StackPane getShip() {
-        return Destructor;
+    public void originDesing() {
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        isSelect = false;
     }
 }

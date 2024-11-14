@@ -2,6 +2,7 @@ package com.example.miniproyecto_3_battlership.controller;
 
 import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.sound.Sounds;
+import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
@@ -127,7 +128,7 @@ public class WelcomeController {
     }
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
-        GameStage.getInstance();
+        GameSelectionStage.getInstance();
         WelcomeStage.deleteInstance();
     }
 
