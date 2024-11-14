@@ -53,6 +53,10 @@ public class GameSelectionController {
 
     private boolean habitable;
 
+    private int actualShadowRow;
+
+    private int actualShadowCol;
+
     @FXML
     private HBox hBoxDestructores;
 
@@ -129,7 +133,20 @@ public class GameSelectionController {
     @FXML
     void onHandleBorderPaneKeyTyped(KeyEvent event) {
         if(event.getCharacter().equalsIgnoreCase("R") && shipSelected != null){
-            shipSelected.rotateShip();
+            if(!shipSelected.isPlaced()) {
+                shipSelected.rotateShip();
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            }else{
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            }
+            if(actualShadowCol != -1) {
+                for(int i = 0; i < shadowShipsSelection.length; i++){
+                    for(int j = 0; j < shadowShipsSelection[i].length; j++){
+                        shadowShipsSelection[i][j].setFill(Color.TRANSPARENT);
+                    }
+                }
+                onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
+            }
         }
     }
 
@@ -158,12 +175,14 @@ public class GameSelectionController {
 
 
     private void onHandleMouseEnteredShips(int row, int col) {
+        actualShadowCol = col;
+        actualShadowRow = row;
         colorhover = Color.rgb(0,0,0,0.5 );
         if(shipSelected != null) {
             try {
                 habitable = true;
                 System.out.println(shipSelected.isHorizontal());
-                if(shipSelected.isHorizontal()) {
+                if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
                     for (int i = 1; i <= shipSelected.getSize(); i++) {
                         for (int j = 0; j < 10; j++) {
                             for (var node : gridPaneShips.getChildren()) {
@@ -248,7 +267,7 @@ public class GameSelectionController {
                 colorhover = Color.rgb(254,0,0,0.2 );
                 try {
                     habitable = false;
-                    if(shipSelected.isHorizontal()) {
+                    if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
                         for (int i = 1; i <= shipSelected.getSize(); i++) {
                             shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
                             System.out.println("se pinto una vez");
@@ -271,10 +290,12 @@ public class GameSelectionController {
     }
 
     private void onHandleMouseExitedShips(int row, int col) {
+        actualShadowCol = -1;
+        actualShadowRow = -1;
         if(shipSelected != null) {
             colorDefault = Color.TRANSPARENT;
             try {
-                if(shipSelected.isHorizontal()) {
+                if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
                     for (int i = 1; i <= shipSelected.getSize(); i++) {
                         shadowShipsSelection[row][col - (i - 1)].setFill(colorDefault);
                     }
@@ -300,6 +321,9 @@ public class GameSelectionController {
             shipSelected.setIsPlaced(true);
             shipSelected.setPosition(row - 1, col - 1);
             gridPaneShips.getChildren().remove(shipSelected);
+            if(shipSelected.potentialRotate() != shipSelected.isHorizontal()){
+                shipSelected.rotateShip();
+            }
             if(shipSelected.isHorizontal()) {
                 gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
                 GridPane.setRowSpan(shipSelected, 0);

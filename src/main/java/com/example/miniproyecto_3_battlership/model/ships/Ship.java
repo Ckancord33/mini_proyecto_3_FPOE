@@ -9,6 +9,8 @@ public class Ship extends Pane {
     protected boolean isHorizontal = true;
 
     protected int size;
+
+    protected boolean potentialRotate = true;
     protected int[] position = new int[2];
 
     protected boolean isPlaced = false;
@@ -53,6 +55,10 @@ public class Ship extends Pane {
         return size;
     }
 
+    public boolean isPlaced(){
+        return isPlaced;
+    }
+
     public void setIsPlaced(boolean isPlaced){
         this.isPlaced = isPlaced;
     }
@@ -61,5 +67,12 @@ public class Ship extends Pane {
         return isHorizontal;
     }
 
+    public void setPotentialRotate(boolean potentialRotate){
+        this.potentialRotate = potentialRotate;
+    }
+
+    public boolean potentialRotate(){
+        return potentialRotate;
+    }
 
 }
