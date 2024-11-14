@@ -4,61 +4,40 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Submarino implements Ship {
-
-    StackPane submarino = new StackPane();
-    private Rectangle body;
-    private boolean isHorizontal = true;
+public class Submarino extends Ship {
 
     public Submarino() {
-        // Cuerpo del barco
-        body = new Rectangle(31.8, 31.8);
-        body.setFill(Color.DARKGRAY);
 
-
-        // Agregar todas las partes al Pane
-        this.submarino.getChildren().addAll(body);
+        this.setStyle("-fx-border-color: black;" +
+            "-fx-border-width: 1;" +
+            "-fx-border-style: solid;"
+        );
+        size =  3;
+        body = new Rectangle(0, 0, 190, 63);
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        this.getChildren().add(body);
+        isSelect = false;
+        size = 3;
     }
 
     public Submarino(boolean b) {
-        // Cuerpo del barco
-        body = new Rectangle(63.63*3, 63.63);
-        body.setFill(Color.YELLOW);
-
-
-        // Agregar todas las partes al Pane
-        this.submarino.getChildren().addAll(body);
-        isHorizontal = b;
+        this.setStyle("-fx-border-color: black;" +
+                "-fx-border-width: 1;" +
+                "-fx-border-style: solid;");
+        body = new Rectangle(0, 0, 190, 63.5);
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        this.getChildren().add(body);
+        isSelect = false;
+        size = 3;
     }
 
-
-
-    public StackPane getSubmarino() {
-        return submarino;
+    public void selectDesing() {
+        body.setFill(javafx.scene.paint.Color.BLACK);
+        isSelect = true;
     }
 
-    public void selectDesing(){
-        body.setFill(Color.BLACK);
-    }
-
-    public void originDesing(){
-        body.setFill(Color.DARKGRAY);
-    }
-
-    @Override
-    public boolean getOrientation() {
-        return false;
-    }
-
-
-    @Override
-    public void rotateShip() {
-        isHorizontal = !isHorizontal;
-        submarino.setRotate(90);
-    }
-
-    @Override
-    public StackPane getShip() {
-        return submarino;
+    public void originDesing() {
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        isSelect = false;
     }
 }
