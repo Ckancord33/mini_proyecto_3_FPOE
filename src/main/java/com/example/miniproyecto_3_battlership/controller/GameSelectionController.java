@@ -182,6 +182,13 @@ public class GameSelectionController {
     }
 
     @FXML
+    void onHandleStartGame(ActionEvent event) throws IOException {
+        GameSelectionStage.deleteInstance();
+        GameStage.getInstance();
+    }
+
+
+    @FXML
     public void onHandleReturn(ActionEvent actionEvent) throws IOException {
         GameSelectionStage.deleteInstance();
         WelcomeStage.getInstance();
