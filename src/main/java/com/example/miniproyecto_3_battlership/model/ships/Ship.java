@@ -8,6 +8,7 @@ public class Ship extends Pane {
     protected boolean isSelect;
     protected boolean isHorizontal;
     protected int size;
+    protected int[] position = new int[2];
 
     public Ship() {
     }
@@ -23,6 +24,15 @@ public class Ship extends Pane {
         this.setRotate(90);
     }
 
+    public void setPosition(int x, int y) {
+        position[0] = x;
+        position[1] = y;
+    }
+
+    public int[] getPosition() {
+        return position;
+    }
+
     public boolean isSelect() {
         return isSelect;
     }
@@ -30,5 +40,6 @@ public class Ship extends Pane {
     public int getSize() {
         return size;
     }
+
 
 }

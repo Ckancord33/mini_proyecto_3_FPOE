@@ -44,7 +44,11 @@ public class GameController {
     @FXML
     private VBox shipSelectVbox;
 
-    private Ship[] shipGame = new Ship[4];
+    Fragata[] fragatas = new Fragata[4];
+    Destructor[] destructores = new Destructor[3];
+    Submarino[] submarinos = new Submarino[2];
+    Portaaviones[] portaaviones = new Portaaviones[1];
+
 
     private double startX, startY;
 
@@ -68,7 +72,7 @@ public class GameController {
 
         gameBorderPane.setBackground(new Background(background));
 
-        createShips();createBorders();
+        createBorders();
         game = new Game();
         game.setMatrix();
         boolean error = true;
@@ -82,23 +86,6 @@ public class GameController {
                 System.out.println("Error, intentando nuevamente");
             }
         } while (error);
-
-
-        matriz = game.getMatriz();
-
-        for (ArrayList<Integer> fila : matriz) {
-            for (Integer valor : fila) {
-                System.out.print(valor + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println(" ");
-
-        shipGame[0] = new Fragata(true);
-        shipGame[1] = new Destructor(true);
-        shipGame[2] = new Submarino(true);
-        shipGame[3] = new Portaaviones(true);
 
 
     }
@@ -157,7 +144,7 @@ public class GameController {
     }
 
     @FXML
-    void createShips() {;
+    public void createShips(int[][] shipsSelected) {;
         double cellWidth = 63.7;
         double cellHeight = 63.7;
         gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
@@ -167,8 +154,8 @@ public class GameController {
                 Rectangle cell = new Rectangle(cellWidth, cellHeight);
                 cell.setFill(Color.TRANSPARENT);
                 cell.getStyleClass().add("cell");
-                int finalRows = rows;
-                int finalCol = col;
+//                gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
+//                GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
                 gridPaneShips.add(cell, col, rows);
             }
         }
@@ -176,7 +163,7 @@ public class GameController {
 
 
 
-    void createBorders() {
+    public void createBorders() {
         double cellWidth = 38.18;
         double cellHeight = 38.18;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());

@@ -161,7 +161,7 @@ public class WelcomeController {
 
         juanLink.setOnAction(e -> {
             easterEgg += 1;
-            if(easterEgg == 8){
+            if(easterEgg == 5){
                 choiceBox.getItems().add("Teniente Ampudia");
             }
 
