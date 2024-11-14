@@ -24,8 +24,8 @@ public class WelcomeStage extends Stage {
         initStyle(StageStyle.UNDECORATED);
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
-        setWidth(screenWidth * 1);
-        setHeight(screenHeight * 1);
+        setWidth(screenWidth * 1.5);
+        setHeight(screenHeight * 1.5);
         setScene(scene);
         show();
     }

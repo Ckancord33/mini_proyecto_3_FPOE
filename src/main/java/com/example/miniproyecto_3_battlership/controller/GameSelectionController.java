@@ -9,6 +9,8 @@ import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -30,6 +32,12 @@ public class GameSelectionController {
 
     @FXML
     private VBox shipSelectVbox;
+
+    @FXML
+    private HBox hBoxSubmarinos;
+
+    @FXML
+    private HBox hBoxPortaAviones;
 
     private Color colorDefault = Color.TRANSPARENT;
 
@@ -90,14 +98,14 @@ public class GameSelectionController {
             submarinos[i] = new Submarino();
             int finalI = i;
             submarinos[i].setOnMouseClicked(e -> shipSelected(submarinos[finalI]));
-            shipSelectVbox.getChildren().add(submarinos[i]);
+            hBoxSubmarinos.getChildren().add(submarinos[i]);
         }
 
         for(int i = 0; i < 1; i++){
             portaaviones[i] = new Portaaviones();
             int finalI = i;
             portaaviones[i].setOnMouseClicked(e -> shipSelected(portaaviones[finalI]));
-            shipSelectVbox.getChildren().add(portaaviones[i]);
+            hBoxPortaAviones.getChildren().add(portaaviones[i]);
         }
 
     }
@@ -115,6 +123,13 @@ public class GameSelectionController {
         } else {
             ship.selectDesing();
             shipSelected = ship;
+        }
+    }
+
+    @FXML
+    void onHandleBorderPaneKeyTyped(KeyEvent event) {
+        if(event.getCharacter().equalsIgnoreCase("R") && shipSelected != null){
+            shipSelected.rotateShip();
         }
     }
 
@@ -147,52 +162,102 @@ public class GameSelectionController {
         if(shipSelected != null) {
             try {
                 habitable = true;
-                for(int i = 1; i <= shipSelected.getSize(); i++){
-                    for(int j = 0; j < 10; j++){
-                        for (var node : gridPaneShips.getChildren()) {
-                            Integer rowIndex = GridPane.getRowIndex(node);
-                            Integer colIndex = GridPane.getColumnIndex(node);
-                            rowIndex = (rowIndex == null) ? 0 : rowIndex;
-                            colIndex = (colIndex == null) ? 0 : colIndex;
+                System.out.println(shipSelected.isHorizontal());
+                if(shipSelected.isHorizontal()) {
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        for (int j = 0; j < 10; j++) {
+                            for (var node : gridPaneShips.getChildren()) {
+                                Integer rowIndex = GridPane.getRowIndex(node);
+                                Integer colIndex = GridPane.getColumnIndex(node);
+                                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                                colIndex = (colIndex == null) ? 0 : colIndex;
 
-                                if (rowIndex == (row+1) && colIndex == j+1 && node instanceof Ship ship) {
+                                if (rowIndex == (row + 1) && colIndex == j + 1 && node instanceof Ship ship) {
                                     int[] shipPositions = new int[ship.getSize()];
                                     int[] selectedShipPositions = new int[shipSelected.getSize()];
                                     boolean isIntercepted = false;
 
-                                    for(int h = 0; h < ship.getSize(); h++){
-                                        shipPositions[h] = ship.getPosition()[1]-h;
+                                    for (int h = 0; h < ship.getSize(); h++) {
+                                        shipPositions[h] = ship.getPosition()[1] - h;
                                     }
 
-                                    for(int h = 0; h < shipSelected.getSize(); h++){
-                                        selectedShipPositions[h] = col-h;
+                                    for (int h = 0; h < shipSelected.getSize(); h++) {
+                                        selectedShipPositions[h] = col - h;
                                     }
 
-                                    for(int h = 0; h < ship.getSize(); h++){
-                                        for(int k = 0; k < shipSelected.getSize(); k++){
-                                            if(shipPositions[h] == selectedShipPositions[k]){
+                                    for (int h = 0; h < ship.getSize(); h++) {
+                                        for (int k = 0; k < shipSelected.getSize(); k++) {
+                                            if (shipPositions[h] == selectedShipPositions[k]) {
                                                 isIntercepted = true;
                                             }
                                         }
                                     }
 
-                                    if(shipSelected != ship && isIntercepted){
+                                    if (shipSelected != ship && isIntercepted) {
                                         throw new errorOutBorderGrillaGame();
                                     }
 
                                 }
                             }
+                        }
+                        shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
                     }
-                    shadowShipsSelection[row][col - (i -1)].setFill(colorhover);
+                }else{
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        for (int j = 0; j < 10; j++) {
+                            for (var node : gridPaneShips.getChildren()) {
+                                Integer rowIndex = GridPane.getRowIndex(node);
+                                Integer colIndex = GridPane.getColumnIndex(node);
+                                rowIndex = (rowIndex == null) ? 0 : rowIndex;
+                                colIndex = (colIndex == null) ? 0 : colIndex;
+
+                                if (rowIndex == j+1 && colIndex == (col+1) && node instanceof Ship ship) {
+                                    int[] shipPositions = new int[ship.getSize()];
+                                    int[] selectedShipPositions = new int[shipSelected.getSize()];
+                                    boolean isIntercepted = false;
+
+                                    for (int h = 0; h < ship.getSize(); h++) {
+                                        shipPositions[h] = ship.getPosition()[0] - h;
+                                    }
+
+                                    for (int h = 0; h < shipSelected.getSize(); h++) {
+                                        selectedShipPositions[h] = row - h;
+                                    }
+
+                                    for (int h = 0; h < ship.getSize(); h++) {
+                                        for (int k = 0; k < shipSelected.getSize(); k++) {
+                                            if (shipPositions[h] == selectedShipPositions[k]) {
+                                                isIntercepted = true;
+                                            }
+                                        }
+                                    }
+
+                                    if (shipSelected != ship && isIntercepted) {
+                                        throw new errorOutBorderGrillaGame();
+                                    }
+
+                                }
+                            }
+                        }
+                        shadowShipsSelection[row- (i - 1)][col].setFill(colorhover);
+                    }
+
                 }
             } catch (ArrayIndexOutOfBoundsException | errorOutBorderGrillaGame x) {
                 System.out.println("Error en la grilla");
                 colorhover = Color.rgb(254,0,0,0.2 );
                 try {
                     habitable = false;
-                    for (int i = 1; i <= shipSelected.getSize(); i++) {
-                        shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
-                        System.out.println("se pinto una vez");
+                    if(shipSelected.isHorizontal()) {
+                        for (int i = 1; i <= shipSelected.getSize(); i++) {
+                            shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
+                            System.out.println("se pinto una vez");
+                        }
+                    }else{
+                        for (int i = 1; i <= shipSelected.getSize(); i++) {
+                            shadowShipsSelection[row - (i - 1)][col].setFill(colorhover);
+                            System.out.println("se pinto una vez");
+                        }
                     }
                 }catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("Error en la grilla 2");
@@ -209,8 +274,14 @@ public class GameSelectionController {
         if(shipSelected != null) {
             colorDefault = Color.TRANSPARENT;
             try {
-                for(int i = 1; i <= shipSelected.getSize(); i++){
-                    shadowShipsSelection[row][col - (i -1)].setFill(colorDefault);
+                if(shipSelected.isHorizontal()) {
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row][col - (i - 1)].setFill(colorDefault);
+                    }
+                }else{
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row - (i - 1)][col].setFill(colorDefault);
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException x) {
 
@@ -226,10 +297,18 @@ public class GameSelectionController {
         col += 1;
 
         if(shipSelected != null && habitable ){
+            shipSelected.setIsPlaced(true);
             shipSelected.setPosition(row - 1, col - 1);
             gridPaneShips.getChildren().remove(shipSelected);
-            gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
-            GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+            if(shipSelected.isHorizontal()) {
+                gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
+                GridPane.setRowSpan(shipSelected, 0);
+                GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+            }else{
+                gridPaneShips.add(shipSelected, col, row - shipSelected.getSize() + 1);
+                GridPane.setColumnSpan(shipSelected, 0);
+                GridPane.setRowSpan(shipSelected, shipSelected.getSize());
+            }
         }
     }
 
