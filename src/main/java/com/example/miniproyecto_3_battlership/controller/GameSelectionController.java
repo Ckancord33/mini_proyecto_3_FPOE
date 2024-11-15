@@ -1,23 +1,20 @@
 package com.example.miniproyecto_3_battlership.controller;
 
-import com.example.miniproyecto_3_battlership.model.errorOutBorderGrillaGame;
-import com.example.miniproyecto_3_battlership.model.game.Game;
+import com.example.miniproyecto_3_battlership.model.CrossedShipsException;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class GameSelectionController {
@@ -30,6 +27,15 @@ public class GameSelectionController {
 
     @FXML
     private VBox shipSelectVbox;
+
+    @FXML
+    private HBox hBoxSubmarinos;
+
+    @FXML
+    private HBox hBoxPortaAviones;
+
+    @FXML
+    private Label infoLabel;
 
     private Color colorDefault = Color.TRANSPARENT;
 
@@ -44,6 +50,10 @@ public class GameSelectionController {
     private int[][] shipsSelected = new int[10][10];
 
     private boolean habitable;
+
+    private int actualShadowRow;
+
+    private int actualShadowCol;
 
     @FXML
     private HBox hBoxDestructores;
@@ -90,15 +100,17 @@ public class GameSelectionController {
             submarinos[i] = new Submarino();
             int finalI = i;
             submarinos[i].setOnMouseClicked(e -> shipSelected(submarinos[finalI]));
-            shipSelectVbox.getChildren().add(submarinos[i]);
+            hBoxSubmarinos.getChildren().add(submarinos[i]);
         }
 
         for(int i = 0; i < 1; i++){
             portaaviones[i] = new Portaaviones();
             int finalI = i;
             portaaviones[i].setOnMouseClicked(e -> shipSelected(portaaviones[finalI]));
-            shipSelectVbox.getChildren().add(portaaviones[i]);
+            hBoxPortaAviones.getChildren().add(portaaviones[i]);
         }
+
+        infoLabel.setText("Teniente seleccione sus barcos");
 
     }
 
@@ -115,6 +127,26 @@ public class GameSelectionController {
         } else {
             ship.selectDesing();
             shipSelected = ship;
+        }
+    }
+
+    @FXML
+    void onHandleBorderPaneKeyTyped(KeyEvent event) {
+        if(event.getCharacter().equalsIgnoreCase("R") && shipSelected != null){
+            if(!shipSelected.isPlaced()) {
+                shipSelected.rotateShip();
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            }else{
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            }
+            if(actualShadowCol != -1) {
+                for(int i = 0; i < shadowShipsSelection.length; i++){
+                    for(int j = 0; j < shadowShipsSelection[i].length; j++){
+                        shadowShipsSelection[i][j].setFill(Color.TRANSPARENT);
+                    }
+                }
+                onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
+            }
         }
     }
 
@@ -143,56 +175,49 @@ public class GameSelectionController {
 
 
     private void onHandleMouseEnteredShips(int row, int col) {
+        actualShadowCol = col;
+        actualShadowRow = row;
         colorhover = Color.rgb(0,0,0,0.5 );
         if(shipSelected != null) {
             try {
                 habitable = true;
-                for(int i = 1; i <= shipSelected.getSize(); i++){
-                    for(int j = 0; j < 10; j++){
-                        for (var node : gridPaneShips.getChildren()) {
-                            Integer rowIndex = GridPane.getRowIndex(node);
-                            Integer colIndex = GridPane.getColumnIndex(node);
-                            rowIndex = (rowIndex == null) ? 0 : rowIndex;
-                            colIndex = (colIndex == null) ? 0 : colIndex;
-
-                                if (rowIndex == (row+1) && colIndex == j+1 && node instanceof Ship ship) {
-                                    int[] shipPositions = new int[ship.getSize()];
-                                    int[] selectedShipPositions = new int[shipSelected.getSize()];
-                                    boolean isIntercepted = false;
-
-                                    for(int h = 0; h < ship.getSize(); h++){
-                                        shipPositions[h] = ship.getPosition()[1]-h;
-                                    }
-
-                                    for(int h = 0; h < shipSelected.getSize(); h++){
-                                        selectedShipPositions[h] = col-h;
-                                    }
-
-                                    for(int h = 0; h < ship.getSize(); h++){
-                                        for(int k = 0; k < shipSelected.getSize(); k++){
-                                            if(shipPositions[h] == selectedShipPositions[k]){
-                                                isIntercepted = true;
-                                            }
-                                        }
-                                    }
-
-                                    if(shipSelected != ship && isIntercepted){
-                                        throw new errorOutBorderGrillaGame();
-                                    }
-
-                                }
-                            }
+                System.out.println(shipSelected.isHorizontal());
+                for(int j = 0; j < shipSelected.getSize(); j++) {
+                    if (shipSelected.potentialRotate()) {
+                        if (shipsSelected[row][col - j] != 0) {
+                            throw new CrossedShipsException();
+                        }
+                    } else {
+                        if (shipsSelected[row - j][col] != 0) {
+                            throw new CrossedShipsException();
+                        }
                     }
-                    shadowShipsSelection[row][col - (i -1)].setFill(colorhover);
                 }
-            } catch (ArrayIndexOutOfBoundsException | errorOutBorderGrillaGame x) {
+                if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
+                    }
+                }else{
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row- (i - 1)][col].setFill(colorhover);
+                    }
+
+                }
+            } catch (ArrayIndexOutOfBoundsException | CrossedShipsException x) {
                 System.out.println("Error en la grilla");
                 colorhover = Color.rgb(254,0,0,0.2 );
                 try {
                     habitable = false;
-                    for (int i = 1; i <= shipSelected.getSize(); i++) {
-                        shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
-                        System.out.println("se pinto una vez");
+                    if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
+                        for (int i = 1; i <= shipSelected.getSize(); i++) {
+                            shadowShipsSelection[row][col - (i - 1)].setFill(colorhover);
+                            System.out.println("se pinto una vez");
+                        }
+                    }else{
+                        for (int i = 1; i <= shipSelected.getSize(); i++) {
+                            shadowShipsSelection[row - (i - 1)][col].setFill(colorhover);
+                            System.out.println("se pinto una vez");
+                        }
                     }
                 }catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("Error en la grilla 2");
@@ -206,11 +231,19 @@ public class GameSelectionController {
     }
 
     private void onHandleMouseExitedShips(int row, int col) {
+        actualShadowCol = -1;
+        actualShadowRow = -1;
         if(shipSelected != null) {
             colorDefault = Color.TRANSPARENT;
             try {
-                for(int i = 1; i <= shipSelected.getSize(); i++){
-                    shadowShipsSelection[row][col - (i -1)].setFill(colorDefault);
+                if((shipSelected.isHorizontal() && !shipSelected.isPlaced()) || shipSelected.potentialRotate()) {
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row][col - (i - 1)].setFill(colorDefault);
+                    }
+                }else{
+                    for (int i = 1; i <= shipSelected.getSize(); i++) {
+                        shadowShipsSelection[row - (i - 1)][col].setFill(colorDefault);
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException x) {
 
@@ -226,10 +259,43 @@ public class GameSelectionController {
         col += 1;
 
         if(shipSelected != null && habitable ){
-            shipSelected.setPosition(row - 1, col - 1);
+            if(shipSelected.isPlaced()){
+                for(int i = 0; i < shipSelected.getSize(); i++) {
+                    if(shipSelected.isHorizontal()) {
+                        shipsSelected[shipSelected.getPosition()[0]][shipSelected.getPosition()[1] - i] = 0;
+                    }else{
+                        shipsSelected[shipSelected.getPosition()[0] - i][shipSelected.getPosition()[1]] = 0;
+                    }
+                }
+            }
+            shipSelected.setIsPlaced(true);
             gridPaneShips.getChildren().remove(shipSelected);
-            gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
-            GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+            if(shipSelected.potentialRotate() != shipSelected.isHorizontal()){
+                shipSelected.rotateShip();
+            }
+            try {
+                if (shipSelected.isHorizontal()) {
+                    gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
+                    GridPane.setRowSpan(shipSelected, 0);
+                    GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+                } else {
+                    gridPaneShips.add(shipSelected, col, row - shipSelected.getSize() + 1);
+                    GridPane.setColumnSpan(shipSelected, 0);
+                    GridPane.setRowSpan(shipSelected, shipSelected.getSize());
+                }
+            }catch (IllegalArgumentException e){
+                shipSelected.setPosition(row - 1, col - 1);
+                for(int i = 0; i < shipSelected.getSize(); i++) {
+                    if(shipSelected.isHorizontal()) {
+                        shipsSelected[shipSelected.getPosition()[0]][shipSelected.getPosition()[1] - i] = 1;
+                    }else{
+                        shipsSelected[shipSelected.getPosition()[0] - i][shipSelected.getPosition()[1]] = 1;
+                    }
+                }
+                infoLabel.setText("Teniente seleccione sus barcos");
+            }
+        }else if(!habitable){
+            infoLabel.setText("Teniente ponga sus barcos en posiciones validas");
         }
     }
 
@@ -244,6 +310,26 @@ public class GameSelectionController {
 
     @FXML
     void onHandleStartGame(ActionEvent event) throws IOException {
+        int totalSum = 0;
+        for(int i = 0;i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                if(shipsSelected[i][j] != 0) {
+                    totalSum++;
+                }
+            }
+        }
+
+        if(totalSum != 20){
+            infoLabel.setText("Teniente debe seleccionar todos los barcos antes de poder ir a la batalla");
+            return;
+        }
+
+        for(int i = 0;i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                shipsSelected[i][j] = 0;
+            }
+        }
+
         for (var node : gridPaneShips.getChildren()) {
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer colIndex = GridPane.getColumnIndex(node);
@@ -273,7 +359,7 @@ public class GameSelectionController {
         GameSelectionStage.getInstance();
         GameStage.getInstance();
         GameStage.getInstance().getGameController().createShips(shipsSelected);
-
+        GameSelectionStage.deleteInstance();
     }
 
 

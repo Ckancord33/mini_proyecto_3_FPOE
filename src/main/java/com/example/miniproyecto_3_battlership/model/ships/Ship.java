@@ -6,9 +6,11 @@ import javafx.scene.shape.Rectangle;
 public class Ship extends Pane {
     protected Rectangle body;
     protected boolean isSelect;
-    protected boolean isHorizontal;
+    protected boolean isHorizontal = true;
     protected int size;
+    protected boolean potentialRotate = true;
     protected int[] position = new int[2];
+    protected boolean isPlaced = false;
 
     public Ship() {
     }
@@ -20,8 +22,17 @@ public class Ship extends Pane {
     }
 
     public void rotateShip() {
-        isHorizontal = !isHorizontal;
-        this.setRotate(90);
+        if(isHorizontal) {
+            this.setRotate(90);
+            isHorizontal = false;
+        }else{
+            this.setRotate(0);
+            isHorizontal = true;
+        }
+    }
+
+    public void setIsHorizontal(boolean isHorizontal){
+        this.isHorizontal = isHorizontal;
     }
 
     public void setPosition(int x, int y) {
@@ -41,5 +52,24 @@ public class Ship extends Pane {
         return size;
     }
 
+    public boolean isPlaced(){
+        return isPlaced;
+    }
+
+    public void setIsPlaced(boolean isPlaced){
+        this.isPlaced = isPlaced;
+    }
+
+    public boolean isHorizontal(){
+        return isHorizontal;
+    }
+
+    public void setPotentialRotate(boolean potentialRotate){
+        this.potentialRotate = potentialRotate;
+    }
+
+    public boolean potentialRotate(){
+        return potentialRotate;
+    }
 
 }

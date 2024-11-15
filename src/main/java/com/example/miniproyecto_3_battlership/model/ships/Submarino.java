@@ -7,6 +7,8 @@ import javafx.scene.shape.Rectangle;
 public class Submarino extends Ship {
 
     public Submarino() {
+        this.setWidth(190);
+        this.setHeight(63);
 
         this.setStyle("-fx-border-color: black;" +
             "-fx-border-width: 1;" +
@@ -18,12 +20,15 @@ public class Submarino extends Ship {
         this.getChildren().add(body);
         isSelect = false;
         size = 3;
+        isHorizontal = true;
     }
 
     public Submarino(boolean b) {
         this.setStyle("-fx-border-color: black;" +
                 "-fx-border-width: 1;" +
-                "-fx-border-style: solid;");
+                "-fx-border-style: solid;" +
+                "-fx-padding: 0;"
+        );
         body = new Rectangle(0, 0, 190, 63.5);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
         this.getChildren().add(body);
