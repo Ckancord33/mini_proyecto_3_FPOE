@@ -7,12 +7,9 @@ public class Ship extends Pane {
     protected Rectangle body;
     protected boolean isSelect;
     protected boolean isHorizontal = true;
-
     protected int size;
-
     protected boolean potentialRotate = true;
     protected int[] position = new int[2];
-
     protected boolean isPlaced = false;
 
     public Ship() {

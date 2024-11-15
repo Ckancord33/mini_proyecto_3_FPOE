@@ -215,6 +215,11 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="135.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
+            <Label fx:id="infoLabel" alignment="CENTER" layoutX="141.0" layoutY="941.0" prefHeight="87.0" prefWidth="750.0" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="25.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
