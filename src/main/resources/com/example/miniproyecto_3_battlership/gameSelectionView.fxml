@@ -72,7 +72,7 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPaneMiddle" prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="195.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
             <GridPane fx:id="gridPaneShips" layoutX="131.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="700.0">
@@ -220,6 +220,14 @@
                   <Font name="Berlin Sans FB" size="25.0" />
                </font>
             </Label>
+            <Button fx:id="randomButton" layoutX="92.0" layoutY="250.0" mnemonicParsing="false" onAction="#onHandleRandomButton" prefHeight="65.0" prefWidth="61.0" style="-fx-background-color: #7D3434; -fx-border-radius: 100; -fx-background-radius: 100; -fx-border-width: 3; -fx-border-color: #373F51;" text="A" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
    </center>

@@ -61,6 +61,7 @@ public class WelcomeController {
 
     private Sounds samuelVoice;
     private int easterEgg;
+    private int easterEgg2;
 
     @FXML
     public void initialize() {
@@ -72,7 +73,7 @@ public class WelcomeController {
         Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter5.png")));
         Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter6.png")));
         Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter7.png")));
-
+        Image characterEasterEgg2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter8.png")));
 
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());
@@ -109,6 +110,8 @@ public class WelcomeController {
                 imgCharacter.setImage(character6);
             }else if(newValue == "Teniente Ampudia"){
                 imgCharacter.setImage(characterEasterEgg);
+            }else if(newValue == "Capitana Cordoba"){
+                imgCharacter.setImage(characterEasterEgg2);
             }
         });
 
@@ -134,6 +137,7 @@ public class WelcomeController {
     @FXML
     public void onHandleCredits(ActionEvent event){
         easterEgg = 0;
+        easterEgg2 = 0;
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Credits");
         alert.setHeaderText(null);
@@ -155,8 +159,10 @@ public class WelcomeController {
         });
 
         nicolasLink.setOnAction(e -> {
-            System.out.println("Acción para Nicolas");
-            alert.setContentText("Nicolas Cordoba.");
+            easterEgg2 += 1;
+            if(easterEgg2 == 5){
+                choiceBox.getItems().add("Capitana Cordoba");
+            }
         });
 
         juanLink.setOnAction(e -> {
