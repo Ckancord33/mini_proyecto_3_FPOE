@@ -74,13 +74,13 @@
     -fx-font-size: 25;
     -fx-background-color: #0f2f42;
     -fx-border-radius: 30;
-    -fx-background-radius: 30;
-    -fx-border-width: 3;
+    -fx-background-radius: 50;
+    -fx-border-width: 4;
     -fx-border-color: #373F51;
 }
 
 .buttonReturn:hover{
-    -fx-background-color: rgba(15, 47, 66, 0.6);
+    -fx-background-color: rgba(15, 47, 66, 0.8);
 }
 
 

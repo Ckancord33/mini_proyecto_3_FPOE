@@ -15,7 +15,7 @@
 
 <BorderPane fx:id="gameBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.GameController">
    <right>
-      <AnchorPane prefHeight="1080.0" prefWidth="519.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="519.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="381.81" layoutX="72.18" layoutY="385.18" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-5.0" width="381.81" />
             <GridPane fx:id="gridPaneGame" layoutX="34.0" layoutY="347.0" onMousePressed="#onHandleMousePressedGame" prefHeight="420.0" prefWidth="420.0" translateX="-5.0">
@@ -152,9 +152,9 @@
                </cursor>
             </GridPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2f42" height="66.0" layoutX="85.0" layoutY="263.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" translateX="-5.0" width="354.0" />
-            <ImageView fitHeight="221.0" fitWidth="225.0" layoutX="31.0" layoutY="810.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
+            <ImageView fx:id="imgVillain" fitHeight="221.0" fitWidth="225.0" layoutX="31.0" layoutY="810.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
                <image>
-                  <Image url="@Image/character2.png" />
+                  <Image url="@Image/gameCharacter5.png" />
                </image>
             </ImageView>
             <Label layoutX="155.0" layoutY="271.0" prefHeight="44.0" prefWidth="222.0" text="Flota enemiga" textFill="WHITE" translateX="-5.0">
@@ -163,7 +163,7 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="62.0" layoutX="204.0" layoutY="887.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" translateX="-5.0" width="252.0" />
-            <Label layoutX="219.0" layoutY="896.0" prefHeight="44.0" prefWidth="232.0" text="Mortem oscura" textFill="WHITE" translateX="-5.0">
+            <Label fx:id="lbNameVillain" layoutX="219.0" layoutY="896.0" prefHeight="44.0" prefWidth="232.0" text="Mortem oscura" textFill="WHITE" translateX="-5.0">
                <font>
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
@@ -175,12 +175,12 @@
       <AnchorPane prefHeight="1080.0" prefWidth="431.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2f42" height="47.0" layoutX="106.0" layoutY="94.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="263.0" />
-            <Label layoutX="143.0" layoutY="102.0" prefHeight="33.0" prefWidth="209.0" text="Coronel Sander" textFill="WHITE">
+            <Label fx:id="nameCharacter" layoutX="143.0" layoutY="102.0" prefHeight="33.0" prefWidth="209.0" text="Coronel Sander" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="30.0" />
                </font>
             </Label>
-            <ImageView fitHeight="289.0" fitWidth="273.0" layoutX="101.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgCharacter" fitHeight="289.0" fitWidth="273.0" layoutX="101.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Image/character1.png" />
                </image>

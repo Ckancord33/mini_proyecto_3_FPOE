@@ -4,15 +4,23 @@ import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -36,6 +44,21 @@ public class GameController {
     @FXML
     private AnchorPane anchorPaneMiddle;
 
+    @FXML
+    private AnchorPane anchorPaneLeft;
+
+    @FXML
+    private Label nameCharacter;
+
+    @FXML
+    private Label lbNameVillain;
+
+    @FXML
+    private ImageView imgCharacter;
+
+    @FXML
+    private ImageView imgVillain;
+
     Fragata[] fragatas = new Fragata[4];
     Destructor[] destructores = new Destructor[3];
     Submarino[] submarinos = new Submarino[2];
@@ -45,6 +68,19 @@ public class GameController {
 
 
     public void initialize() {
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        anchorPaneLeft.setTranslateX(screenWidth);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(.5), anchorPaneLeft);
+        fadeIn.setFromValue(0.5);
+        fadeIn.setToValue(1.0);
+
+        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.5), anchorPaneLeft);
+        moveLeft.setFromX(screenWidth);
+        moveLeft.setToX(0);
+
+        ParallelTransition newStageTransition = new ParallelTransition(fadeIn, moveLeft);
+        newStageTransition.play();
 
 
         //IMAGEN DE FONDO
@@ -77,7 +113,58 @@ public class GameController {
             }
         } while (error);
 
+        setCharacter();
+        setEnemy();
 
+    }
+
+    private void setEnemy() {
+        String[] villanos = {"Zarok", "Varek", "Drakk", "Korr", "Morth", "Tharn", "Vulkar", "Grim", "Raek", "Durn"};
+        lbNameVillain.setText(villanos[(int)(Math.random()*9)]);
+        int villain =(int)(Math.random() * 2);
+        if (villain == 0){
+            imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png"))));
+        }else{
+            imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png"))));
+        }
+
+    }
+
+    public void setCharacter(){
+        String nameCharacterActual = WelcomeController.getNameCharacter();
+        Image imageCharacterActual;
+        nameCharacter.setText(nameCharacterActual);
+        if (nameCharacterActual == "Coronel Sander"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Almte. Zemansky"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Mayor Lovelace"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Coronela Rosalind"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "????"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "???"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Teniente Ampudia"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Capitana Cordoba"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }
     }
 
 
