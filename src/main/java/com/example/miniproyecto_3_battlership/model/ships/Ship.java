@@ -72,4 +72,8 @@ public class Ship extends Pane {
         return potentialRotate;
     }
 
+    public void setIsSelect(boolean isSelect){
+        this.isSelect = isSelect;
+    }
+
 }

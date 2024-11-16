@@ -12,7 +12,8 @@ public class Destructor extends Ship {
                 "-fx-border-style: solid;");
         body = new Rectangle(0, 0, 127, 63.5);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
-        getChildren().add(body);
+        body.setStroke(Color.TRANSPARENT);
+        this.getChildren().add(body);
         isSelect = false;
         size = 2;
     }
@@ -31,11 +32,13 @@ public class Destructor extends Ship {
 
     public void selectDesing() {
         body.setFill(javafx.scene.paint.Color.BLACK);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = true;
     }
 
     public void originDesing() {
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = false;
     }
 }

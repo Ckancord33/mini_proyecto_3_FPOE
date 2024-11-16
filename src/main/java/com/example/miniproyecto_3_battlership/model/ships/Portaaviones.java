@@ -11,6 +11,7 @@ public class Portaaviones extends Ship {
                 "-fx-border-style: solid;");
         body = new Rectangle(0, 0, 253, 63.5);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
         this.getChildren().add(body);
         isSelect = false;
         size = 4;
@@ -31,11 +32,13 @@ public class Portaaviones extends Ship {
 
     public void selectDesing() {
         body.setFill(javafx.scene.paint.Color.BLACK);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = true;
     }
 
     public void originDesing() {
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = false;
     }
 }

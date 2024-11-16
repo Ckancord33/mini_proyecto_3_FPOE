@@ -5,6 +5,7 @@ import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -32,6 +33,9 @@ public class GameController {
     @FXML
     private BorderPane gameBorderPane;
 
+    @FXML
+    private AnchorPane anchorPaneMiddle;
+
     Fragata[] fragatas = new Fragata[4];
     Destructor[] destructores = new Destructor[3];
     Submarino[] submarinos = new Submarino[2];
@@ -57,7 +61,8 @@ public class GameController {
 
         gameBorderPane.setBackground(new Background(background));
 
-        createBorders(); createBordersGridPaneGame();
+        createBorders();
+//        createBordersGridPaneGame();
         game = new Game();
         game.setMatrix();
         boolean error = true;
@@ -128,90 +133,85 @@ public class GameController {
         System.out.println("Clic en la celda: columna " + column + ", fila " + row);
     }
 
-    @FXML
-    public void createBordersGridPaneGame() {;
-        double cellWidth = 63.7;
-        double cellHeight = 63.7;
-        gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
-        for (int rows = 1; rows <= 10; rows++) {
-            for (int col = 1; col <= 10; col++) {
-                Rectangle cell = new Rectangle(cellWidth, cellHeight);
-                cell.setFill(Color.TRANSPARENT);
-                cell.getStyleClass().add("cell");
-                gridPaneShips.add(cell, col, rows);
-            }
+    public void setGridPaneShips(GridPane gridPaneShips, ArrayList <Ship> ships){
+        setShips(ships);
+        for(Node node : gridPaneShips.getChildren()){
+            node.setOnMouseClicked(null);
+            node.setOnMouseEntered(null);
+            node.setOnMouseExited(null);
         }
+        gridPaneShips.setStyle("-fx-cursor: default;");
+        gridPaneShips.setLayoutX(131);
+        gridPaneShips.setLayoutY(199);
+        anchorPaneMiddle.getChildren().add(gridPaneShips);
+
+
     }
 
-    public void setShips(int[][] positionHeadShips, ArrayList <Ship> ships, int[][] shipsSelected) {
-        imprimirMatriz(positionHeadShips);
+    public void setShips(ArrayList <Ship> ships) {
         int[] nShips = {0,0,0,0};
         for (Ship ship : ships) {
             if (ship instanceof Fragata) {
                 fragatas[nShips[0]] = (Fragata) ship;
                 fragatas[nShips[0]].originDesing();
-                fragatas[nShips[0]].setOnMouseClicked(null);
                 nShips[0]++;
             }
             if (ship instanceof Destructor) {
                 destructores[nShips[1]] = (Destructor) ship;
                 destructores[nShips[1]].originDesing();
-                destructores[nShips[1]].setOnMouseClicked(null);
                 nShips[1]++;
             }
             if (ship instanceof Submarino) {
                 submarinos[nShips[2]] = (Submarino) ship;
                 submarinos[nShips[2]].originDesing();
-                submarinos[nShips[2]].setOnMouseClicked(null);
                 nShips[2]++;
             }
             if (ship instanceof Portaaviones) {
                 portaaviones[nShips[3]] = (Portaaviones) ship;
                 portaaviones[nShips[3]].originDesing();
-                portaaviones[nShips[3]].setOnMouseClicked(null);
+
                 nShips[3]++;
             }
         }
-        putShips(positionHeadShips);
     }
-
-    public void putShips(int[][] positionHeadShips){
-        int[] nShips = {0,0,0,0};
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 10; col++) {
-                switch (positionHeadShips[row][col] ){
-                    case 1:
-                        gridPaneShips.add(fragatas[nShips[0]], col+1, row+1);
-                        nShips[0]++;
-                        break;
-                    case 2:
-                        addShipsGridPaneShips(destructores[nShips[1]], row, col);
-                        nShips[1]++;
-                        break;
-                    case 3:
-                        addShipsGridPaneShips(submarinos[nShips[2]], row, col);
-                        nShips[2]++;
-                        break;
-                    case 4:
-                        addShipsGridPaneShips(portaaviones[nShips[3]], row, col);
-                        nShips[3]++;
-                        break;
-                }
-            }
-        }
-    }
-
-    public void addShipsGridPaneShips(Ship ship, int row, int col) {
-        if (ship.isHorizontal()) {
-            gridPaneShips.add(ship, col - ship.getSize() + 2, row+1);
-            GridPane.setRowSpan(ship, 1);
-            GridPane.setColumnSpan(ship, ship.getSize());
-        } else {
-            gridPaneShips.add(ship, col+1, row - ship.getSize() + 2);
-            GridPane.setColumnSpan(ship, 1);
-            GridPane.setRowSpan(ship, ship.getSize());
-        }
-    }
+//
+//    public void putShips(int[][] positionHeadShips){
+//        int[] nShips = {0,0,0,0};
+//        for (int row = 0; row < 10; row++) {
+//            for (int col = 0; col < 10; col++) {
+//                switch (positionHeadShips[row][col] ){
+//                    case 1:
+//                        gridPaneShips.add(fragatas[nShips[0]], col+1, row+1);
+//                        nShips[0]++;
+//                        break;
+//                    case 2:
+//                        addShipsGridPaneShips(destructores[nShips[1]], row, col);
+//                        nShips[1]++;
+//                        break;
+//                    case 3:
+//                        addShipsGridPaneShips(submarinos[nShips[2]], row, col);
+//                        nShips[2]++;
+//                        break;
+//                    case 4:
+//                        addShipsGridPaneShips(portaaviones[nShips[3]], row, col);
+//                        nShips[3]++;
+//                        break;
+//                }
+//            }
+//        }
+//    }
+//
+//    public void addShipsGridPaneShips(Ship ship, int row, int col) {
+//        if (ship.isHorizontal()) {
+//            gridPaneShips.add(ship, col -ship.getSize() +2, row+1);
+//            GridPane.setRowSpan(ship, 0);
+//            GridPane.setColumnSpan(ship, ship.getSize());
+//        } else {
+//            gridPaneShips.add(ship, col+1, row - ship.getSize()+2);
+//            GridPane.setColumnSpan(ship, 1);
+//            GridPane.setRowSpan(ship, ship.getSize());
+//        }
+//    }
 
     public void imprimirMatriz(int[][] shipsSelected) {
         for (int i = 0; i < 10; i++) {

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
 public class GameSelectionController {
 
@@ -91,6 +92,7 @@ public class GameSelectionController {
             int finalI = i;
             fragatas[i].setOnMouseClicked(e -> shipSelected(fragatas[finalI]));
             hBoxFragatas.getChildren().add(fragatas[i]);
+            ships.add(fragatas[i]);
         }
 
         for (int i = 0; i < 3; i++) {
@@ -98,6 +100,7 @@ public class GameSelectionController {
             int finalI = i;
             destructores[i].setOnMouseClicked(e -> shipSelected(destructores[finalI]));
             hBoxDestructores.getChildren().add(destructores[i]);
+            ships.add(destructores[i]);
         }
 
         for (int i = 0; i < 2; i++) {
@@ -105,6 +108,7 @@ public class GameSelectionController {
             int finalI = i;
             submarinos[i].setOnMouseClicked(e -> shipSelected(submarinos[finalI]));
             hBoxSubmarinos.getChildren().add(submarinos[i]);
+            ships.add(submarinos[i]);
         }
 
         for (int i = 0; i < 1; i++) {
@@ -112,9 +116,34 @@ public class GameSelectionController {
             int finalI = i;
             portaaviones[i].setOnMouseClicked(e -> shipSelected(portaaviones[finalI]));
             hBoxPortaAviones.getChildren().add(portaaviones[i]);
+            ships.add(portaaviones[i]);
         }
 
         infoLabel.setText("Teniente seleccione sus barcos");
+
+    }
+
+    @FXML
+    public void onHandleRandomButton(){
+
+        int randomRow, randomCol, randomHorientation;
+        for(int i = 0; i < ships.size(); i++) {
+            shipSelected(ships.get(i));
+            do {
+                randomRow = (int) (Math.random() * 9);
+                randomCol = (int) (Math.random() * 9);
+                randomHorientation = (int) (Math.random() * 1);
+                if (randomHorientation == 0) {
+                    onHandleBorderPaneKeyTyped2();
+                }
+                onHandleMouseEnteredShips(randomRow, randomCol);
+                onHandleMouseClickedShips(randomRow, randomCol);
+                onHandleMouseExitedShips(randomRow, randomCol);
+
+            } while (!shipSelected.isPlaced() && !habitable);
+            shipSelected(shipSelected);
+        }
+        infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
 
     }
 
@@ -151,6 +180,23 @@ public class GameSelectionController {
                 onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
             }
         }
+    }
+
+    void onHandleBorderPaneKeyTyped2() {
+            if (!shipSelected.isPlaced()) {
+                shipSelected.rotateShip();
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            } else {
+                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+            }
+            if (actualShadowCol != -1) {
+                for (int i = 0; i < shadowShipsSelection.length; i++) {
+                    for (int j = 0; j < shadowShipsSelection[i].length; j++) {
+                        shadowShipsSelection[i][j].setFill(Color.TRANSPARENT);
+                    }
+                }
+                onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
+            }
     }
 
 
@@ -319,14 +365,10 @@ public class GameSelectionController {
             return;
         }
 
-        ships.addAll(Arrays.asList(fragatas));
-        ships.addAll(Arrays.asList(destructores));
-        ships.addAll(Arrays.asList(submarinos));
-        ships.addAll(Arrays.asList(portaaviones));
 
         GameSelectionStage.getInstance();
         GameStage.getInstance();
-        GameStage.getInstance().getGameController().setShips(positionsHeadShips,ships,shipsSelected);
+        GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
         GameSelectionStage.deleteInstance();
     }
 

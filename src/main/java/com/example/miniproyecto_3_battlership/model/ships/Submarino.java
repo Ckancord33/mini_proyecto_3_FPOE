@@ -17,6 +17,7 @@ public class Submarino extends Ship {
         size =  3;
         body = new Rectangle(0, 0, 190, 63);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
         this.getChildren().add(body);
         isSelect = false;
         size = 3;
@@ -38,11 +39,13 @@ public class Submarino extends Ship {
 
     public void selectDesing() {
         body.setFill(javafx.scene.paint.Color.BLACK);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = true;
     }
 
     public void originDesing() {
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
         isSelect = false;
     }
 }
