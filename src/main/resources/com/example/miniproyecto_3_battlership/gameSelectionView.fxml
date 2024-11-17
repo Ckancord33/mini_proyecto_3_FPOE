@@ -58,7 +58,7 @@
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="file:/C:/Users/Windows%2010%20Pro/IdeaProjects/mini_proyecto_3_FPOE/src/main/resources/com/example/miniproyecto_3_battlership/Image/random_button.png" />
+                        <Image url="@Image/random_button.png" />
                      </source>
                   </ImageInput>
                </effect>
@@ -236,13 +236,13 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </GridPane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="66.0" layoutX="278.0" layoutY="107.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="444.0" />
-            <Label layoutX="369.0" layoutY="116.0" prefHeight="44.0" prefWidth="276.0" text="Selecciona tu flota" textFill="WHITE">
+            <Rectangle fx:id="rectangleLabelSelection" arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="66.0" layoutX="278.0" layoutY="107.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="444.0" />
+            <Label fx:id="lbSelecction" layoutX="369.0" layoutY="116.0" prefHeight="44.0" prefWidth="276.0" text="Selecciona tu flota" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="135.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
+            <Rectangle fx:id="rectangleLabelInfo" arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="135.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
             <Label fx:id="infoLabel" alignment="CENTER" layoutX="141.0" layoutY="941.0" prefHeight="87.0" prefWidth="750.0" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="25.0" />

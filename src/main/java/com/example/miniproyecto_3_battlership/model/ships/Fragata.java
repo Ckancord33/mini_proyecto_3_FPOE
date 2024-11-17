@@ -27,12 +27,12 @@ public class Fragata extends Ship {
                 10.0,60.0,
                 20.0,60.0,
                 25.0,55.0,
-                25.0,50.0,
+                35.0,50.0,
                 45.0,50.0,
                 60.0,35.0,
                 60.0,25.0,
                 45.0,10.0,
-                25.0,10.0,
+                35.0,10.0,
                 25.0,5.0,
                 20.0,0.0,
                 10.0,0.0,
@@ -48,12 +48,12 @@ public class Fragata extends Ship {
                 5.0,40.0,
                 13.0,55.0,
                 20.0,55.0,
-                20.0,45.0,
+                25.0,45.0,
                 45.0,45.0,
                 55.0,35.0,
                 55.0,25.0,
                 45.0,15.0,
-                20.0,15.0,
+                25.0,15.0,
                 20.0,5.0,
                 13.0,5.0,
                 5.0,20.0
@@ -87,7 +87,7 @@ public class Fragata extends Ship {
         fragataShape4.setScaleX(1.2);
 
         DropShadow glow = new DropShadow();
-        glow.setColor(Color.CYAN);
+        glow.setColor(Color.CADETBLUE);
         glow.setRadius(10);
         glow.setSpread(0.3);
         shapesGroup.setEffect(glow);
@@ -115,24 +115,4 @@ public class Fragata extends Ship {
         size = 1;
     }
 
-    public void selectDesing() {
-        DropShadow glow = new DropShadow();
-        glow.setColor(Color.WHITE);
-        glow.setRadius(15);
-        glow.setSpread(0.5);
-        shapesGroup.setEffect(glow);
-        isSelect = true;
-    }
-
-    public void originDesing() {
-        DropShadow glow = new DropShadow();
-        glow.setColor(Color.CYAN);
-        glow.setRadius(5);
-        glow.setSpread(0.2);
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(0);
-        glow.setInput(colorAdjust);
-        shapesGroup.setEffect(glow);
-        isSelect = false;
-    }
 }

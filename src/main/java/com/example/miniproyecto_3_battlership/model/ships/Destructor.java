@@ -7,9 +7,6 @@ import javafx.scene.shape.Rectangle;
 public class Destructor extends Ship {
 
     public Destructor() {
-        this.setStyle("-fx-border-color: black;" +
-                "-fx-border-width: 1;" +
-                "-fx-border-style: solid;");
         body = new Rectangle(0, 0, 127, 63.5);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
         body.setStroke(Color.TRANSPARENT);

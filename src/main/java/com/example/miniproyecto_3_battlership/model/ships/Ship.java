@@ -1,7 +1,10 @@
 package com.example.miniproyecto_3_battlership.model.ships;
 
 import javafx.scene.Group;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Ship extends Pane {
@@ -18,9 +21,24 @@ public class Ship extends Pane {
     }
 
     public void selectDesing() {
+        DropShadow glow = new DropShadow();
+        glow.setColor(Color.WHITE);
+        glow.setRadius(15);
+        glow.setSpread(0.5);
+        shapesGroup.setEffect(glow);
+        isSelect = true;
     }
 
     public void originDesing() {
+        DropShadow glow = new DropShadow();
+        glow.setColor(Color.CADETBLUE);
+        glow.setRadius(10);
+        glow.setSpread(0.4);
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(0);
+        glow.setInput(colorAdjust);
+        shapesGroup.setEffect(glow);
+        isSelect = false;
     }
 
     public void rotateShip() {
@@ -76,6 +94,13 @@ public class Ship extends Pane {
 
     public void setIsSelect(boolean isSelect){
         this.isSelect = isSelect;
+    }
+
+    public void setScaleShip(double X, double Y){
+        shapesGroup.setScaleX(X);
+        shapesGroup.setScaleY(Y);
+        body.setScaleX(X);
+        body.setScaleY(Y);
     }
 
 }

@@ -9,11 +9,6 @@ public class Submarino extends Ship {
     public Submarino() {
         this.setWidth(190);
         this.setHeight(63);
-
-        this.setStyle("-fx-border-color: black;" +
-            "-fx-border-width: 1;" +
-            "-fx-border-style: solid;"
-        );
         size =  3;
         body = new Rectangle(0, 0, 190, 63);
         body.setFill(javafx.scene.paint.Color.DARKGRAY);
