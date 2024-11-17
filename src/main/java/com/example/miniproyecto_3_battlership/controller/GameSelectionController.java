@@ -1,22 +1,29 @@
 package com.example.miniproyecto_3_battlership.controller;
 
-import com.example.miniproyecto_3_battlership.model.CrossedShipsException;
+import com.example.miniproyecto_3_battlership.model.exeption.CrossedShipsException;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
+import javafx.animation.FadeTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
@@ -65,6 +72,19 @@ public class GameSelectionController {
 
     @FXML
     private HBox hBoxFragatas;
+
+    @FXML
+    private AnchorPane anchorPaneLeft;
+
+    @FXML
+    private Label nameCharacter;
+
+    @FXML
+    private ImageView imgCharacter;
+
+    @FXML
+    private Button randomButton;
+
 
 
     private final Rectangle[][] shadowShipsSelection = new Rectangle[10][10];
@@ -120,30 +140,99 @@ public class GameSelectionController {
         }
 
         infoLabel.setText("Teniente seleccione sus barcos");
+        setCharacter();
+    }
 
+    public void setCharacter(){
+        String nameCharacterActual = WelcomeController.getNameCharacter();
+        Image imageCharacterActual;
+        nameCharacter.setText(nameCharacterActual);
+        if (nameCharacterActual == "Coronel Sander"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Almte. Zemansky"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Mayor Lovelace"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Coronela Rosalind"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "????"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "???"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Teniente Ampudia"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Capitana Cordoba"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }
     }
 
     @FXML
     public void onHandleRandomButton(){
 
-        int randomRow, randomCol, randomHorientation;
-        for(int i = 0; i < ships.size(); i++) {
-            shipSelected(ships.get(i));
-            do {
-                randomRow = (int) (Math.random() * 9);
-                randomCol = (int) (Math.random() * 9);
-                randomHorientation = (int) (Math.random() * 1);
-                if (randomHorientation == 0) {
-                    onHandleBorderPaneKeyTyped2();
-                }
-                onHandleMouseEnteredShips(randomRow, randomCol);
-                onHandleMouseClickedShips(randomRow, randomCol);
-                onHandleMouseExitedShips(randomRow, randomCol);
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(randomButton);
+        rotateTransition.setCycleCount(1);
+        rotateTransition.setDuration(Duration.seconds(.5));
 
-            } while (!shipSelected.isPlaced() && !habitable);
-            shipSelected(shipSelected);
-        }
-        infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
+        Random rand = new Random();
+        int randomRotation = rand.nextInt(360) + 360 * 3;
+
+        rotateTransition.setByAngle(randomRotation);
+        rotateTransition.setAutoReverse(true);
+
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(randomButton);
+        translateTransition.setCycleCount(2);
+        translateTransition.setDuration(Duration.seconds(0.1));
+
+        translateTransition.setByX(10);
+        translateTransition.setAutoReverse(true);
+
+        translateTransition.play();
+        rotateTransition.play();
+
+        rotateTransition.setOnFinished(event2 -> {
+            int randomRow, randomCol, randomHorientation;
+            if(shipSelected != null){
+                shipSelected(shipSelected);
+            }
+            for(int i = 0; i < ships.size(); i++) {
+                shipSelected(ships.get(i));
+                do {
+                    randomRow = (int) (Math.random() * 9);
+                    randomCol = (int) (Math.random() * 9);
+                    randomHorientation = (int) (Math.random() * 1);
+                    if (randomHorientation == 0) {
+                        onHandleBorderPaneKeyTyped2();
+                    }
+                    onHandleMouseEnteredShips(randomRow, randomCol);
+                    onHandleMouseClickedShips(randomRow, randomCol);
+                    onHandleMouseExitedShips(randomRow, randomCol);
+
+                } while (!shipSelected.isPlaced() && !habitable);
+                shipSelected(shipSelected);
+            }
+            resetShadow();
+            infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
+
+        });
+
+
+
 
     }
 
@@ -366,10 +455,42 @@ public class GameSelectionController {
         }
 
 
-        GameSelectionStage.getInstance();
-        GameStage.getInstance();
-        GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
-        GameSelectionStage.deleteInstance();
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(.9), anchorPaneLeft); // rootNode es el contenedor de los elementos.
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.8);
+
+
+        TranslateTransition moveRight = new TranslateTransition(Duration.seconds(0.5), anchorPaneLeft);
+        moveRight.setFromX(0);
+        moveRight.setToX(anchorPaneLeft.getBoundsInParent().getWidth());
+        moveRight.play();
+        fadeOut.play();
+
+
+        moveRight.setOnFinished(event2 -> {
+            Platform.runLater(() -> {
+                try {
+                    GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
+
+        fadeOut.setOnFinished(event2 -> {
+            GameSelectionStage.deleteInstance();
+        });
+
+
+    }
+
+    public void resetShadow(){
+        for (Rectangle[] rectangle : shadowShipsSelection) {
+            for (Rectangle r : rectangle) {
+                r.setFill(colorDefault);
+            }
+        }
     }
 
 

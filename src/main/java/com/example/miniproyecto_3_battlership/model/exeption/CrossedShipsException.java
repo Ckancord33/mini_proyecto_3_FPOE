@@ -1,4 +1,4 @@
-package com.example.miniproyecto_3_battlership.model;
+package com.example.miniproyecto_3_battlership.model.exeption;
 
 public class CrossedShipsException extends Exception {
 

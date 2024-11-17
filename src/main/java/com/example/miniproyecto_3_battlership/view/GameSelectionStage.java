@@ -1,5 +1,6 @@
 package com.example.miniproyecto_3_battlership.view;
 
+import com.example.miniproyecto_3_battlership.controller.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,13 +11,14 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class GameSelectionStage extends Stage {
-
+//    GameController gameSelectionController = new GameController();
     public GameSelectionStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/miniproyecto_3_battlership/gameSelectionView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         setResizable(false);
         initStyle(StageStyle.UNDECORATED);
+//        gameSelectionController = loader.getController();
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
         setWidth(screenWidth * 1);
@@ -25,6 +27,10 @@ public class GameSelectionStage extends Stage {
         setScene(scene);
         show();
     }
+
+//    public GameController getGameController() {
+//        return gameSelectionController;
+//    }
 
     private static class GameStageHolder {
         /**

@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class WelcomeController {
@@ -63,17 +64,20 @@ public class WelcomeController {
     private int easterEgg;
     private int easterEgg2;
 
+    static private String nameCharacter;
+    static private Image imageCharacter;
+
     @FXML
     public void initialize() {
-
-        Image character1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter1.png")));
-        Image character2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter2.png")));
-        Image character3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter3.png")));
-        Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter4.png")));
-        Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter5.png")));
-        Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter6.png")));
-        Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter7.png")));
-        Image characterEasterEgg2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/chapter8.png")));
+        nameCharacter = "Coronel Sander";
+        Image character1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter1.png")));
+        Image character2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter2.png")));
+        Image character3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter3.png")));
+        Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter4.png")));
+        Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter5.png")));
+        Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter6.png")));
+        Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter7.png")));
+        Image characterEasterEgg2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter8.png")));
 
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());
@@ -89,29 +93,35 @@ public class WelcomeController {
 
         welcomeBorderPane.setBackground(new Background(background));
 
-        choiceBox.getItems().addAll("Coronel sander","ArchiAlmirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
+        choiceBox.getItems().addAll("Coronel Sander","Almirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
-            if ( newValue == "Coronel sander") {
+            if ( newValue == "Coronel Sander") {
                 imgCharacter.setImage(character1);
-                System.out.println("entre1");
-            }else if (newValue == "ArchiAlmirante Zemansky") {
+                nameCharacter = "Coronel Sander";
+            }else if (newValue == "Almirante Zemansky") {
                 imgCharacter.setImage(character2);
-                System.out.println("entre2");
+                nameCharacter = "Almte. Zemansky";
             }else if (newValue == "Mayor Lovelace") {
                 imgCharacter.setImage(character3);
+                nameCharacter = "Mayor Lovelace";
             } else if (newValue == "Coronela Rosalind") {
                 imgCharacter.setImage(character4);
+                nameCharacter = "Coronela Rosalind";
             }else if (newValue == "????") {
                 imgCharacter.setImage(character5);
+                nameCharacter = "????";
             }
             else if (newValue == "???") {
                 imgCharacter.setImage(character6);
+                nameCharacter = "???";
             }else if(newValue == "Teniente Ampudia"){
                 imgCharacter.setImage(characterEasterEgg);
+                nameCharacter = "Teniente Ampudia";
             }else if(newValue == "Capitana Cordoba"){
                 imgCharacter.setImage(characterEasterEgg2);
+                nameCharacter = "Capitana Cordoba";
             }
         });
 
@@ -160,14 +170,14 @@ public class WelcomeController {
 
         nicolasLink.setOnAction(e -> {
             easterEgg2 += 1;
-            if(easterEgg2 == 5){
+            if(easterEgg2 == 5 && !choiceBox.getItems().contains("Capitana Cordoba")){
                 choiceBox.getItems().add("Capitana Cordoba");
             }
         });
 
         juanLink.setOnAction(e -> {
             easterEgg += 1;
-            if(easterEgg == 5){
+            if(easterEgg == 5 && !choiceBox.getItems().contains("Teniente Ampudia")){
                 choiceBox.getItems().add("Teniente Ampudia");
             }
 
@@ -232,6 +242,10 @@ public class WelcomeController {
                     break;
             }
         });
+    }
+
+    public static String getNameCharacter(){
+        return nameCharacter;
     }
 
 }

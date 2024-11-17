@@ -1,18 +1,28 @@
 package com.example.miniproyecto_3_battlership.controller;
 
+import com.example.miniproyecto_3_battlership.model.Player.PlayerBot;
+import com.example.miniproyecto_3_battlership.model.Player.PlayerPerson;
 import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
@@ -22,6 +32,8 @@ import java.util.Objects;
 public class GameController {
 
     private Game game;
+    private PlayerBot playerBot;
+    private PlayerPerson playerPerson;
 
 
     @FXML
@@ -36,6 +48,21 @@ public class GameController {
     @FXML
     private AnchorPane anchorPaneMiddle;
 
+    @FXML
+    private AnchorPane anchorPaneLeft;
+
+    @FXML
+    private Label nameCharacter;
+
+    @FXML
+    private Label lbNameVillain;
+
+    @FXML
+    private ImageView imgCharacter;
+
+    @FXML
+    private ImageView imgVillain;
+
     Fragata[] fragatas = new Fragata[4];
     Destructor[] destructores = new Destructor[3];
     Submarino[] submarinos = new Submarino[2];
@@ -46,8 +73,21 @@ public class GameController {
 
     public void initialize() {
 
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        anchorPaneLeft.setTranslateX(screenWidth);
 
-        //IMAGEN DE FONDO
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(.5), anchorPaneLeft);
+        fadeIn.setFromValue(0.5);
+        fadeIn.setToValue(1.0);
+
+        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.5), anchorPaneLeft);
+        moveLeft.setFromX(screenWidth);
+        moveLeft.setToX(0);
+
+        ParallelTransition newStageTransition = new ParallelTransition(fadeIn, moveLeft);
+        newStageTransition.play();
+
+
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
 
 
@@ -62,27 +102,78 @@ public class GameController {
         gameBorderPane.setBackground(new Background(background));
 
         createBorders();
-//        createBordersGridPaneGame();
+
         game = new Game();
-        game.setMatrix();
+        playerBot = game.getPlayerBot();
+        playerBot.setMatrix();
         boolean error = true;
         do {
             try {
-
-                game.generateGameBot();
+                playerBot.generateBotGame();
                 error = false;
             } catch (IndexOutOfBoundsException e) {
-                game.clearMatriz();
+                playerBot.clearMatrix();
                 System.out.println("Error, intentando nuevamente");
             }
         } while (error);
 
+        setCharacter();
+        setEnemy();
 
+    }
+
+    private void setEnemy() {
+        String[] villanos = {"Zarok", "Varek", "Drakk", "Korr", "Morth", "Tharn", "Vulkar", "Grim", "Raek", "Durn"};
+        lbNameVillain.setText(villanos[(int)(Math.random()*9)]);
+        int villain =(int)(Math.random() * 2);
+        if (villain == 0){
+            imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png"))));
+        }else{
+            imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png"))));
+        }
+
+    }
+
+    public void setCharacter(){
+        String nameCharacterActual = WelcomeController.getNameCharacter();
+        Image imageCharacterActual;
+        nameCharacter.setText(nameCharacterActual);
+        if (nameCharacterActual == "Coronel Sander"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Almte. Zemansky"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Mayor Lovelace"){
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "Coronela Rosalind"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "????"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if(nameCharacterActual == "???"){
+            nameCharacter.setAlignment(Pos.CENTER);
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Teniente Ampudia"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }else if (nameCharacterActual == "Capitana Cordoba"){
+            nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
+            imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
+            imgCharacter.setImage(imageCharacterActual);
+        }
     }
 
 
     @FXML
-    void onHandleMousePressedGame(MouseEvent event) {
+    void onHandleMousePressedGameEnemy(MouseEvent event) {
         double cellWidth = gridPaneGame.getWidth() / gridPaneGame.getColumnCount();
         double cellHeight = gridPaneGame.getHeight() / gridPaneGame.getRowCount();
 
@@ -94,7 +185,7 @@ public class GameController {
         int column = (int) (x / cellWidth);
         int row = (int) (y / cellHeight);
 
-        matriz = game.getMatriz();
+        matriz = playerBot.getMatriz();
         if(row != 0 && column != 0) {
             if (matriz.get(row-1).get(column-1) == 1) {
                 System.out.println("PUM LE ATINASTE");
@@ -130,7 +221,6 @@ public class GameController {
             }
         }
 
-        System.out.println("Clic en la celda: columna " + column + ", fila " + row);
     }
 
     public void setGridPaneShips(GridPane gridPaneShips, ArrayList <Ship> ships){
@@ -174,53 +264,6 @@ public class GameController {
             }
         }
     }
-//
-//    public void putShips(int[][] positionHeadShips){
-//        int[] nShips = {0,0,0,0};
-//        for (int row = 0; row < 10; row++) {
-//            for (int col = 0; col < 10; col++) {
-//                switch (positionHeadShips[row][col] ){
-//                    case 1:
-//                        gridPaneShips.add(fragatas[nShips[0]], col+1, row+1);
-//                        nShips[0]++;
-//                        break;
-//                    case 2:
-//                        addShipsGridPaneShips(destructores[nShips[1]], row, col);
-//                        nShips[1]++;
-//                        break;
-//                    case 3:
-//                        addShipsGridPaneShips(submarinos[nShips[2]], row, col);
-//                        nShips[2]++;
-//                        break;
-//                    case 4:
-//                        addShipsGridPaneShips(portaaviones[nShips[3]], row, col);
-//                        nShips[3]++;
-//                        break;
-//                }
-//            }
-//        }
-//    }
-//
-//    public void addShipsGridPaneShips(Ship ship, int row, int col) {
-//        if (ship.isHorizontal()) {
-//            gridPaneShips.add(ship, col -ship.getSize() +2, row+1);
-//            GridPane.setRowSpan(ship, 0);
-//            GridPane.setColumnSpan(ship, ship.getSize());
-//        } else {
-//            gridPaneShips.add(ship, col+1, row - ship.getSize()+2);
-//            GridPane.setColumnSpan(ship, 1);
-//            GridPane.setRowSpan(ship, ship.getSize());
-//        }
-//    }
-
-    public void imprimirMatriz(int[][] shipsSelected) {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.print(shipsSelected[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     public void createBorders() {
         double cellWidth = 38.18;
@@ -237,6 +280,12 @@ public class GameController {
         }
     }
 
+    // HERE WILL BE THE WHOLE GAME
+    public void gameTurn(){
+        do{
+            System.out.println("hola");
+        }while(game.verifyWinner());
+    }
 
 
     @FXML
