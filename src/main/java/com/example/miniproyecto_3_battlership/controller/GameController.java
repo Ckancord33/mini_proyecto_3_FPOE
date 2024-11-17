@@ -6,11 +6,11 @@ import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
-import javafx.animation.FadeTransition;
-import javafx.animation.ParallelTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,6 +22,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -63,6 +64,9 @@ public class GameController {
     @FXML
     private ImageView imgVillain;
 
+    @FXML
+    private Label infoLabel;
+
     Fragata[] fragatas = new Fragata[4];
     Destructor[] destructores = new Destructor[3];
     Submarino[] submarinos = new Submarino[2];
@@ -72,21 +76,6 @@ public class GameController {
 
 
     public void initialize() {
-
-        double screenWidth = Screen.getPrimary().getBounds().getWidth();
-        anchorPaneLeft.setTranslateX(screenWidth);
-
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(.5), anchorPaneLeft);
-        fadeIn.setFromValue(0.5);
-        fadeIn.setToValue(1.0);
-
-        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.5), anchorPaneLeft);
-        moveLeft.setFromX(screenWidth);
-        moveLeft.setToX(0);
-
-        ParallelTransition newStageTransition = new ParallelTransition(fadeIn, moveLeft);
-        newStageTransition.play();
-
 
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
 
@@ -119,7 +108,6 @@ public class GameController {
 
         setCharacter();
         setEnemy();
-
     }
 
     private void setEnemy() {
@@ -169,6 +157,7 @@ public class GameController {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
             imgCharacter.setImage(imageCharacterActual);
         }
+
     }
 
 
@@ -176,8 +165,6 @@ public class GameController {
     void onHandleMousePressedGameEnemy(MouseEvent event) {
         double cellWidth = gridPaneGame.getWidth() / gridPaneGame.getColumnCount();
         double cellHeight = gridPaneGame.getHeight() / gridPaneGame.getRowCount();
-
-        System.out.println(cellWidth + " " + cellHeight);
 
         double x = event.getX();
         double y = event.getY();
@@ -187,73 +174,153 @@ public class GameController {
 
         matriz = playerBot.getMatriz();
         if(row != 0 && column != 0) {
-            if (matriz.get(row-1).get(column-1) == 1) {
+            if (matriz.get(row-1).get(column-1) != 0) {
                 System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(2,2,4, Color.BLUE);
+                Circle circle = new Circle(0,0,30, Color.DARKGRAY);
                 gridPaneGame.add(circle, column, row);
-            }else if(matriz.get(row-1).get(column-1) == 2){
-                System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(2,2,4, Color.RED);
-                gridPaneGame.add(circle, column, row);
-            }else if(matriz.get(row-1).get(column-1) == 3){
-                System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(2,2,4, Color.GREEN);
-                gridPaneGame.add(circle, column, row);
-            }else if(matriz.get(row-1).get(column-1) == 4){
-                System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(2,2,4, Color.PURPLE);
-                gridPaneGame.add(circle, column, row);
-            }else{
+                playerTurn();
+                infoLabel.setText("La maquina esta pensando...");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event2 -> {
+                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                });
+                pause.play();
+
+            } else{
                 System.out.println("NO LE ATINASTE");
-                AnchorPane pane = new AnchorPane();
+                Group group = new Group();
                 Line line1 = new Line(9, 9, 29, 29);
                 Line line2 = new Line(29, 9, 9, 29);
-
-
                 line1.setStroke(Color.RED);
                 line1.setStrokeWidth(5);
                 line2.setStroke(Color.RED);
                 line2.setStrokeWidth(5);
-
-                pane.getChildren().addAll(line1, line2);
-
-                gridPaneGame.add(pane, column, row);
+                group.getChildren().addAll(line1, line2);
+                gridPaneGame.add(group, column, row);
+                playerTurn();
+                infoLabel.setText("La maquina esta pensando...");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event2 -> {
+                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                });
+                pause.play();
             }
         }
 
+
     }
 
-    public void setGridPaneShips(GridPane gridPaneShips, ArrayList <Ship> ships){
+    @FXML
+    void botAttack(int row, int column) {
+
+        matriz = playerBot.getMatriz();
+        if(row != 0 && column != 0) {
+            if (matriz.get(row-1).get(column-1) != 0) {
+                System.out.println("PUM LE ATINASTE");
+                Circle circle = new Circle(0,0,20, Color.DARKGRAY);
+                gridPaneShips.add(circle, column, row);
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    playerTurn();
+                });
+                pause.play();
+
+            } else{
+                System.out.println("NO LE ATINASTE");
+                Group group = new Group();
+                Line line1 = new Line(9, 9, 29, 29);
+                Line line2 = new Line(29, 9, 9, 29);
+                line1.setStroke(Color.RED);
+                line1.setStrokeWidth(5);
+                line2.setStroke(Color.RED);
+                line2.setStrokeWidth(5);
+                group.getChildren().addAll(line1, line2);
+                gridPaneShips.add(group, column, row);
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    playerTurn();
+                });
+                pause.play();
+            }
+        }
+    }
+
+    private void playerTurn() {
+        if (gridPaneGame.isDisable()){
+            gridPaneGame.setDisable(false);
+        }else{
+            gridPaneGame.setDisable(true);
+        }
+    }
+
+    public void setGridPaneShips(GridPane gridPaneShipsGame, ArrayList <Ship> ships){
         setShips(ships);
+        this.gridPaneShips = gridPaneShipsGame;
+        animationIn();
         for(Node node : gridPaneShips.getChildren()){
             node.setOnMouseClicked(null);
             node.setOnMouseEntered(null);
             node.setOnMouseExited(null);
         }
-        gridPaneShips.setStyle("-fx-cursor: default;");
-        gridPaneShips.setLayoutX(131);
-        gridPaneShips.setLayoutY(199);
-        anchorPaneMiddle.getChildren().add(gridPaneShips);
 
+        gridPaneShips.setStyle("-fx-cursor: default;");
+        gridPaneShips.setLayoutX(-102);
+        gridPaneShips.setLayoutY(199);
+        anchorPaneLeft.getChildren().add(1,gridPaneShips);
+    }
+
+    public void animationIn(){
+
+        anchorPaneLeft.setTranslateX(-400);
+
+        double screenWidth = Screen.getPrimary().getBounds().getWidth();
+        anchorPaneMiddle.setTranslateY(screenWidth);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.9), anchorPaneLeft);
+        fadeIn.setFromValue(0.5);
+        fadeIn.setToValue(1.0);
+
+        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), anchorPaneLeft);
+        moveLeft.setToX(0);
+
+        ParallelTransition newStageTransition = new ParallelTransition(fadeIn, moveLeft);
+        newStageTransition.play();
+
+        FadeTransition fadeIn2 = new FadeTransition(Duration.seconds(2.5), anchorPaneMiddle);
+        fadeIn2.setFromValue(0.2);
+        fadeIn2.setToValue(1.0);
+
+        TranslateTransition moveUp = new TranslateTransition(Duration.seconds(3), anchorPaneMiddle);
+        moveUp.setFromY(screenWidth);
+        moveUp.setToY(0);
+
+        ParallelTransition newStageTransition2 = new ParallelTransition(fadeIn2, moveUp);
+        newStageTransition2.play();
+
+        moveLeft.setInterpolator(Interpolator.EASE_BOTH);
+        moveUp.setInterpolator(Interpolator.EASE_BOTH);
 
     }
 
-    public void setShips(ArrayList <Ship> ships) {
+    public void setShips(ArrayList <Ship> ships ) {
         int[] nShips = {0,0,0,0};
         for (Ship ship : ships) {
             if (ship instanceof Fragata) {
                 fragatas[nShips[0]] = (Fragata) ship;
                 fragatas[nShips[0]].originDesing();
+
                 nShips[0]++;
             }
             if (ship instanceof Destructor) {
                 destructores[nShips[1]] = (Destructor) ship;
                 destructores[nShips[1]].originDesing();
+
                 nShips[1]++;
             }
             if (ship instanceof Submarino) {
                 submarinos[nShips[2]] = (Submarino) ship;
                 submarinos[nShips[2]].originDesing();
+
                 nShips[2]++;
             }
             if (ship instanceof Portaaviones) {
@@ -262,12 +329,13 @@ public class GameController {
 
                 nShips[3]++;
             }
+
         }
     }
 
     public void createBorders() {
-        double cellWidth = 38.18;
-        double cellHeight = 38.18;
+        double cellWidth = 63.7;
+        double cellHeight = 63.7;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
 
         for (int rows = 1; rows <= 10; rows++) {
@@ -280,15 +348,8 @@ public class GameController {
         }
     }
 
-    // HERE WILL BE THE WHOLE GAME
-    public void gameTurn(){
-        do{
-            System.out.println("hola");
-        }while(game.verifyWinner());
-    }
 
-
-    @FXML
+        @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         GameStage.deleteInstance();
         WelcomeStage.getInstance();

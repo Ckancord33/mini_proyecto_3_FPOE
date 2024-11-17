@@ -5,9 +5,7 @@ import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
-import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +45,17 @@ public class GameSelectionController {
     @FXML
     private Label infoLabel;
 
+    @FXML
+    private Label lbSelecction;
+
+    @FXML
+    private Rectangle rectangleLabelInfo;
+
+    @FXML
+    private Rectangle rectangleLabelSelection;
+
+
+
     private Color colorDefault = Color.TRANSPARENT;
 
     private Color colorhover = Color.rgb(0, 0, 0, 0.5);
@@ -75,6 +84,9 @@ public class GameSelectionController {
 
     @FXML
     private AnchorPane anchorPaneLeft;
+
+    @FXML
+    private AnchorPane anchorPaneMiddle;
 
     @FXML
     private Label nameCharacter;
@@ -455,30 +467,78 @@ public class GameSelectionController {
         }
 
 
+        rectangleLabelInfo.setOpacity(0);
+        infoLabel.setOpacity(0);
+        rectangleLabelSelection.setOpacity(0);
+        lbSelecction.setOpacity(0);
 
-        FadeTransition fadeOut = new FadeTransition(Duration.seconds(.9), anchorPaneLeft); // rootNode es el contenedor de los elementos.
+        Timeline timeline = new Timeline();
+
+        int duration = 2000;
+        int frames = 30;
+
+        for (int i = 0; i < frames; i++) {
+
+            KeyFrame keyFrame = new KeyFrame(
+                    Duration.millis(i * (duration / frames)),
+                    e -> {
+
+                        double offsetX = Math.random() * 4 - 4;
+                        double offsetY = Math.random() * 4 - 5;
+
+                        gameBorderPane.setTranslateX(offsetX);
+                        gameBorderPane.setTranslateY(offsetY);
+                    }
+            );
+            timeline.getKeyFrames().add(keyFrame);
+        }
+
+        timeline.setOnFinished(e -> {
+            gameBorderPane.setTranslateX(0);
+            gameBorderPane.setTranslateY(0);
+        });
+
+
+        timeline.play();
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.8), anchorPaneLeft);
         fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.8);
-
+        fadeOut.setToValue(0.5);
 
         TranslateTransition moveRight = new TranslateTransition(Duration.seconds(0.5), anchorPaneLeft);
         moveRight.setFromX(0);
         moveRight.setToX(anchorPaneLeft.getBoundsInParent().getWidth());
-        moveRight.play();
-        fadeOut.play();
 
+        ParallelTransition transitionLeft = new ParallelTransition(fadeOut, moveRight);
+        transitionLeft.play();
 
-        moveRight.setOnFinished(event2 -> {
+        FadeTransition fadeOut2 = new FadeTransition(Duration.seconds(0.8), anchorPaneMiddle);
+        fadeOut2.setFromValue(1.0);
+        fadeOut2.setToValue(0.7);
+
+        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.3), anchorPaneMiddle);
+        moveLeft.setFromX(0);
+        moveLeft.setToX(140);
+
+        ParallelTransition transitionMiddle = new ParallelTransition(fadeOut2, moveLeft);
+        transitionMiddle.play();
+        moveLeft.setInterpolator(Interpolator.EASE_BOTH);
+
+        fadeOut.setOnFinished(event2 -> {
             Platform.runLater(() -> {
-                try {
-                    GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                PauseTransition pause = new PauseTransition(Duration.seconds(.3));
+                pause.setOnFinished(event4 -> {
+                    try {
+                        GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                pause.play();
             });
         });
 
-        fadeOut.setOnFinished(event2 -> {
+        moveLeft.setOnFinished(event3 -> {
             GameSelectionStage.deleteInstance();
         });
 

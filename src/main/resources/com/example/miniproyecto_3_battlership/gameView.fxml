@@ -15,10 +15,68 @@
 
 <BorderPane fx:id="gameBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.miniproyecto_3_battlership.controller.GameController">
    <right>
-      <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="519.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="652.0" BorderPane.alignment="CENTER">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="381.81" layoutX="72.18" layoutY="385.18" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-5.0" width="381.81" />
-            <GridPane fx:id="gridPaneGame" layoutX="34.0" layoutY="347.0" onMousePressed="#onHandleMousePressedGameEnemy" prefHeight="420.0" prefWidth="420.0" translateX="-5.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="-38.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
+            <ImageView fx:id="imgVillain" fitHeight="221.0" fitWidth="225.0" layoutX="279.0" layoutY="862.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
+               <image>
+                  <Image url="@Image/gameCharacter5.png" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="62.0" layoutX="467.0" layoutY="945.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" translateX="-5.0" width="173.0" />
+            <Label fx:id="lbNameVillain" layoutX="482.0" layoutY="954.0" prefHeight="44.0" prefWidth="145.0" text="Mortem" textFill="WHITE" translateX="-5.0">
+               <font>
+                  <Font name="Berlin Sans FB" size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </right>
+   <left>
+      <AnchorPane fx:id="anchorPaneRight" prefHeight="1080.0" prefWidth="431.0" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2f42" height="47.0" layoutX="106.0" layoutY="94.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="263.0" />
+            <Label fx:id="nameCharacter" layoutX="143.0" layoutY="102.0" prefHeight="33.0" prefWidth="209.0" text="Coronel Sander" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgCharacter" fitHeight="289.0" fitWidth="273.0" layoutX="101.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Image/character1.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="101.0" layoutY="557.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #7D3434; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-width: 3; -fx-border-color: #373F51;" text="Reiniciar flota!" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="101.0" layoutY="648.0" mnemonicParsing="false" onAction="#onHandleReturn" prefHeight="70.0" prefWidth="280.0" styleClass="buttonReturn" stylesheets="@Css/css.css" text="Abandonar flota" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="25.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane fx:id="anchorPaneMiddle" prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="53.0" layoutY="272.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="66.0" layoutX="139.0" layoutY="133.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="444.0" />
+            <Label alignment="CENTER" layoutX="224.0" layoutY="142.0" prefHeight="44.0" prefWidth="276.0" text="Flota Enemiga" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="35.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="-14.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
+            <GridPane fx:id="gridPaneGame" layoutX="-11.0" layoutY="208.0" onMousePressed="#onHandleMousePressedGameEnemy" prefHeight="700.0" prefWidth="700.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -48,102 +106,102 @@
                <children>
                   <Label text="A" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="B" textFill="WHITE" GridPane.columnIndex="2">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="C" textFill="WHITE" GridPane.columnIndex="3">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="d" textFill="WHITE" GridPane.columnIndex="4">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="E" textFill="WHITE" GridPane.columnIndex="5">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="F" textFill="WHITE" GridPane.columnIndex="6">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="G" textFill="WHITE" GridPane.columnIndex="7">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="H" textFill="WHITE" GridPane.columnIndex="8">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="I" textFill="WHITE" GridPane.columnIndex="9">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="J" textFill="WHITE" GridPane.columnIndex="10">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="1" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="2" textFill="WHITE" GridPane.rowIndex="2">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="3" textFill="WHITE" GridPane.rowIndex="3">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="4" textFill="WHITE" GridPane.rowIndex="4">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="5" textFill="WHITE" GridPane.rowIndex="5">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="6" textFill="WHITE" GridPane.rowIndex="6">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="7" textFill="WHITE" GridPane.rowIndex="7">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="8" textFill="WHITE" GridPane.rowIndex="8">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="9" textFill="WHITE" GridPane.rowIndex="9">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                   <Label text="10" textFill="WHITE" GridPane.rowIndex="10">
                      <font>
-                        <Font name="HotelDeParisXe" size="12.0" />
+                        <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
                </children>
@@ -151,70 +209,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </GridPane>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2f42" height="66.0" layoutX="85.0" layoutY="263.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" translateX="-5.0" width="354.0" />
-            <ImageView fx:id="imgVillain" fitHeight="221.0" fitWidth="225.0" layoutX="31.0" layoutY="810.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
-               <image>
-                  <Image url="@Image/gameCharacter5.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="155.0" layoutY="271.0" prefHeight="44.0" prefWidth="222.0" text="Flota enemiga" textFill="WHITE" translateX="-5.0">
-               <font>
-                  <Font name="Berlin Sans FB" size="35.0" />
-               </font>
-            </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="62.0" layoutX="204.0" layoutY="887.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" translateX="-5.0" width="252.0" />
-            <Label fx:id="lbNameVillain" layoutX="219.0" layoutY="896.0" prefHeight="44.0" prefWidth="232.0" text="Mortem oscura" textFill="WHITE" translateX="-5.0">
-               <font>
-                  <Font name="Berlin Sans FB" size="35.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-   </right>
-   <left>
-      <AnchorPane prefHeight="1080.0" prefWidth="431.0" BorderPane.alignment="CENTER">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2f42" height="47.0" layoutX="106.0" layoutY="94.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="263.0" />
-            <Label fx:id="nameCharacter" layoutX="143.0" layoutY="102.0" prefHeight="33.0" prefWidth="209.0" text="Coronel Sander" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="30.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="imgCharacter" fitHeight="289.0" fitWidth="273.0" layoutX="101.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Image/character1.png" />
-               </image>
-            </ImageView>
-            <Button layoutX="101.0" layoutY="538.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #7D3434; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-width: 3; -fx-border-color: #373F51;" text="Reiniciar flota!" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="30.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button layoutX="101.0" layoutY="640.0" mnemonicParsing="false" onAction="#onHandleReturn" prefHeight="70.0" prefWidth="280.0" styleClass="buttonReturn" stylesheets="@Css/css.css" text="Abandonar flota" textFill="WHITE">
+            <Label fx:id="infoLabel" alignment="CENTER" layoutX="-5.0" layoutY="940.0" prefHeight="87.0" prefWidth="750.0" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="25.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-         </children>
-      </AnchorPane>
-   </left>
-   <center>
-      <AnchorPane fx:id="anchorPaneMiddle" prefHeight="1080.0" prefWidth="1012.0" BorderPane.alignment="CENTER">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="195.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7d3434" height="66.0" layoutX="278.0" layoutY="107.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" width="444.0" />
-            <Label layoutX="369.0" layoutY="116.0" prefHeight="44.0" prefWidth="276.0" text="Selecciona tu flota" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="35.0" />
-               </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="135.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
          </children>
       </AnchorPane>
    </center>
