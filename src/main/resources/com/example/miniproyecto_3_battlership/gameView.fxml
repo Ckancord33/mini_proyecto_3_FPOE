@@ -18,7 +18,7 @@
       <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="519.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="381.81" layoutX="72.18" layoutY="385.18" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-5.0" width="381.81" />
-            <GridPane fx:id="gridPaneGame" layoutX="34.0" layoutY="347.0" onMousePressed="#onHandleMousePressedGame" prefHeight="420.0" prefWidth="420.0" translateX="-5.0">
+            <GridPane fx:id="gridPaneGame" layoutX="34.0" layoutY="347.0" onMousePressed="#onHandleMousePressedGameEnemy" prefHeight="420.0" prefWidth="420.0" translateX="-5.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
