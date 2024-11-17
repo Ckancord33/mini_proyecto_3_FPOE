@@ -1,17 +1,18 @@
 package com.example.miniproyecto_3_battlership.controller;
 
-import com.example.miniproyecto_3_battlership.model.CrossedShipsException;
+import com.example.miniproyecto_3_battlership.model.exeption.CrossedShipsException;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,9 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
@@ -82,6 +81,9 @@ public class GameSelectionController {
 
     @FXML
     private ImageView imgCharacter;
+
+    @FXML
+    private Button randomButton;
 
 
 
@@ -181,24 +183,56 @@ public class GameSelectionController {
     @FXML
     public void onHandleRandomButton(){
 
-        int randomRow, randomCol, randomHorientation;
-        for(int i = 0; i < ships.size(); i++) {
-            shipSelected(ships.get(i));
-            do {
-                randomRow = (int) (Math.random() * 9);
-                randomCol = (int) (Math.random() * 9);
-                randomHorientation = (int) (Math.random() * 1);
-                if (randomHorientation == 0) {
-                    onHandleBorderPaneKeyTyped2();
-                }
-                onHandleMouseEnteredShips(randomRow, randomCol);
-                onHandleMouseClickedShips(randomRow, randomCol);
-                onHandleMouseExitedShips(randomRow, randomCol);
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(randomButton);
+        rotateTransition.setCycleCount(1);
+        rotateTransition.setDuration(Duration.seconds(.5));
 
-            } while (!shipSelected.isPlaced() && !habitable);
-            shipSelected(shipSelected);
-        }
-        infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
+        Random rand = new Random();
+        int randomRotation = rand.nextInt(360) + 360 * 3;
+
+        rotateTransition.setByAngle(randomRotation);
+        rotateTransition.setAutoReverse(true);
+
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(randomButton);
+        translateTransition.setCycleCount(2);
+        translateTransition.setDuration(Duration.seconds(0.1));
+
+        translateTransition.setByX(10);
+        translateTransition.setAutoReverse(true);
+
+        translateTransition.play();
+        rotateTransition.play();
+
+        rotateTransition.setOnFinished(event2 -> {
+            int randomRow, randomCol, randomHorientation;
+            if(shipSelected != null){
+                shipSelected(shipSelected);
+            }
+            for(int i = 0; i < ships.size(); i++) {
+                shipSelected(ships.get(i));
+                do {
+                    randomRow = (int) (Math.random() * 9);
+                    randomCol = (int) (Math.random() * 9);
+                    randomHorientation = (int) (Math.random() * 1);
+                    if (randomHorientation == 0) {
+                        onHandleBorderPaneKeyTyped2();
+                    }
+                    onHandleMouseEnteredShips(randomRow, randomCol);
+                    onHandleMouseClickedShips(randomRow, randomCol);
+                    onHandleMouseExitedShips(randomRow, randomCol);
+
+                } while (!shipSelected.isPlaced() && !habitable);
+                shipSelected(shipSelected);
+            }
+            resetShadow();
+            infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
+
+        });
+
+
+
 
     }
 
@@ -449,6 +483,14 @@ public class GameSelectionController {
         });
 
 
+    }
+
+    public void resetShadow(){
+        for (Rectangle[] rectangle : shadowShipsSelection) {
+            for (Rectangle r : rectangle) {
+                r.setFill(colorDefault);
+            }
+        }
     }
 
 

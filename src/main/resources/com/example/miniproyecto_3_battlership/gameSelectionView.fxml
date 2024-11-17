@@ -21,7 +21,7 @@
    <right>
       <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="576.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="shipSelectVbox" alignment="BOTTOM_CENTER" fillWidth="false" layoutX="12.0" layoutY="318.0" prefHeight="717.0" prefWidth="486.0" spacing="25.0" style="-fx-background-color: rgba(125, 52, 52,0.5); -fx-border-color: #6a767f; -fx-border-width: 3; -fx-border-radius: 15; -fx-background-radius: 15;">
+            <VBox fx:id="shipSelectVbox" alignment="BOTTOM_CENTER" fillWidth="false" layoutX="12.0" layoutY="318.0" prefHeight="717.0" prefWidth="486.0" spacing="25.0" style="-fx-background-color: rgba(15, 47, 66,0.5); -fx-border-color: #6a767f; -fx-border-width: 3; -fx-border-radius: 15; -fx-background-radius: 15;">
                <children>
                   <HBox fx:id="hBoxFragatas" alignment="BOTTOM_CENTER" fillHeight="false" prefHeight="77.0" prefWidth="473.0" spacing="25.0">
                      <VBox.margin>
@@ -58,7 +58,7 @@
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="file:/C:/Users/Windows%2010%20Pro/IdeaProjects/mini_proyecto_3_FPOE/src/main/resources/com/example/miniproyecto_3_battlership/Image/random_button.png" />
+                        <Image url="@Image/random_button.png" />
                      </source>
                   </ImageInput>
                </effect>
@@ -146,7 +146,7 @@
                         <Font name="HotelDeParisXe" size="30.0" />
                      </font>
                   </Label>
-                  <Label text="d" textFill="#f2f2f2" GridPane.columnIndex="4">
+                  <Label text="D" textFill="#f2f2f2" GridPane.columnIndex="4">
                      <font>
                         <Font name="HotelDeParisXe" size="30.0" />
                      </font>

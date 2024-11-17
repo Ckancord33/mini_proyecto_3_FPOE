@@ -1,10 +1,12 @@
 package com.example.miniproyecto_3_battlership.model.ships;
 
+import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 public class Ship extends Pane {
-    protected Rectangle body;
+    protected Group shapesGroup = new Group();
+    protected Rectangle body = new Rectangle();
     protected boolean isSelect;
     protected boolean isHorizontal = true;
     protected int size;

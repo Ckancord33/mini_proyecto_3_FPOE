@@ -1,5 +1,7 @@
 package com.example.miniproyecto_3_battlership.controller;
 
+import com.example.miniproyecto_3_battlership.model.Player.PlayerBot;
+import com.example.miniproyecto_3_battlership.model.Player.PlayerPerson;
 import com.example.miniproyecto_3_battlership.model.game.Game;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
@@ -30,6 +32,8 @@ import java.util.Objects;
 public class GameController {
 
     private Game game;
+    private PlayerBot playerBot;
+    private PlayerPerson playerPerson;
 
 
     @FXML
@@ -68,6 +72,7 @@ public class GameController {
 
 
     public void initialize() {
+
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         anchorPaneLeft.setTranslateX(screenWidth);
 
@@ -83,7 +88,6 @@ public class GameController {
         newStageTransition.play();
 
 
-        //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
 
 
@@ -98,17 +102,17 @@ public class GameController {
         gameBorderPane.setBackground(new Background(background));
 
         createBorders();
-//        createBordersGridPaneGame();
+
         game = new Game();
-        game.setMatrix();
+        playerBot = game.getPlayerBot();
+        playerBot.setMatrix();
         boolean error = true;
         do {
             try {
-
-                game.generateGameBot();
+                playerBot.generateBotGame();
                 error = false;
             } catch (IndexOutOfBoundsException e) {
-                game.clearMatriz();
+                playerBot.clearMatrix();
                 System.out.println("Error, intentando nuevamente");
             }
         } while (error);
@@ -169,7 +173,7 @@ public class GameController {
 
 
     @FXML
-    void onHandleMousePressedGame(MouseEvent event) {
+    void onHandleMousePressedGameEnemy(MouseEvent event) {
         double cellWidth = gridPaneGame.getWidth() / gridPaneGame.getColumnCount();
         double cellHeight = gridPaneGame.getHeight() / gridPaneGame.getRowCount();
 
@@ -181,7 +185,7 @@ public class GameController {
         int column = (int) (x / cellWidth);
         int row = (int) (y / cellHeight);
 
-        matriz = game.getMatriz();
+        matriz = playerBot.getMatriz();
         if(row != 0 && column != 0) {
             if (matriz.get(row-1).get(column-1) == 1) {
                 System.out.println("PUM LE ATINASTE");
@@ -217,7 +221,6 @@ public class GameController {
             }
         }
 
-        System.out.println("Clic en la celda: columna " + column + ", fila " + row);
     }
 
     public void setGridPaneShips(GridPane gridPaneShips, ArrayList <Ship> ships){
@@ -261,53 +264,6 @@ public class GameController {
             }
         }
     }
-//
-//    public void putShips(int[][] positionHeadShips){
-//        int[] nShips = {0,0,0,0};
-//        for (int row = 0; row < 10; row++) {
-//            for (int col = 0; col < 10; col++) {
-//                switch (positionHeadShips[row][col] ){
-//                    case 1:
-//                        gridPaneShips.add(fragatas[nShips[0]], col+1, row+1);
-//                        nShips[0]++;
-//                        break;
-//                    case 2:
-//                        addShipsGridPaneShips(destructores[nShips[1]], row, col);
-//                        nShips[1]++;
-//                        break;
-//                    case 3:
-//                        addShipsGridPaneShips(submarinos[nShips[2]], row, col);
-//                        nShips[2]++;
-//                        break;
-//                    case 4:
-//                        addShipsGridPaneShips(portaaviones[nShips[3]], row, col);
-//                        nShips[3]++;
-//                        break;
-//                }
-//            }
-//        }
-//    }
-//
-//    public void addShipsGridPaneShips(Ship ship, int row, int col) {
-//        if (ship.isHorizontal()) {
-//            gridPaneShips.add(ship, col -ship.getSize() +2, row+1);
-//            GridPane.setRowSpan(ship, 0);
-//            GridPane.setColumnSpan(ship, ship.getSize());
-//        } else {
-//            gridPaneShips.add(ship, col+1, row - ship.getSize()+2);
-//            GridPane.setColumnSpan(ship, 1);
-//            GridPane.setRowSpan(ship, ship.getSize());
-//        }
-//    }
-
-    public void imprimirMatriz(int[][] shipsSelected) {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                System.out.print(shipsSelected[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     public void createBorders() {
         double cellWidth = 38.18;
@@ -324,6 +280,12 @@ public class GameController {
         }
     }
 
+    // HERE WILL BE THE WHOLE GAME
+    public void gameTurn(){
+        do{
+            System.out.println("hola");
+        }while(game.verifyWinner());
+    }
 
 
     @FXML
