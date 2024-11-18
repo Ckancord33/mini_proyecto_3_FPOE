@@ -2,6 +2,7 @@ package com.example.miniproyecto_3_battlership.controller;
 
 import com.example.miniproyecto_3_battlership.model.sound.Sounds;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
+import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
@@ -133,8 +135,12 @@ public class WelcomeController {
         btnHoverStyle(btnCredits, 4);
         btnHoverStyle(btnQuitGame, 5);
 
+        doesExist("save.ser");
+
         samuelVoice = new Sounds();
         samuelVoice.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mivoice2.wav");
+
+
 
 
     }
@@ -142,6 +148,15 @@ public class WelcomeController {
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
         GameSelectionStage.getInstance();
         WelcomeStage.deleteInstance();
+    }
+
+    public void doesExist(String path){
+        File file = new File(path);
+        if(file.exists()){
+            btnContinue.setDisable(false);
+        }else{
+            btnContinue.setDisable(true);
+        }
     }
 
     @FXML
@@ -183,6 +198,8 @@ public class WelcomeController {
 
         });
 
+
+
         VBox contentBox = new VBox(1);
         contentBox.getChildren().addAll(contentText,samuelLink, nicolasLink, juanLink);
         contentBox.getChildren().forEach(child -> child.getStyleClass().add("vbox-child"));
@@ -196,6 +213,13 @@ public class WelcomeController {
 
         alert.showAndWait();
 
+    }
+
+
+    @FXML
+    void onHandleContinueGame(ActionEvent event) throws IOException {
+        GameStage.getInstance().getGameController().Continue();
+        WelcomeStage.deleteInstance();
     }
 
     @FXML

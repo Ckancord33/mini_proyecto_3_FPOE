@@ -65,6 +65,7 @@ public class GameSelectionController {
     Submarino[] submarinos = new Submarino[2];
     Portaaviones[] portaaviones = new Portaaviones[1];
     ArrayList <Ship> ships = new ArrayList<>();
+    ArrayList <int[]> shipsPosition = new ArrayList<>();
 
     private Ship shipSelected;
     private final int[][] shipsSelected = new int[10][10];
@@ -153,6 +154,18 @@ public class GameSelectionController {
 
         infoLabel.setText("Teniente seleccione sus barcos");
         setCharacter();
+    }
+
+    public void shipPositions(){
+        for (int i = 0; i < ships.size(); i++) {
+            Ship ship = ships.get(i);
+            int row = ship.getPosition()[0];
+            int col = ship.getPosition()[1];
+            int size = ship.getSize();
+            int horizontal = ship.isHorizontal() ? 1 : 0;
+            shipsPosition.add(new int[]{row, col, size, horizontal});
+
+        }
     }
 
     public void setCharacter(){
@@ -524,12 +537,14 @@ public class GameSelectionController {
         transitionMiddle.play();
         moveLeft.setInterpolator(Interpolator.EASE_BOTH);
 
+        shipPositions();
+
         fadeOut.setOnFinished(event2 -> {
             Platform.runLater(() -> {
                 PauseTransition pause = new PauseTransition(Duration.seconds(.3));
                 pause.setOnFinished(event4 -> {
                     try {
-                        GameStage.getInstance().getGameController().setGridPaneShips(gridPaneShips, ships);
+                        GameStage.getInstance().getGameController().setGridPaneShips(shipsPosition);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

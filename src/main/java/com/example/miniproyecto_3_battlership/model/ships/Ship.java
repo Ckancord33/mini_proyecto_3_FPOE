@@ -7,7 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Ship extends Pane {
+import java.io.Serializable;
+
+public class Ship extends Pane implements Serializable {
     protected Group shapesGroup = new Group();
     protected Rectangle body = new Rectangle();
     protected boolean isSelect;

@@ -1,9 +1,10 @@
 package com.example.miniproyecto_3_battlership.model.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PlayerBot extends APlayer{
+public class PlayerBot extends APlayer implements Serializable {
 
     private final ArrayList<ArrayList<Integer>> shipsPositionMatrixBot = new ArrayList<>();
 
