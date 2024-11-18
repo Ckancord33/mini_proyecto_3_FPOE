@@ -24,7 +24,7 @@
                         <Image url="@Image/button_hover_desing.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="btnContinue" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandlePlayGame" prefHeight="49.0" prefWidth="150.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="Continue" textFill="WHITE" wrapText="true">
+                  <Button fx:id="btnContinue" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onHandleContinueGame" prefHeight="49.0" prefWidth="150.0" style="-fx-background-color: Transparent;" styleClass="label-hover" stylesheets="@Css/css.css" text="Continue" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="HotelDeParis" size="30.0" />
                      </font>

@@ -3,6 +3,8 @@ package com.example.miniproyecto_3_battlership.controller;
 import com.example.miniproyecto_3_battlership.model.Player.PlayerBot;
 import com.example.miniproyecto_3_battlership.model.Player.PlayerPerson;
 import com.example.miniproyecto_3_battlership.model.game.Game;
+import com.example.miniproyecto_3_battlership.model.serializable.Save;
+import com.example.miniproyecto_3_battlership.model.serializable.SerializableFileHandler;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
@@ -10,6 +12,7 @@ import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -21,26 +24,28 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class GameController {
+public class GameController implements Serializable {
 
     private Game game;
     private PlayerBot playerBot;
     private PlayerPerson playerPerson;
+    private SerializableFileHandler serializableFileHandler = new SerializableFileHandler();
 
 
     @FXML
     private GridPane gridPaneGame;
 
-    @FXML
     private GridPane gridPaneShips;
 
     @FXML
@@ -72,6 +77,8 @@ public class GameController {
     Submarino[] submarinos = new Submarino[2];
     Portaaviones[] portaaviones = new Portaaviones[1];
     private ArrayList<ArrayList<Integer>> matriz;
+    private ArrayList<Ship> ship = new ArrayList<>();
+    private Save save;
 
 
 
@@ -92,6 +99,11 @@ public class GameController {
 
         createBorders();
 
+    }
+
+    public void setGridPaneShips(ArrayList <int[]> shipsPositions){
+        animationIn();
+
         game = new Game();
         playerBot = game.getPlayerBot();
         playerBot.setMatrix();
@@ -108,6 +120,111 @@ public class GameController {
 
         setCharacter();
         setEnemy();
+
+        save = new Save(shipsPositions, game);
+        ship = save.getShip();
+        createGridPaneGame();
+
+        for(Node node : gridPaneShips.getChildren()){
+            node.setOnMouseClicked(null);
+            node.setOnMouseEntered(null);
+            node.setOnMouseExited(null);
+        }
+        gridPaneShips.setStyle("-fx-cursor: default;");
+        gridPaneShips.setLayoutX(-102);
+        gridPaneShips.setLayoutY(199);
+        anchorPaneLeft.getChildren().add(1,gridPaneShips);
+
+        serializableFileHandler.serialize("save.ser", save);
+    }
+
+    public void Continue(){
+        save = (Save) serializableFileHandler.deserialize("save.ser");
+        game = save.getGame();
+        playerBot = game.getPlayerBot();
+        ship = save.getShip();
+        setCharacter();
+        setEnemy();
+        createGridPaneGame();
+        gridPaneShips.setStyle("-fx-cursor: default;");
+        gridPaneShips.setLayoutX(-102);
+        gridPaneShips.setLayoutY(199);
+        anchorPaneLeft.getChildren().add(1,gridPaneShips);
+
+    }
+
+    public void createGridPaneGame(){
+        gridPaneShips = new GridPane();
+        gridPaneShips.setPrefSize(700.0, 700.0);
+        gridPaneShips.setCursor(Cursor.HAND);
+        for (int i = 0; i < 11; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setHalignment(javafx.geometry.HPos.CENTER);
+            column.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+            column.setMinWidth(10.0);
+            column.setPrefWidth(100.0);
+            gridPaneShips.getColumnConstraints().add(column);
+        }
+
+        // Add row constraints
+        for (int i = 0; i < 11; i++) {
+            RowConstraints row = new RowConstraints();
+            row.setValignment(javafx.geometry.VPos.CENTER);
+            row.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+            row.setMinHeight(10.0);
+            row.setPrefHeight(30.0);
+            gridPaneShips.getRowConstraints().add(row);
+        }
+
+        // Add column labels (A-J)
+        String[] columnLabels = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+        for (int i = 0; i < columnLabels.length; i++) {
+            Label label = new Label(columnLabels[i]);
+            label.setTextFill(javafx.scene.paint.Color.web("#f2f2f2"));
+            label.setFont(new javafx.scene.text.Font("HotelDeParisXe", 30.0));
+            GridPane.setColumnIndex(label, i + 1);
+            gridPaneShips.getChildren().add(label);
+        }
+
+        // Add row labels (1-10)
+        for (int i = 1; i <= 10; i++) {
+            Label label = new Label(String.valueOf(i));
+            label.setTextFill(javafx.scene.paint.Color.web("#f5f5f5"));
+            label.setFont(new Font("HotelDeParisXe", 30.0));
+            GridPane.setRowIndex(label, i);
+            gridPaneShips.getChildren().add(label);
+        }
+        double cellWidth = 63.7;
+        double cellHeight = 63.7;
+        gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
+        for (int rows = 1; rows <= 10; rows++) {
+            for (int col = 1; col <= 10; col++) {
+                Rectangle cell = new Rectangle(cellWidth, cellHeight);
+                cell.setFill(Color.TRANSPARENT);
+                cell.getStyleClass().add("cell");
+                gridPaneShips.add(cell, col, rows);
+            }
+        }
+
+        for(int i = 0; i < ship.size(); i++){
+            Ship shipSelected = this.ship.get(i);
+            int row = shipSelected.getPosition()[0] + 1;
+            int col = shipSelected.getPosition()[1] + 1;
+            try {
+                if (shipSelected.isHorizontal()) {
+                    gridPaneShips.add(shipSelected, col - shipSelected.getSize() + 1, row);
+                    GridPane.setRowSpan(shipSelected, 0);
+                    GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+                } else {
+                    gridPaneShips.add(shipSelected, col, row - shipSelected.getSize() + 1);
+                    GridPane.setColumnSpan(shipSelected, 0);
+                    GridPane.setRowSpan(shipSelected, shipSelected.getSize());
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
     }
 
     private void setEnemy() {
@@ -253,21 +370,7 @@ public class GameController {
         }
     }
 
-    public void setGridPaneShips(GridPane gridPaneShipsGame, ArrayList <Ship> ships){
-        setShips(ships);
-        this.gridPaneShips = gridPaneShipsGame;
-        animationIn();
-        for(Node node : gridPaneShips.getChildren()){
-            node.setOnMouseClicked(null);
-            node.setOnMouseEntered(null);
-            node.setOnMouseExited(null);
-        }
 
-        gridPaneShips.setStyle("-fx-cursor: default;");
-        gridPaneShips.setLayoutX(-102);
-        gridPaneShips.setLayoutY(199);
-        anchorPaneLeft.getChildren().add(1,gridPaneShips);
-    }
 
     public void animationIn(){
 
@@ -302,36 +405,36 @@ public class GameController {
 
     }
 
-    public void setShips(ArrayList <Ship> ships ) {
-        int[] nShips = {0,0,0,0};
-        for (Ship ship : ships) {
-            if (ship instanceof Fragata) {
-                fragatas[nShips[0]] = (Fragata) ship;
-                fragatas[nShips[0]].originDesing();
-
-                nShips[0]++;
-            }
-            if (ship instanceof Destructor) {
-                destructores[nShips[1]] = (Destructor) ship;
-                destructores[nShips[1]].originDesing();
-
-                nShips[1]++;
-            }
-            if (ship instanceof Submarino) {
-                submarinos[nShips[2]] = (Submarino) ship;
-                submarinos[nShips[2]].originDesing();
-
-                nShips[2]++;
-            }
-            if (ship instanceof Portaaviones) {
-                portaaviones[nShips[3]] = (Portaaviones) ship;
-                portaaviones[nShips[3]].originDesing();
-
-                nShips[3]++;
-            }
-
-        }
-    }
+//    public void setShips(ArrayList <Ship> ships ) {
+//        int[] nShips = {0,0,0,0};
+//        for (Ship ship : ships) {
+//            if (ship instanceof Fragata) {
+//                fragatas[nShips[0]] = (Fragata) ship;
+//                fragatas[nShips[0]].originDesing();
+//
+//                nShips[0]++;
+//            }
+//            if (ship instanceof Destructor) {
+//                destructores[nShips[1]] = (Destructor) ship;
+//                destructores[nShips[1]].originDesing();
+//
+//                nShips[1]++;
+//            }
+//            if (ship instanceof Submarino) {
+//                submarinos[nShips[2]] = (Submarino) ship;
+//                submarinos[nShips[2]].originDesing();
+//
+//                nShips[2]++;
+//            }
+//            if (ship instanceof Portaaviones) {
+//                portaaviones[nShips[3]] = (Portaaviones) ship;
+//                portaaviones[nShips[3]].originDesing();
+//
+//                nShips[3]++;
+//            }
+//
+//        }
+//    }
 
     public void createBorders() {
         double cellWidth = 63.7;
