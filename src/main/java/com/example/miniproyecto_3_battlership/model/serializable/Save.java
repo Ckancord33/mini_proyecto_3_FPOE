@@ -9,14 +9,20 @@ import java.util.ArrayList;
 public class Save implements Serializable {
     private ArrayList<int[]> shipPositions;
     private Game game;
+    private int[][] playerMatrix;
 
-    public Save(ArrayList<int[]> ship, Game game) {
+    public Save(ArrayList<int[]> ship, Game game, int[][] playerMatrix) {
         this.shipPositions = ship;
         this.game = game;
+        this.playerMatrix = playerMatrix;
     }
 
     public Game getGame() {
         return game;
+    }
+
+    public int[][] getPlayerMatrix() {
+        return playerMatrix;
     }
 
     public ArrayList<Ship> getShip() {

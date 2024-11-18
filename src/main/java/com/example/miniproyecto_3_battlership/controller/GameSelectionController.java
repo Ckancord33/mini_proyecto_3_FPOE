@@ -55,7 +55,6 @@ public class GameSelectionController {
     private Rectangle rectangleLabelSelection;
 
 
-
     private Color colorDefault = Color.TRANSPARENT;
 
     private Color colorhover = Color.rgb(0, 0, 0, 0.5);
@@ -64,8 +63,8 @@ public class GameSelectionController {
     Destructor[] destructores = new Destructor[3];
     Submarino[] submarinos = new Submarino[2];
     Portaaviones[] portaaviones = new Portaaviones[1];
-    ArrayList <Ship> ships = new ArrayList<>();
-    ArrayList <int[]> shipsPosition = new ArrayList<>();
+    ArrayList<Ship> ships = new ArrayList<>();
+    ArrayList<int[]> shipsPosition = new ArrayList<>();
 
     private Ship shipSelected;
     private final int[][] shipsSelected = new int[10][10];
@@ -97,7 +96,6 @@ public class GameSelectionController {
 
     @FXML
     private Button randomButton;
-
 
 
     private final Rectangle[][] shadowShipsSelection = new Rectangle[10][10];
@@ -156,7 +154,7 @@ public class GameSelectionController {
         setCharacter();
     }
 
-    public void shipPositions(){
+    public void shipPositions() {
         for (int i = 0; i < ships.size(); i++) {
             Ship ship = ships.get(i);
             int row = ship.getPosition()[0];
@@ -168,37 +166,37 @@ public class GameSelectionController {
         }
     }
 
-    public void setCharacter(){
+    public void setCharacter() {
         String nameCharacterActual = WelcomeController.getNameCharacter();
         Image imageCharacterActual;
         nameCharacter.setText(nameCharacterActual);
-        if (nameCharacterActual == "Coronel Sander"){
+        if (nameCharacterActual == "Coronel Sander") {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "Almte. Zemansky"){
+        } else if (nameCharacterActual == "Almte. Zemansky") {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Mayor Lovelace"){
+        } else if (nameCharacterActual == "Mayor Lovelace") {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "Coronela Rosalind"){
+        } else if (nameCharacterActual == "Coronela Rosalind") {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "????"){
+        } else if (nameCharacterActual == "????") {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "???"){
+        } else if (nameCharacterActual == "???") {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Teniente Ampudia"){
+        } else if (nameCharacterActual == "Teniente Ampudia") {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Capitana Cordoba"){
+        } else if (nameCharacterActual == "Capitana Cordoba") {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
             imgCharacter.setImage(imageCharacterActual);
@@ -206,7 +204,7 @@ public class GameSelectionController {
     }
 
     @FXML
-    public void onHandleRandomButton(){
+    public void onHandleRandomButton() {
 
         RotateTransition rotateTransition = new RotateTransition();
         rotateTransition.setNode(randomButton);
@@ -232,10 +230,10 @@ public class GameSelectionController {
 
         rotateTransition.setOnFinished(event2 -> {
             int randomRow, randomCol, randomHorientation;
-            if(shipSelected != null){
+            if (shipSelected != null) {
                 shipSelected(shipSelected);
             }
-            for(int i = 0; i < ships.size(); i++) {
+            for (int i = 0; i < ships.size(); i++) {
                 shipSelected(ships.get(i));
                 do {
                     randomRow = (int) (Math.random() * 9);
@@ -255,8 +253,6 @@ public class GameSelectionController {
             infoLabel.setText("Teniente se pusieron sus barcos de manera estrategica");
 
         });
-
-
 
 
     }
@@ -297,20 +293,20 @@ public class GameSelectionController {
     }
 
     void onHandleBorderPaneKeyTyped2() {
-            if (!shipSelected.isPlaced()) {
-                shipSelected.rotateShip();
-                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
-            } else {
-                shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
-            }
-            if (actualShadowCol != -1) {
-                for (int i = 0; i < shadowShipsSelection.length; i++) {
-                    for (int j = 0; j < shadowShipsSelection[i].length; j++) {
-                        shadowShipsSelection[i][j].setFill(Color.TRANSPARENT);
-                    }
+        if (!shipSelected.isPlaced()) {
+            shipSelected.rotateShip();
+            shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+        } else {
+            shipSelected.setPotentialRotate(!shipSelected.potentialRotate());
+        }
+        if (actualShadowCol != -1) {
+            for (int i = 0; i < shadowShipsSelection.length; i++) {
+                for (int j = 0; j < shadowShipsSelection[i].length; j++) {
+                    shadowShipsSelection[i][j].setFill(Color.TRANSPARENT);
                 }
-                onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
             }
+            onHandleMouseEnteredShips(actualShadowRow, actualShadowCol);
+        }
     }
 
 
@@ -446,7 +442,7 @@ public class GameSelectionController {
                 }
             } catch (IllegalArgumentException e) {
                 shipSelected.setPosition(row - 1, col - 1);
-                positionsHeadShips[row-1][col-1] = shipSelected.getSize();
+                positionsHeadShips[row - 1][col - 1] = shipSelected.getSize();
                 for (int i = 0; i < shipSelected.getSize(); i++) {
                     if (shipSelected.isHorizontal()) {
                         shipsSelected[shipSelected.getPosition()[0]][shipSelected.getPosition()[1] - i] = 1;
@@ -541,15 +537,11 @@ public class GameSelectionController {
 
         fadeOut.setOnFinished(event2 -> {
             Platform.runLater(() -> {
-                PauseTransition pause = new PauseTransition(Duration.seconds(.3));
-                pause.setOnFinished(event4 -> {
-                    try {
-                        GameStage.getInstance().getGameController().setGridPaneShips(shipsPosition);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                pause.play();
+                try {
+                    GameStage.getInstance().getGameController().setGridPaneShips(shipsPosition, shipsSelected);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         });
 
@@ -560,7 +552,7 @@ public class GameSelectionController {
 
     }
 
-    public void resetShadow(){
+    public void resetShadow() {
         for (Rectangle[] rectangle : shadowShipsSelection) {
             for (Rectangle r : rectangle) {
                 r.setFill(colorDefault);

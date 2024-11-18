@@ -10,7 +10,6 @@ import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.animation.*;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -26,10 +25,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,6 +75,7 @@ public class GameController implements Serializable {
     Portaaviones[] portaaviones = new Portaaviones[1];
     private ArrayList<ArrayList<Integer>> matriz;
     private ArrayList<Ship> ship = new ArrayList<>();
+    private Rectangle[][] enemyShadow = new Rectangle[10][10];
     private Save save;
 
 
@@ -97,16 +95,19 @@ public class GameController implements Serializable {
 
         gameBorderPane.setBackground(new Background(background));
 
-        createBorders();
+        createEnemuShadows();
 
     }
 
-    public void setGridPaneShips(ArrayList <int[]> shipsPositions){
+    public void setGridPaneShips(ArrayList <int[]> shipsPositions, int[][] shipsSelected){
         animationIn();
 
         game = new Game();
         playerBot = game.getPlayerBot();
+        playerPerson = game.getPlayerPerson();
+        playerPerson.setMatrix();
         playerBot.setMatrix();
+        playerPerson.setChosenMatrix(shipsSelected);
         boolean error = true;
         do {
             try {
@@ -121,7 +122,7 @@ public class GameController implements Serializable {
         setCharacter();
         setEnemy();
 
-        save = new Save(shipsPositions, game);
+        save = new Save(shipsPositions, game, shipsSelected);
         ship = save.getShip();
         createGridPaneGame();
 
@@ -279,67 +280,19 @@ public class GameController implements Serializable {
 
 
     @FXML
-    void onHandleMousePressedGameEnemy(MouseEvent event) {
-        double cellWidth = gridPaneGame.getWidth() / gridPaneGame.getColumnCount();
-        double cellHeight = gridPaneGame.getHeight() / gridPaneGame.getRowCount();
-
-        double x = event.getX();
-        double y = event.getY();
-
-        int column = (int) (x / cellWidth);
-        int row = (int) (y / cellHeight);
-
-        matriz = playerBot.getMatriz();
-        if(row != 0 && column != 0) {
-            if (matriz.get(row-1).get(column-1) != 0) {
-                System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(0,0,30, Color.DARKGRAY);
-                gridPaneGame.add(circle, column, row);
-                playerTurn();
-                infoLabel.setText("La maquina esta pensando...");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event2 -> {
-                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
-                });
-                pause.play();
-
-            } else{
-                System.out.println("NO LE ATINASTE");
-                Group group = new Group();
-                Line line1 = new Line(9, 9, 29, 29);
-                Line line2 = new Line(29, 9, 9, 29);
-                line1.setStroke(Color.RED);
-                line1.setStrokeWidth(5);
-                line2.setStroke(Color.RED);
-                line2.setStrokeWidth(5);
-                group.getChildren().addAll(line1, line2);
-                gridPaneGame.add(group, column, row);
-                playerTurn();
-                infoLabel.setText("La maquina esta pensando...");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event2 -> {
-                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
-                });
-                pause.play();
-            }
-        }
-
-
-    }
-
-    @FXML
     void botAttack(int row, int column) {
 
-        matriz = playerBot.getMatriz();
+        matriz = playerPerson.getMatrix();
         if(row != 0 && column != 0) {
-            if (matriz.get(row-1).get(column-1) != 0) {
+            if (matriz.get(row-1).get(column-1) != 0)  {
                 System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(0,0,20, Color.DARKGRAY);
+                Circle circle = new Circle(0,0,20, Color.RED);
                 gridPaneShips.add(circle, column, row);
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
                     playerTurn();
                 });
+                playerPerson.changeMatrix(row-1, column-1, -1);
                 pause.play();
 
             } else{
@@ -353,6 +306,7 @@ public class GameController implements Serializable {
                 line2.setStrokeWidth(5);
                 group.getChildren().addAll(line1, line2);
                 gridPaneShips.add(group, column, row);
+                playerPerson.changeMatrix(row-1, column-1, 2);
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
                     playerTurn();
@@ -400,55 +354,80 @@ public class GameController implements Serializable {
         ParallelTransition newStageTransition2 = new ParallelTransition(fadeIn2, moveUp);
         newStageTransition2.play();
 
-        moveLeft.setInterpolator(Interpolator.EASE_BOTH);
-        moveUp.setInterpolator(Interpolator.EASE_BOTH);
-
     }
 
-//    public void setShips(ArrayList <Ship> ships ) {
-//        int[] nShips = {0,0,0,0};
-//        for (Ship ship : ships) {
-//            if (ship instanceof Fragata) {
-//                fragatas[nShips[0]] = (Fragata) ship;
-//                fragatas[nShips[0]].originDesing();
-//
-//                nShips[0]++;
-//            }
-//            if (ship instanceof Destructor) {
-//                destructores[nShips[1]] = (Destructor) ship;
-//                destructores[nShips[1]].originDesing();
-//
-//                nShips[1]++;
-//            }
-//            if (ship instanceof Submarino) {
-//                submarinos[nShips[2]] = (Submarino) ship;
-//                submarinos[nShips[2]].originDesing();
-//
-//                nShips[2]++;
-//            }
-//            if (ship instanceof Portaaviones) {
-//                portaaviones[nShips[3]] = (Portaaviones) ship;
-//                portaaviones[nShips[3]].originDesing();
-//
-//                nShips[3]++;
-//            }
-//
-//        }
-//    }
-
-    public void createBorders() {
+    public void createEnemuShadows() {
         double cellWidth = 63.7;
         double cellHeight = 63.7;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
-
         for (int rows = 1; rows <= 10; rows++) {
             for (int col = 1; col <= 10; col++) {
                 Rectangle cell = new Rectangle(cellWidth, cellHeight);
                 cell.setFill(Color.TRANSPARENT);
                 cell.getStyleClass().add("cell");
-                gridPaneGame.add(cell, col, rows);
+                enemyShadow[rows - 1][col - 1] = cell;
+                int finalRows = rows - 1;
+                int finalCol = col - 1;
+                enemyShadow[rows - 1][col - 1].setOnMouseEntered(e -> onHandleMouseEnteredShips(finalRows, finalCol));
+                enemyShadow[rows - 1][col - 1].setOnMouseExited(e -> onHandleMouseExitedShips(finalRows, finalCol));
+                enemyShadow[rows - 1][col - 1].setOnMouseClicked(e -> onHandleMouseClickedShips(finalRows, finalCol));
+                gridPaneGame.add(enemyShadow[rows - 1][col - 1], col, rows);
             }
         }
+    }
+
+    public void onHandleMouseEnteredShips(int row, int col) {
+        Color colorhover = Color.rgb(0, 0, 0, 0.5);
+        enemyShadow[row][col].setFill(colorhover);
+    }
+
+    public void onHandleMouseClickedShips(int row, int column) {
+        row += 1;
+        column += 1;
+
+        matriz = playerBot.getMatrix();
+        if(row != 0 && column != 0) {
+            if (matriz.get(row-1).get(column-1) != 0) {
+                System.out.println("PUM LE ATINASTE");
+                Circle circle = new Circle(0,0,30, Color.DARKGRAY);
+                gridPaneGame.add(circle, column, row);
+                playerTurn();
+                infoLabel.setText("La maquina esta pensando...");
+                playerBot.changeMatrix(row -1, column -1, -1);
+                enemyShadow[row-1][column-1].setOnMouseClicked(null);
+                enemyShadow[row-1][column-1].setStyle("-fx-cursor: default;");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event2 -> {
+                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                });
+                pause.play();
+
+            } else{
+                System.out.println("NO LE ATINASTE");
+                Group group = new Group();
+                Line line1 = new Line(9, 9, 29, 29);
+                Line line2 = new Line(29, 9, 9, 29);
+                line1.setStroke(Color.RED);
+                line1.setStrokeWidth(5);
+                line2.setStroke(Color.RED);
+                line2.setStrokeWidth(5);
+                group.getChildren().addAll(line1, line2);
+                gridPaneGame.add(group, column, row);
+                playerTurn();
+                infoLabel.setText("La maquina esta pensando...");
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event2 -> {
+                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                });
+                pause.play();
+            }
+        }
+
+    }
+
+    public void onHandleMouseExitedShips(int row, int col) {
+        Color colorDefault = Color.TRANSPARENT;
+        enemyShadow[row][col].setFill(colorDefault);
     }
 
 
