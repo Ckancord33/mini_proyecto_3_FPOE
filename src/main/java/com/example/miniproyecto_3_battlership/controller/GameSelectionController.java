@@ -525,7 +525,7 @@ public class GameSelectionController {
         fadeOut2.setFromValue(1.0);
         fadeOut2.setToValue(0.7);
 
-        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.3), anchorPaneMiddle);
+        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.5), anchorPaneMiddle);
         moveLeft.setFromX(0);
         moveLeft.setToX(140);
 
