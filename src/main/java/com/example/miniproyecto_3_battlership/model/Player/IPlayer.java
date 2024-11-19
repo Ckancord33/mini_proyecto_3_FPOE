@@ -6,11 +6,9 @@ public interface IPlayer {
     void setMatrix();
     ArrayList<ArrayList<Integer>> getMatrix();
     void clearMatrix();
-    void changeValuesMatrix(int[][] matrix);
+    void changeMatrix(int row, int col,int value);
 
     void setChosenMatrix(int[][] matrix);
     void generateBotGame();
     void botIntelligence();
-
-    void gameTurnPlayer();
 }

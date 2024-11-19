@@ -18,6 +18,139 @@
       <AnchorPane fx:id="anchorPaneLeft" prefHeight="1080.0" prefWidth="652.0" BorderPane.alignment="CENTER">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0f2e4093" height="636.36" layoutX="-38.0" layoutY="263.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="636.36" />
+            <GridPane fx:id="gridPaneShips" layoutX="-102.0" layoutY="199.0" prefHeight="700.0" prefWidth="700.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="A" textFill="WHITE" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="B" textFill="WHITE" GridPane.columnIndex="2">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="C" textFill="WHITE" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="D" textFill="WHITE" GridPane.columnIndex="4">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="E" textFill="WHITE" GridPane.columnIndex="5">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="F" textFill="WHITE" GridPane.columnIndex="6">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="G" textFill="WHITE" GridPane.columnIndex="7">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="H" textFill="WHITE" GridPane.columnIndex="8">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="I" textFill="WHITE" GridPane.columnIndex="9">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="J" textFill="WHITE" GridPane.columnIndex="10">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="1" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="2" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="3" textFill="WHITE" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="4" textFill="WHITE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="5" textFill="WHITE" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="6" textFill="WHITE" GridPane.rowIndex="6">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="7" textFill="WHITE" GridPane.rowIndex="7">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="8" textFill="WHITE" GridPane.rowIndex="8">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="9" textFill="WHITE" GridPane.rowIndex="9">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label text="10" textFill="WHITE" GridPane.rowIndex="10">
+                     <font>
+                        <Font name="Berlin Sans FB" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </GridPane>
             <ImageView fx:id="imgVillain" fitHeight="221.0" fitWidth="225.0" layoutX="279.0" layoutY="862.0" pickOnBounds="true" preserveRatio="true" translateX="-5.0">
                <image>
                   <Image url="@Image/gameCharacter5.png" />
@@ -76,7 +209,7 @@
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00000066" height="85.0" layoutX="-14.0" layoutY="942.0" stroke="#6a767f" strokeType="INSIDE" strokeWidth="2.0" style="-fx-arc-height: 40; -fx-arc-width: 40;" width="764.0" />
-            <GridPane fx:id="gridPaneGame" layoutX="-11.0" layoutY="208.0" onMousePressed="#onHandleMousePressedGameEnemy" prefHeight="700.0" prefWidth="700.0">
+            <GridPane fx:id="gridPaneGame" layoutX="-11.0" layoutY="208.0" prefHeight="700.0" prefWidth="700.0">
                <columnConstraints>
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -106,102 +239,102 @@
                <children>
                   <Label text="A" textFill="WHITE" GridPane.columnIndex="1">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="B" textFill="WHITE" GridPane.columnIndex="2">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="C" textFill="WHITE" GridPane.columnIndex="3">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
-                  <Label text="d" textFill="WHITE" GridPane.columnIndex="4">
+                  <Label text="D" textFill="WHITE" GridPane.columnIndex="4">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="E" textFill="WHITE" GridPane.columnIndex="5">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="F" textFill="WHITE" GridPane.columnIndex="6">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="G" textFill="WHITE" GridPane.columnIndex="7">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="H" textFill="WHITE" GridPane.columnIndex="8">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="I" textFill="WHITE" GridPane.columnIndex="9">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="J" textFill="WHITE" GridPane.columnIndex="10">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="1" textFill="WHITE" GridPane.rowIndex="1">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="2" textFill="WHITE" GridPane.rowIndex="2">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="3" textFill="WHITE" GridPane.rowIndex="3">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="4" textFill="WHITE" GridPane.rowIndex="4">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="5" textFill="WHITE" GridPane.rowIndex="5">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="6" textFill="WHITE" GridPane.rowIndex="6">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="7" textFill="WHITE" GridPane.rowIndex="7">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="8" textFill="WHITE" GridPane.rowIndex="8">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="9" textFill="WHITE" GridPane.rowIndex="9">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                   <Label text="10" textFill="WHITE" GridPane.rowIndex="10">
                      <font>
-                        <Font name="HotelDeParisXe" size="30.0" />
+                        <Font name="Berlin Sans FB" size="30.0" />
                      </font>
                   </Label>
                </children>
