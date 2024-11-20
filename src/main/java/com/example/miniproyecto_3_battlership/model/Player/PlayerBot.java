@@ -1,156 +1,75 @@
 package com.example.miniproyecto_3_battlership.model.Player;
 
+import com.example.miniproyecto_3_battlership.model.exeption.CrossedShipsException;
+import com.example.miniproyecto_3_battlership.model.ships.*;
+import javafx.scene.paint.Color;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class PlayerBot extends APlayer implements Serializable {
 
+    private ArrayList<int[]> enemyShipsInfo = new ArrayList<>(); // [0] = x, [1] = y, [2] = size, [3] = orientation
+
 
     public void generateBotGame(){
-        int fragataNumbers = 0;
-        int destroyerNumbers = 0;
-        int submarineNumbers = 0;
-        int airportCarrierNumbers = 0;
-        int randomRow;
-        int randomCol;
-        int direction;
-        do{
-            randomRow = (int)(Math.random()*9);
-            randomCol = (int)(Math.random()*9);
-            if(shipsMatrix.get(randomRow).get(randomCol)==0){
-                shipsMatrix.get(randomRow).set(randomCol,1);
-                fragataNumbers++;
+        for (int i = 0; i < 4; i++) {
+            enemyShipsInfo.add(new int[]{0,0,1,0});
+        }
+
+        for (int i = 0; i < 3; i++) {
+            enemyShipsInfo.add(new int[]{0,0,2,0});
+        }
+
+        for (int i = 0; i < 2; i++) {
+            enemyShipsInfo.add(new int[]{0,0,3,0});
+        }
+
+        for (int i = 0; i < 1; i++) {
+            enemyShipsInfo.add(new int[]{0,0,4,0});
+        }
+
+        int row, col, randomHorientation;
+        boolean tryAgain;
+        for (int i = 0; i < enemyShipsInfo.size(); i++) {
+            do {
+                tryAgain = false;
+                row = (int) (Math.random() * 9);
+                col = (int) (Math.random() * 9);
+                Random random = new Random();
+                randomHorientation = random.nextInt(2);
+                enemyShipsInfo.get(i)[0] = row;
+                enemyShipsInfo.get(i)[1] = col;
+                enemyShipsInfo.get(i)[3] = randomHorientation;
+                for (int j = 0; j < enemyShipsInfo.get(i)[2]; j++) {
+                    try {
+                        if (randomHorientation == 1) {
+                            if (shipsMatrix.get(row).get(col - j) != 0) {
+                                tryAgain = true;
+                            }
+                        } else {
+                            if (shipsMatrix.get(row - j).get(col) != 0) {
+                                tryAgain = true;
+                            }
+                        }
+                    }catch (IndexOutOfBoundsException e){
+                        tryAgain = true;
+                    }
+                }
+            } while (tryAgain);
+            for (int j = 0; j < enemyShipsInfo.get(i)[2]; j++) {
+                if(enemyShipsInfo.get(i)[3] == 1){
+                    shipsMatrix.get(row).set(col - j, 1);
+                } else {
+                    shipsMatrix.get(row - j).set(col, 1);
+                }
             }
-        }while (fragataNumbers < 4);
-
-        do{
-            randomRow = (int)(Math.random()*8);
-            randomCol = (int)(Math.random()*8);
-            direction = (int)(Math.random()*3);
-            switch(direction){
-                case 0:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow-1).set(randomCol,1);
-                        destroyerNumbers++;
-                    }
-                    break;
-                case 1:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol+1,1);
-                        destroyerNumbers++;
-                    }
-                    break;
-                case 2:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow+1).set(randomCol,1);
-                        destroyerNumbers++;
-                    }
-                    break;
-                case 3:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol-1,1);
-                        destroyerNumbers++;
-                    }
-
-            }
-
-        }while (destroyerNumbers < 3);
-
-        do{
-            randomRow = (int)(Math.random()*8);
-            randomCol = (int)(Math.random()*8);
-            direction = (int)(Math.random()*3);
-            switch(direction){
-                case 0:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0 && shipsMatrix.get(randomRow-2).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow-1).set(randomCol,1);
-                        shipsMatrix.get(randomRow-2).set(randomCol,1);
-                        submarineNumbers++;
-                    }
-                    break;
-                case 1:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0 && shipsMatrix.get(randomRow).get(randomCol+2)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol+1,1);
-                        shipsMatrix.get(randomRow).set(randomCol+2,1);
-                        submarineNumbers++;
-                    }
-                    break;
-                case 2:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0 && shipsMatrix.get(randomRow+2).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow+1).set(randomCol,1);
-                        shipsMatrix.get(randomRow+2).set(randomCol,1);
-                        submarineNumbers++;
-                    }
-                    break;
-                case 3:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0 && shipsMatrix.get(randomRow).get(randomCol-2)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol-1,1);
-                        shipsMatrix.get(randomRow).set(randomCol-2,1);
-                        submarineNumbers++;
-                    }
-
-            }
-
-        }while (submarineNumbers < 2);
-
-        do{
-            randomRow = (int)(Math.random()*8);
-            randomCol = (int)(Math.random()*8);
-            direction = (int)(Math.random()*3);
-            switch(direction){
-                case 0:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0 && shipsMatrix.get(randomRow-2).get(randomCol)==0 && shipsMatrix.get(randomRow-3).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow-1).set(randomCol,1);
-                        shipsMatrix.get(randomRow-2).set(randomCol,1);
-                        shipsMatrix.get(randomRow-3).set(randomCol,1);
-                        airportCarrierNumbers++;
-                    }
-                    break;
-                case 1:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0 && shipsMatrix.get(randomRow).get(randomCol+2)==0 && shipsMatrix.get(randomRow).get(randomCol+3)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol+1,1);
-                        shipsMatrix.get(randomRow).set(randomCol+2,1);
-                        shipsMatrix.get(randomRow).set(randomCol+3,1);
-                        airportCarrierNumbers++;
-                    }
-                    break;
-                case 2:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0 && shipsMatrix.get(randomRow+2).get(randomCol)==0 && shipsMatrix.get(randomRow+3).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow+1).set(randomCol,1);
-                        shipsMatrix.get(randomRow+2).set(randomCol,1);
-                        shipsMatrix.get(randomRow+3).set(randomCol,1);
-                        airportCarrierNumbers++;
-                    }
-                    break;
-                case 3:
-                    if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0 && shipsMatrix.get(randomRow).get(randomCol-2)==0 && shipsMatrix.get(randomRow).get(randomCol-3)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,1);
-                        shipsMatrix.get(randomRow).set(randomCol-1,1);
-                        shipsMatrix.get(randomRow).set(randomCol-2,1);
-                        shipsMatrix.get(randomRow).set(randomCol-3,1);
-                        airportCarrierNumbers++;
-                    }
-
-            }
-
-        }while (airportCarrierNumbers < 1);
-
-
+        }
     };
 
-    public int[] botIntelligence(ArrayList matrix){
+    public int[] botIntelligence(ArrayList<ArrayList<Integer>> matrix){
        int[]  dpos= new int[2];
        dpos[0]=(int)(Math.random()*9);
        dpos[1]=(int)(Math.random()*9);
@@ -168,6 +87,38 @@ public class PlayerBot extends APlayer implements Serializable {
             }
         }
         return dpos;
+    }
+
+    public ArrayList<Ship> getEnemyShips(){
+        ArrayList<Ship> ships = new ArrayList<>();
+        for(int i = 0; i < enemyShipsInfo.size(); i++) {
+            int[] shipInfo = this.enemyShipsInfo.get(i);
+            int row = shipInfo[0];
+            int col = shipInfo[1];
+            int size = shipInfo[2];
+            int isHorizontal = shipInfo[3];
+
+            Ship shipSelected = new Ship();
+
+            if (size == 1) {
+                shipSelected = new Fragata();
+            }
+            if (size == 2) {
+                shipSelected = new Destructor();
+            }
+            if (size == 3) {
+                shipSelected = new Submarino();
+            }
+            if (size == 4) {
+                shipSelected = new Portaaviones();
+            }
+            if (isHorizontal != 1) {
+                shipSelected.rotateShip();
+            }
+            shipSelected.setPosition(row, col);
+            ships.add(shipSelected);
+        }
+        return ships;
     }
 
 
