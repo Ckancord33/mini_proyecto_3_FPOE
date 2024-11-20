@@ -15,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,13 +28,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
+import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+
 
 public class GameController implements Serializable {
 
@@ -81,9 +85,21 @@ public class GameController implements Serializable {
     private Image image;
     private ImagePattern imagePatter;
 
+    private String nameCharacterActual;
+    private String nameEnemyActual;
+    private int imageEnemyActual;
+
+    private PlainTextFileHandler plainTextFileHandler;
+
 
 
     public void initialize() {
+
+        plainTextFileHandler = new PlainTextFileHandler();
+        String[] data = plainTextFileHandler.readFromFile("character.txt");
+        nameCharacterActual = data[0];
+        nameEnemyActual = data[1];
+        imageEnemyActual = Integer.parseInt(data[2]);
 
         image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/mira.png")));
         imagePatter  = new ImagePattern(image);
@@ -192,10 +208,16 @@ public class GameController implements Serializable {
     }
 
     private void setEnemy() {
-        String[] villanos = {"Zarok", "Varek", "Drakk", "Korr", "Morth", "Tharn", "Vulkar", "Grim", "Raek", "Durn"};
-        lbNameVillain.setText(villanos[(int)(Math.random()*9)]);
-        int villain =(int)(Math.random() * 2);
-        if (villain == 0){
+        if(Objects.equals(nameEnemyActual, " ")){
+            String[] enemys = {"Zarok", "Varek", "Drakk", "Korr", "Morth", "Tharn", "Vulkar", "Grim", "Raek", "Durn"};
+            nameEnemyActual = enemys[(int)(Math.random()*9)];
+            lbNameVillain.setText(nameEnemyActual);
+            imageEnemyActual =(int)(Math.random() * 2);
+            plainTextFileHandler.writeToFile("character.txt", nameCharacterActual + "," + nameEnemyActual + "," + imageEnemyActual );
+        }else{
+            lbNameVillain.setText(nameEnemyActual);
+        }
+        if (imageEnemyActual == 0){
             imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png"))));
         }else{
             imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png"))));
@@ -203,44 +225,41 @@ public class GameController implements Serializable {
 
     }
 
-    public void setCharacter(){
-        PlainTextFileHandler plainTextFileHandler = new PlainTextFileHandler();
-        String[] data = plainTextFileHandler.readFromFile("character.txt");
-        String nameCharacterActual = data[0];
+    public void setCharacter() {
+
         Image imageCharacterActual;
         nameCharacter.setText(nameCharacterActual);
-        if (nameCharacterActual == "Coronel Sander"){
+        if (Objects.equals(nameCharacterActual, "Coronel Sander")) {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "Almte. Zemansky"){
+        } else if (Objects.equals(nameCharacterActual, "Almte. Zemansky")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Mayor Lovelace"){
+        } else if (Objects.equals(nameCharacterActual, "Mayor Lovelace")) {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "Coronela Rosalind"){
+        } else if (Objects.equals(nameCharacterActual, "Coronela Rosalind")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "????"){
+        } else if (Objects.equals(nameCharacterActual, "????")) {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if(nameCharacterActual == "???"){
+        } else if (Objects.equals(nameCharacterActual, "???")) {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Teniente Ampudia"){
+        } else if (Objects.equals(nameCharacterActual, "Teniente Ampudia")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
             imgCharacter.setImage(imageCharacterActual);
-        }else if (nameCharacterActual == "Capitana Cordoba"){
+        } else if (Objects.equals(nameCharacterActual, "Capitana Cordoba")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
             imgCharacter.setImage(imageCharacterActual);
         }
-
     }
 
     public void onHandleMouseClickedShips(int row, int column) {
@@ -421,6 +440,11 @@ public class GameController implements Serializable {
 
         }
 
+        playVideoVictory();
+
+    }
+
+    private void playVideoVictory() {
     }
 
     public void defeat(boolean defeat){
