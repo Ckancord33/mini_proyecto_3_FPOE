@@ -155,7 +155,6 @@ public class GameController implements Serializable {
         createEnemuShadows();
         loadGridPaneShips();
         loadGridPaneGame();
-        createEnemuShadows();
 
     }
 
