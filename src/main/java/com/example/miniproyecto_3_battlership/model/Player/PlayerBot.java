@@ -3,9 +3,15 @@ package com.example.miniproyecto_3_battlership.model.Player;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 public class PlayerBot extends APlayer implements Serializable {
 
+    int [] positionAttack = new int[2];
+    boolean direction = false;
+    Stack<int[]> shots = new Stack<>();
+    int [] lastShot = new int[2];
+    int verifyShot;
 
     public void generateBotGame(){
         int fragataNumbers = 0;
@@ -150,24 +156,36 @@ public class PlayerBot extends APlayer implements Serializable {
 
     };
 
-    public int[] botIntelligence(ArrayList matrix){
-       int[]  dpos= new int[2];
-       dpos[0]=(int)(Math.random()*9);
-       dpos[1]=(int)(Math.random()*9);
-        int[] pos = new int[2];
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-               // if(shipsMatrix.get(i).get(j)==)
-                if(shipsMatrix.get(i).get(j) ==1){
-                    System.out.println("halle un barco");
-                    pos[0]=i+1;
-                    pos[1]=j;
-                    return pos;
-                }
+    public void botIntelligence(ArrayList<ArrayList<Integer>> matrix){
+         lastShot = shots.peek();
+         verifyShot = matrix.get(lastShot[0]).get(lastShot[1]);
+         if(verifyShot == -1){
+             positionAttack[0]= lastShot[0];
+             positionAttack[1]= lastShot[1]-1;
+         }else{
+             generatePositionRandom(matrix);
+         }
+    }
 
-            }
-        }
-        return dpos;
+    public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix){
+        int actualPosition;
+        do{
+            positionAttack[0]=(int)(Math.random()*9 +1);
+            positionAttack[1]=(int)(Math.random()*9 +1);
+            actualPosition = matrix.get(positionAttack[0]).get(positionAttack[1]);
+        }while (actualPosition == 0 );
+    }
+
+    public int[] getPositionRandom(){
+        return positionAttack;
+    }
+
+    public Stack<int[]> getShots(){
+        return shots;
+    }
+
+    public void addShots(){
+        shots.push(positionAttack);
     }
 
 

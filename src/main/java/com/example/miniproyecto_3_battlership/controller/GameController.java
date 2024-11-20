@@ -89,11 +89,15 @@ public class GameController implements Serializable {
     private String nameEnemyActual;
     private int imageEnemyActual;
 
+    private int rowBot , columnbot ;
+
     private PlainTextFileHandler plainTextFileHandler;
 
 
-
     public void initialize() {
+
+        rowBot = 0;
+        columnbot =0;
 
         plainTextFileHandler = new PlainTextFileHandler();
         String[] data = plainTextFileHandler.readFromFile("character.txt");
@@ -102,7 +106,7 @@ public class GameController implements Serializable {
         imageEnemyActual = Integer.parseInt(data[2]);
 
         image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/mira.png")));
-        imagePatter  = new ImagePattern(image);
+        imagePatter = new ImagePattern(image);
 
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
 
@@ -121,7 +125,7 @@ public class GameController implements Serializable {
 
     }
 
-    public void setGridPaneShips(ArrayList <int[]> shipsPositions, int[][] shipsSelected){
+    public void setGridPaneShips(ArrayList<int[]> shipsPositions, int[][] shipsSelected) {
         animationIn();
 
         game = new Game();
@@ -147,18 +151,18 @@ public class GameController implements Serializable {
         save = new Save(shipsPositions);
         ship = save.getShip();
         createGridPaneGame();
-        
+
         gridPaneShips.setStyle("-fx-cursor: default;");
 
         serializableFileHandler.serialize("save.ser", save);
         serializableFileHandler.serialize("game.ser", game);
-        
+
         playerPerson.showMatrix();
         System.out.println();
         playerBot.showMatrix();
     }
 
-    public void Continue(){
+    public void Continue() {
         save = (Save) serializableFileHandler.deserialize("save.ser");
         game = (Game) serializableFileHandler.deserialize("game.ser");
         playerBot = game.getPlayerBot();
@@ -173,7 +177,7 @@ public class GameController implements Serializable {
 
     }
 
-    public void createGridPaneGame(){
+    public void createGridPaneGame() {
         double cellWidth = 63.7;
         double cellHeight = 63.7;
         gridPaneShips.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
@@ -186,7 +190,7 @@ public class GameController implements Serializable {
             }
         }
 
-        for(int i = 0; i < ship.size(); i++){
+        for (int i = 0; i < ship.size(); i++) {
             Ship shipSelected = this.ship.get(i);
             int row = shipSelected.getPosition()[0] + 1;
             int col = shipSelected.getPosition()[1] + 1;
@@ -208,18 +212,18 @@ public class GameController implements Serializable {
     }
 
     private void setEnemy() {
-        if(Objects.equals(nameEnemyActual, " ")){
+        if (Objects.equals(nameEnemyActual, " ")) {
             String[] enemys = {"Zarok", "Varek", "Drakk", "Korr", "Morth", "Tharn", "Vulkar", "Grim", "Raek", "Durn"};
-            nameEnemyActual = enemys[(int)(Math.random()*9)];
+            nameEnemyActual = enemys[(int) (Math.random() * 9)];
             lbNameVillain.setText(nameEnemyActual);
-            imageEnemyActual =(int)(Math.random() * 2);
-            plainTextFileHandler.writeToFile("character.txt", nameCharacterActual + "," + nameEnemyActual + "," + imageEnemyActual );
-        }else{
+            imageEnemyActual = (int) (Math.random() * 2);
+            plainTextFileHandler.writeToFile("character.txt", nameCharacterActual + "," + nameEnemyActual + "," + imageEnemyActual);
+        } else {
             lbNameVillain.setText(nameEnemyActual);
         }
-        if (imageEnemyActual == 0){
+        if (imageEnemyActual == 0) {
             imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png"))));
-        }else{
+        } else {
             imgVillain.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png"))));
         }
 
@@ -267,36 +271,33 @@ public class GameController implements Serializable {
         column += 1;
 
         matriz = playerBot.getMatrix();
-        if(row != 0 && column != 0) {
-            enemyShadow[row-1][column-1].setOnMouseClicked(null);
-            enemyShadow[row-1][column-1].setOnMouseEntered(null);
-            enemyShadow[row-1][column-1].setOnMouseExited(null);
-            enemyShadow[row-1][column-1].setStyle("-fx-cursor: default;");
-            if (matriz.get(row-1).get(column-1) != 0) {
+        if (row != 0 && column != 0) {
+            enemyShadow[row - 1][column - 1].setOnMouseClicked(null);
+            enemyShadow[row - 1][column - 1].setOnMouseEntered(null);
+            enemyShadow[row - 1][column - 1].setOnMouseExited(null);
+            enemyShadow[row - 1][column - 1].setStyle("-fx-cursor: default;");
+            if (matriz.get(row - 1).get(column - 1) != 0) {
                 System.out.println("PUM LE ATINASTE");
                 gridPaneGame.add(successSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
-                playerBot.changeMatrix(row -1, column -1, -1);
+                playerBot.changeMatrix(row - 1, column - 1, -1);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event2 -> {
-                  int brow =  playerBot.botIntelligence(playerPerson.getMatrix())[0];
-                    int bcol =  playerBot.botIntelligence(playerPerson.getMatrix())[1];
-                    botAttack(brow+1,  bcol+1 );
+
+                    botAttack();
                 });
                 pause.play();
 
-            } else{
+            } else {
                 System.out.println("NO LE ATINASTE");
                 gridPaneGame.add(errorSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
-                playerBot.changeMatrix(row -1, column -1, 2);
+                playerBot.changeMatrix(row - 1, column - 1, 2);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event2 -> {
-                    int brow =  playerBot.botIntelligence(playerPerson.getMatrix())[0];
-                    int bcol =  playerBot.botIntelligence(playerPerson.getMatrix())[1];
-                    botAttack(brow+1,  bcol+1 );
+                    botAttack();
                 });
                 pause.play();
             }
@@ -306,32 +307,32 @@ public class GameController implements Serializable {
 
     }
 
-    public void loadGridPaneShips(){
+    public void loadGridPaneShips() {
         matriz = playerPerson.getMatrix();
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                if(matriz.get(i).get(j) == 2){
-                    gridPaneShips.add(errorSymbol(), j+1, i+1);
-                }else if(matriz.get(i).get(j) == -1){
-                    Circle circle = new Circle(0,0,20, Color.RED);
-                    gridPaneShips.add(circle, j+1, i+1);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (matriz.get(i).get(j) == 2) {
+                    gridPaneShips.add(errorSymbol(), j + 1, i + 1);
+                } else if (matriz.get(i).get(j) == -1) {
+                    Circle circle = new Circle(0, 0, 20, Color.RED);
+                    gridPaneShips.add(circle, j + 1, i + 1);
                 }
             }
         }
     }
 
-    public void loadGridPaneGame(){
+    public void loadGridPaneGame() {
         matriz = playerBot.getMatrix();
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-                if(matriz.get(i).get(j) == 2){
-                    gridPaneGame.add(errorSymbol(), j+1, i+1);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (matriz.get(i).get(j) == 2) {
+                    gridPaneGame.add(errorSymbol(), j + 1, i + 1);
                     enemyShadow[i][j].setOnMouseClicked(null);
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
-                }else if(matriz.get(i).get(j) == -1){
-                    Circle circle = new Circle(0,0,20, Color.RED);
-                    gridPaneGame.add(circle, j+1, i+1);
+                } else if (matriz.get(i).get(j) == -1) {
+                    Circle circle = new Circle(0, 0, 20, Color.RED);
+                    gridPaneGame.add(circle, j + 1, i + 1);
                     enemyShadow[i][j].setOnMouseClicked(null);
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
@@ -341,45 +342,50 @@ public class GameController implements Serializable {
     }
 
     public void playerTurn() {
-        if (gridPaneGame.isDisable()){
+        if (gridPaneGame.isDisable()) {
             gridPaneGame.setDisable(false);
-        }else{
+        } else {
             gridPaneGame.setDisable(true);
         }
     }
 
     @FXML
+    void botAttack() {
 
-    void botAttack(int row, int column) {
-
+        if(playerBot.getShots().isEmpty()){
+            playerBot.generatePositionRandom(playerPerson.getMatrix());
+            rowBot = playerBot.getPositionRandom()[0];
+            columnbot = playerBot.getPositionRandom()[1];
+            playerBot.addShots();
+        }else{
+            playerBot.botIntelligence();
+        }
         matriz = playerPerson.getMatrix();
 
-        if(row != 0 && column != 0) {
-            if (matriz.get(row-1).get(column-1) != 0 && matriz.get(row-1).get(column-1) != 2 && matriz.get(row-1).get(column-1) != -1) {
-                System.out.println("PUM LE ATINASTE");
-                gridPaneShips.add(successSymbol(), column, row);
-                PauseTransition pause = new PauseTransition(Duration.seconds(0));
-                pause.setOnFinished(event -> {
-                    playerTurn();
-                });
-                playerPerson.changeMatrix(row-1, column-1, -1);
-                pause.play();
-                defeat((game.verifyWinner(playerPerson)));
+        if (matriz.get(rowBot - 1).get(columnbot - 1) != 0) {
+            System.out.println("PUM LE ATINASTE");
+            gridPaneShips.add(successSymbol(), columnbot, rowBot);
+            PauseTransition pause = new PauseTransition(Duration.seconds(0));
+            pause.setOnFinished(event -> {
+                playerTurn();
+            });
+            playerPerson.changeMatrix(rowBot - 1, columnbot - 1, -1);
+            pause.play();
+            defeat((game.verifyWinner(playerPerson)));
 
-            } else{
-                System.out.println("NO LE ATINASTE");
-                gridPaneShips.add(errorSymbol(), column, row);
-                playerPerson.changeMatrix(row-1, column-1, 2);
-                PauseTransition pause = new PauseTransition(Duration.seconds(0));
-                pause.setOnFinished(event -> {
-                    playerTurn();
-                });
-                pause.play();
-            }
+        } else {
+            System.out.println("NO LE ATINASTE");
+            gridPaneShips.add(errorSymbol(), columnbot, rowBot);
+            playerPerson.changeMatrix(rowBot - 1, columnbot - 1, 2);
+            PauseTransition pause = new PauseTransition(Duration.seconds(0));
+            pause.setOnFinished(event -> {
+                playerTurn();
+            });
+            pause.play();
         }
     }
 
-    public Group errorSymbol(){
+    public Group errorSymbol() {
         Group group = new Group();
         Line line1 = new Line(9, 9, 29, 29);
         Line line2 = new Line(29, 9, 9, 29);
@@ -391,7 +397,7 @@ public class GameController implements Serializable {
         return group;
     }
 
-    public Group successSymbol(){
+    public Group successSymbol() {
         Group group = new Group();
         Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/bombfx.png")));
         ImagePattern imagePattern4 = new ImagePattern(image4);
@@ -423,12 +429,12 @@ public class GameController implements Serializable {
         spark.setTranslateY(0);
 
 
-        group.getChildren().addAll(bombBody,fuse,spark);
+        group.getChildren().addAll(bombBody, fuse, spark);
         return group;
     }
 
-    public void victory(boolean victory){
-        if (victory){
+    public void victory(boolean victory) {
+        if (victory) {
             infoLabel.setText("¡Felicidades! Has ganado");
             gridPaneGame.setDisable(true);
             Path path = Paths.get("game.ser");
@@ -451,15 +457,15 @@ public class GameController implements Serializable {
     private void playVideoVictory() {
     }
 
-    public void defeat(boolean defeat){
-        if (defeat){
+    public void defeat(boolean defeat) {
+        if (defeat) {
             infoLabel.setText("¡Has perdido! Intentalo de nuevo");
             gridPaneGame.setDisable(true);
         }
 
     }
 
-    public void animationIn(){
+    public void animationIn() {
 
         anchorPaneLeft.setTranslateX(-400);
 
@@ -514,7 +520,6 @@ public class GameController implements Serializable {
         enemyShadow[row][col].setFill(imagePatter);
     }
 
-    
 
     public void onHandleMouseExitedShips(int row, int col) {
         Color colorDefault = Color.TRANSPARENT;
@@ -522,13 +527,12 @@ public class GameController implements Serializable {
     }
 
 
-        @FXML
+    @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         playerBot.showMatrix();
         GameStage.deleteInstance();
         WelcomeStage.getInstance();
     }
-
 
 
 }
