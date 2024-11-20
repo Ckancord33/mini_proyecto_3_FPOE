@@ -161,6 +161,7 @@ public class WelcomeController {
 
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
+        mainMusic.stopSound();
         GameSelectionStage.getInstance();
         WelcomeStage.deleteInstance();
     }

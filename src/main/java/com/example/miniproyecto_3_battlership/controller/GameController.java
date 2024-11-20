@@ -22,9 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Duration;
@@ -371,8 +369,38 @@ public class GameController implements Serializable {
 
     public Group successSymbol(){
         Group group = new Group();
-        Circle circle = new Circle(0,0,20, Color.RED);
-        group.getChildren().add(circle);
+        Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/bombfx.png")));
+        ImagePattern imagePattern4 = new ImagePattern(image4);
+
+        Circle bombBody = new Circle(25, 25, 20);
+        bombBody.setFill(Color.DARKSLATEBLUE); // Color gris oscuro con matiz azul
+        bombBody.setFill(imagePattern4);
+        Line fuse = new Line(25, 5, 40, 0); // Línea desde la parte superior de la bomba
+        fuse.setStroke(Color.WHITE);
+        fuse.setStrokeWidth(3);
+
+        Polygon spark = new Polygon(
+                28, -8,  // Pico superior largo
+                30, -6,  // Pico superior derecho corto
+                33, -4,  // Pico derecho largo
+                30, -2,  // Pico inferior derecho corto
+                28, 0,   // Pico inferior largo
+                26, -2,  // Pico inferior izquierdo corto
+                23, -4,  // Pico izquierdo largo
+                26, -6   // Pico superior izquierdo corto
+        );
+        spark.setFill(Color.YELLOW); // Color amarillo brillante
+        spark.setStroke(Color.ORANGE); // Bordes naranjas
+        spark.setStrokeWidth(0.5);
+
+// Ajustar la posición moviéndolo más a la derecha
+        spark.setScaleX(1.2);
+        spark.setScaleY(1.2);
+        spark.setTranslateX(15); // Desplazar 5 píxeles hacia la derecha
+        spark.setTranslateY(0); // Sin cambio en la posición vertical
+
+
+        group.getChildren().addAll(bombBody,fuse,spark);
         return group;
     }
 
