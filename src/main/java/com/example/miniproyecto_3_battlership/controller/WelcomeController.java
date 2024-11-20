@@ -162,6 +162,7 @@ public class WelcomeController {
 
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
+        mainMusic.stopSound();
         plainTextFileHandler.writeToFile("character.txt", nameCharacter + "," + " " + "," + "0");
         WelcomeStage.deleteInstance();
         GameSelectionStage.getInstance();
