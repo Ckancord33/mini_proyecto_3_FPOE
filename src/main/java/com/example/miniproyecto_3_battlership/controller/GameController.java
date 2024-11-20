@@ -277,7 +277,6 @@ public class GameController implements Serializable {
             enemyShadow[row - 1][column - 1].setOnMouseExited(null);
             enemyShadow[row - 1][column - 1].setStyle("-fx-cursor: default;");
             if (matriz.get(row - 1).get(column - 1) != 0) {
-                System.out.println("PUM LE ATINASTE");
                 gridPaneGame.add(successSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
@@ -290,7 +289,6 @@ public class GameController implements Serializable {
                 pause.play();
 
             } else {
-                System.out.println("NO LE ATINASTE");
                 gridPaneGame.add(errorSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
@@ -356,11 +354,15 @@ public class GameController implements Serializable {
             playerBot.generatePositionRandom(playerPerson.getMatrix());
             rowBot = playerBot.getPositionRandom()[0];
             columnbot = playerBot.getPositionRandom()[1];
-            playerBot.addShots();
+            playerBot.addShots(rowBot,columnbot);
         }else{
-            playerBot.botIntelligence();
+            playerBot.botIntelligence(playerPerson.getMatrix());
+            rowBot = playerBot.getPositionRandom()[0];
+            columnbot = playerBot.getPositionRandom()[1];
+            playerBot.addShots(rowBot,columnbot);
         }
         matriz = playerPerson.getMatrix();
+        System.out.print("row: " + rowBot + " column: " + columnbot);
 
         if (matriz.get(rowBot - 1).get(columnbot - 1) != 0) {
             System.out.println("PUM LE ATINASTE");

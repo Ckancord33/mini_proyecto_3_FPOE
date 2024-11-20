@@ -159,7 +159,9 @@ public class PlayerBot extends APlayer implements Serializable {
     public void botIntelligence(ArrayList<ArrayList<Integer>> matrix){
          lastShot = shots.peek();
          verifyShot = matrix.get(lastShot[0]).get(lastShot[1]);
+         System.out.print(verifyShot);
          if(verifyShot == -1){
+             System.out.printf("Le pegue");
              positionAttack[0]= lastShot[0];
              positionAttack[1]= lastShot[1]-1;
          }else{
@@ -173,7 +175,8 @@ public class PlayerBot extends APlayer implements Serializable {
             positionAttack[0]=(int)(Math.random()*9 +1);
             positionAttack[1]=(int)(Math.random()*9 +1);
             actualPosition = matrix.get(positionAttack[0]).get(positionAttack[1]);
-        }while (actualPosition == 0 );
+            System.out.println(actualPosition);
+        }while (actualPosition == 2 || actualPosition == -1);
     }
 
     public int[] getPositionRandom(){
@@ -184,8 +187,9 @@ public class PlayerBot extends APlayer implements Serializable {
         return shots;
     }
 
-    public void addShots(){
-        shots.push(positionAttack);
+    public void addShots(int rowBot, int ColumnBot){
+        int[] positionBot = {rowBot,ColumnBot};
+        shots.push(positionBot);
     }
 
 
