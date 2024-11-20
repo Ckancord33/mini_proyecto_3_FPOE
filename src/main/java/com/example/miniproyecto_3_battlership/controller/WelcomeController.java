@@ -1,5 +1,6 @@
 package com.example.miniproyecto_3_battlership.controller;
 
+import com.example.miniproyecto_3_battlership.model.planeTextFile.PlainTextFileHandler;
 import com.example.miniproyecto_3_battlership.model.sound.Sounds;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
@@ -66,21 +67,13 @@ public class WelcomeController {
     private int easterEgg;
     private int easterEgg2;
 
-    static private String nameCharacter;
-    static private Image imageCharacter;
+    private String nameCharacter;
+
+    private PlainTextFileHandler plainTextFileHandler;
 
     @FXML
     public void initialize() {
-        nameCharacter = "Coronel Sander";
-        Image character1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter1.png")));
-        Image character2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter2.png")));
-        Image character3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter3.png")));
-        Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter4.png")));
-        Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter5.png")));
-        Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter6.png")));
-        Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter7.png")));
-        Image characterEasterEgg2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter8.png")));
-
+        plainTextFileHandler = new PlainTextFileHandler();
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());
 
@@ -96,35 +89,10 @@ public class WelcomeController {
         welcomeBorderPane.setBackground(new Background(background));
 
         choiceBox.getItems().addAll("Coronel Sander","Almirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
+        selectionCharacter("Coronel Sander");
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
-            if ( newValue == "Coronel Sander") {
-                imgCharacter.setImage(character1);
-                nameCharacter = "Coronel Sander";
-            }else if (newValue == "Almirante Zemansky") {
-                imgCharacter.setImage(character2);
-                nameCharacter = "Almte. Zemansky";
-            }else if (newValue == "Mayor Lovelace") {
-                imgCharacter.setImage(character3);
-                nameCharacter = "Mayor Lovelace";
-            } else if (newValue == "Coronela Rosalind") {
-                imgCharacter.setImage(character4);
-                nameCharacter = "Coronela Rosalind";
-            }else if (newValue == "????") {
-                imgCharacter.setImage(character5);
-                nameCharacter = "????";
-            }
-            else if (newValue == "???") {
-                imgCharacter.setImage(character6);
-                nameCharacter = "???";
-            }else if(newValue == "Teniente Ampudia"){
-                imgCharacter.setImage(characterEasterEgg);
-                nameCharacter = "Teniente Ampudia";
-            }else if(newValue == "Capitana Cordoba"){
-                imgCharacter.setImage(characterEasterEgg2);
-                nameCharacter = "Capitana Cordoba";
-            }
+            selectionCharacter(newValue);
         });
 
 
@@ -135,7 +103,7 @@ public class WelcomeController {
         btnHoverStyle(btnCredits, 4);
         btnHoverStyle(btnQuitGame, 5);
 
-        doesExist("save.ser");
+        doesExist("game.ser");
 
         samuelVoice = new Sounds();
         samuelVoice.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mivoice2.wav");
@@ -144,6 +112,49 @@ public class WelcomeController {
 
 
     }
+
+    private void selectionCharacter(String newValue) {
+
+        Image character1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter1.png")));
+        Image character2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter2.png")));
+        Image character3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter3.png")));
+        Image character4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter4.png")));
+        Image character5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter5.png")));
+        Image character6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter6.png")));
+        Image characterEasterEgg = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter7.png")));
+        Image characterEasterEgg2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/gameCharacter8.png")));
+
+        if ( newValue == "Coronel Sander") {
+            imgCharacter.setImage(character1);
+            nameCharacter = "Coronel Sander";
+        }else if (newValue == "Almirante Zemansky") {
+            imgCharacter.setImage(character2);
+            nameCharacter = "Almte. Zemansky";
+        }else if (newValue == "Mayor Lovelace") {
+            imgCharacter.setImage(character3);
+            nameCharacter = "Mayor Lovelace";
+        } else if (newValue == "Coronela Rosalind") {
+            imgCharacter.setImage(character4);
+            nameCharacter = "Coronela Rosalind";
+        }else if (newValue == "????") {
+            imgCharacter.setImage(character5);
+            nameCharacter = "????";
+        }
+        else if (newValue == "???") {
+            imgCharacter.setImage(character6);
+            nameCharacter = "???";
+        }else if(newValue == "Teniente Ampudia"){
+            imgCharacter.setImage(characterEasterEgg);
+            nameCharacter = "Teniente Ampudia";
+        }else if(newValue == "Capitana Cordoba"){
+            imgCharacter.setImage(characterEasterEgg2);
+            nameCharacter = "Capitana Cordoba";
+        }
+
+        plainTextFileHandler.writeToFile("character.txt", newValue);
+
+    }
+
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
         GameSelectionStage.getInstance();
@@ -218,8 +229,8 @@ public class WelcomeController {
 
     @FXML
     void onHandleContinueGame(ActionEvent event) throws IOException {
-        GameStage.getInstance().getGameController().Continue();
         WelcomeStage.deleteInstance();
+        GameStage.getInstance().getGameController().Continue();
     }
 
     @FXML
@@ -268,8 +279,5 @@ public class WelcomeController {
         });
     }
 
-    public static String getNameCharacter(){
-        return nameCharacter;
-    }
 
 }

@@ -60,5 +60,17 @@ public abstract class APlayer implements IPlayer {
         }
     }
 
+    public boolean verifyWinner(){
+        int counter = 0;
+        for (int i = 0; i < 10; i++){
+            for (int j = 0; j < 10; j++){
+                if (shipsMatrix.get(i).get(j) == -1){
+                    counter++;
+                }
+            }
+        }
+        return counter == 20;
+    }
+
 
 }

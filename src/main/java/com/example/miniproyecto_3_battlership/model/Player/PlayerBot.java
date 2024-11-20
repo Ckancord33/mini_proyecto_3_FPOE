@@ -31,29 +31,29 @@ public class PlayerBot extends APlayer implements Serializable {
             switch(direction){
                 case 0:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,2);
-                        shipsMatrix.get(randomRow-1).set(randomCol,2);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow-1).set(randomCol,1);
                         destroyerNumbers++;
                     }
                     break;
                 case 1:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,2);
-                        shipsMatrix.get(randomRow).set(randomCol+1,2);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol+1,1);
                         destroyerNumbers++;
                     }
                     break;
                 case 2:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,2);
-                        shipsMatrix.get(randomRow+1).set(randomCol,2);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow+1).set(randomCol,1);
                         destroyerNumbers++;
                     }
                     break;
                 case 3:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,2);
-                        shipsMatrix.get(randomRow).set(randomCol-1,2);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol-1,1);
                         destroyerNumbers++;
                     }
 
@@ -68,33 +68,33 @@ public class PlayerBot extends APlayer implements Serializable {
             switch(direction){
                 case 0:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0 && shipsMatrix.get(randomRow-2).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,3);
-                        shipsMatrix.get(randomRow-1).set(randomCol,3);
-                        shipsMatrix.get(randomRow-2).set(randomCol,3);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow-1).set(randomCol,1);
+                        shipsMatrix.get(randomRow-2).set(randomCol,1);
                         submarineNumbers++;
                     }
                     break;
                 case 1:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0 && shipsMatrix.get(randomRow).get(randomCol+2)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,3);
-                        shipsMatrix.get(randomRow).set(randomCol+1,3);
-                        shipsMatrix.get(randomRow).set(randomCol+2,3);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol+1,1);
+                        shipsMatrix.get(randomRow).set(randomCol+2,1);
                         submarineNumbers++;
                     }
                     break;
                 case 2:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0 && shipsMatrix.get(randomRow+2).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,3);
-                        shipsMatrix.get(randomRow+1).set(randomCol,3);
-                        shipsMatrix.get(randomRow+2).set(randomCol,3);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow+1).set(randomCol,1);
+                        shipsMatrix.get(randomRow+2).set(randomCol,1);
                         submarineNumbers++;
                     }
                     break;
                 case 3:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0 && shipsMatrix.get(randomRow).get(randomCol-2)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,3);
-                        shipsMatrix.get(randomRow).set(randomCol-1,3);
-                        shipsMatrix.get(randomRow).set(randomCol-2,3);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol-1,1);
+                        shipsMatrix.get(randomRow).set(randomCol-2,1);
                         submarineNumbers++;
                     }
 
@@ -109,37 +109,37 @@ public class PlayerBot extends APlayer implements Serializable {
             switch(direction){
                 case 0:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow-1).get(randomCol)==0 && shipsMatrix.get(randomRow-2).get(randomCol)==0 && shipsMatrix.get(randomRow-3).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,4);
-                        shipsMatrix.get(randomRow-1).set(randomCol,4);
-                        shipsMatrix.get(randomRow-2).set(randomCol,4);
-                        shipsMatrix.get(randomRow-3).set(randomCol,4);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow-1).set(randomCol,1);
+                        shipsMatrix.get(randomRow-2).set(randomCol,1);
+                        shipsMatrix.get(randomRow-3).set(randomCol,1);
                         airportCarrierNumbers++;
                     }
                     break;
                 case 1:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol+1)==0 && shipsMatrix.get(randomRow).get(randomCol+2)==0 && shipsMatrix.get(randomRow).get(randomCol+3)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,4);
-                        shipsMatrix.get(randomRow).set(randomCol+1,4);
-                        shipsMatrix.get(randomRow).set(randomCol+2,4);
-                        shipsMatrix.get(randomRow).set(randomCol+3,4);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol+1,1);
+                        shipsMatrix.get(randomRow).set(randomCol+2,1);
+                        shipsMatrix.get(randomRow).set(randomCol+3,1);
                         airportCarrierNumbers++;
                     }
                     break;
                 case 2:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow+1).get(randomCol)==0 && shipsMatrix.get(randomRow+2).get(randomCol)==0 && shipsMatrix.get(randomRow+3).get(randomCol)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,4);
-                        shipsMatrix.get(randomRow+1).set(randomCol,4);
-                        shipsMatrix.get(randomRow+2).set(randomCol,4);
-                        shipsMatrix.get(randomRow+3).set(randomCol,4);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow+1).set(randomCol,1);
+                        shipsMatrix.get(randomRow+2).set(randomCol,1);
+                        shipsMatrix.get(randomRow+3).set(randomCol,1);
                         airportCarrierNumbers++;
                     }
                     break;
                 case 3:
                     if(shipsMatrix.get(randomRow).get(randomCol)==0 && shipsMatrix.get(randomRow).get(randomCol-1)==0 && shipsMatrix.get(randomRow).get(randomCol-2)==0 && shipsMatrix.get(randomRow).get(randomCol-3)==0){
-                        shipsMatrix.get(randomRow).set(randomCol,4);
-                        shipsMatrix.get(randomRow).set(randomCol-1,4);
-                        shipsMatrix.get(randomRow).set(randomCol-2,4);
-                        shipsMatrix.get(randomRow).set(randomCol-3,4);
+                        shipsMatrix.get(randomRow).set(randomCol,1);
+                        shipsMatrix.get(randomRow).set(randomCol-1,1);
+                        shipsMatrix.get(randomRow).set(randomCol-2,1);
+                        shipsMatrix.get(randomRow).set(randomCol-3,1);
                         airportCarrierNumbers++;
                     }
 
