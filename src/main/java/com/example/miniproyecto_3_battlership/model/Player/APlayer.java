@@ -46,7 +46,7 @@ public abstract class APlayer implements IPlayer {
     }
 
     @Override
-    public void botIntelligence(){
+    public void botIntelligence(ArrayList<ArrayList<Integer>> matrix){
 
     }
 

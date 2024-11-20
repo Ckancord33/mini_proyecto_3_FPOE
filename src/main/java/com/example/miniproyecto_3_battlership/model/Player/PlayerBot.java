@@ -11,6 +11,11 @@ import java.util.Random;
 
 public class PlayerBot extends APlayer implements Serializable {
 
+    int [] positionAttack = new int[2];
+    boolean direction = false;
+    Stack<int[]> shots = new Stack<>();
+    int [] lastShot = new int[2];
+    int verifyShot;
     private ArrayList<int[]> enemyShipsInfo = new ArrayList<>(); // [0] = x, [1] = y, [2] = size, [3] = orientation
 
 
@@ -83,10 +88,40 @@ public class PlayerBot extends APlayer implements Serializable {
                     pos[1]=j;
                     return pos;
                 }
+    public void botIntelligence(ArrayList<ArrayList<Integer>> matrix){
+         lastShot = shots.peek();
+         verifyShot = matrix.get(lastShot[0]).get(lastShot[1]);
+         System.out.print(verifyShot);
+         if(verifyShot == -1){
+             System.out.printf("Le pegue");
+             positionAttack[0]= lastShot[0];
+             positionAttack[1]= lastShot[1]-1;
+         }else{
+             generatePositionRandom(matrix);
+         }
+    }
 
-            }
-        }
-        return dpos;
+    public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix){
+        int actualPosition;
+        do{
+            positionAttack[0]=(int)(Math.random()*9 +1);
+            positionAttack[1]=(int)(Math.random()*9 +1);
+            actualPosition = matrix.get(positionAttack[0]).get(positionAttack[1]);
+            System.out.println(actualPosition);
+        }while (actualPosition == 2 || actualPosition == -1);
+    }
+
+    public int[] getPositionRandom(){
+        return positionAttack;
+    }
+
+    public Stack<int[]> getShots(){
+        return shots;
+    }
+
+    public void addShots(int rowBot, int ColumnBot){
+        int[] positionBot = {rowBot,ColumnBot};
+        shots.push(positionBot);
     }
 
     public ArrayList<Ship> getEnemyShips(){
