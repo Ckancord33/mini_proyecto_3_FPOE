@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PlayerPerson extends APlayer implements Serializable {
-    private final ArrayList<ArrayList<Integer>> selectedShipsMatrix = new ArrayList<>();
-    @Override
-    public void changeValuesMatrix(int[][] matrix){
 
-    }
 
     @Override
     public void setChosenMatrix(int[][] matrix){
-
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                shipsMatrix.get(i).set(j, matrix[i][j]);
+            }
+        }
     }
+
 
 }

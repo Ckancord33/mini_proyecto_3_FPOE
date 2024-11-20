@@ -8,16 +8,11 @@ import java.util.ArrayList;
 
 public class Save implements Serializable {
     private ArrayList<int[]> shipPositions;
-    private Game game;
 
-    public Save(ArrayList<int[]> ship, Game game) {
+    public Save(ArrayList<int[]> ship) {
         this.shipPositions = ship;
-        this.game = game;
     }
 
-    public Game getGame() {
-        return game;
-    }
 
     public ArrayList<Ship> getShip() {
         ArrayList<Ship> ships = new ArrayList<>();
