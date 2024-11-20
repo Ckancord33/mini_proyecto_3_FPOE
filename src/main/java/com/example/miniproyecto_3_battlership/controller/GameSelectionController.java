@@ -173,33 +173,33 @@ public class GameSelectionController {
         String nameCharacterActual = data[0];
         Image imageCharacterActual;
         nameCharacter.setText(nameCharacterActual);
-        if (nameCharacterActual == "Coronel Sander") {
+        if (Objects.equals(nameCharacterActual, "Coronel Sander")) {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character1.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "Almte. Zemansky") {
+        } else if (Objects.equals(nameCharacterActual, "Almte. Zemansky")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character2.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "Mayor Lovelace") {
+        } else if (Objects.equals(nameCharacterActual, "Mayor Lovelace")) {
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character3.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "Coronela Rosalind") {
+        } else if (Objects.equals(nameCharacterActual, "Coronela Rosalind")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character4.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "????") {
+        } else if (Objects.equals(nameCharacterActual, "????")) {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character5.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "???") {
+        } else if (Objects.equals(nameCharacterActual, "???")) {
             nameCharacter.setAlignment(Pos.CENTER);
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character6.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "Teniente Ampudia") {
+        } else if (Objects.equals(nameCharacterActual, "Teniente Ampudia")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character7.png")));
             imgCharacter.setImage(imageCharacterActual);
-        } else if (nameCharacterActual == "Capitana Cordoba") {
+        } else if (Objects.equals(nameCharacterActual, "Capitana Cordoba")) {
             nameCharacter.setStyle("-fx-font-size: 25; -fx-font-family: 'Berlin Sans FB'");
             imageCharacterActual = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/character8.png")));
             imgCharacter.setImage(imageCharacterActual);

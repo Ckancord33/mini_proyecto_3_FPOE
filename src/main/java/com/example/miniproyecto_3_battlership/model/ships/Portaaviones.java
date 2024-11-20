@@ -257,15 +257,5 @@ public class Portaaviones extends Ship {
         size = 4;
     }
 
-    public Portaaviones(boolean b) {
-        this.setStyle("-fx-border-color: black;" +
-                "-fx-border-width: 1;" +
-                "-fx-border-style: solid;");
-        body = new Rectangle(0, 0, 253, 63.5);
-        body.setFill(javafx.scene.paint.Color.DARKGRAY);
-        this.getChildren().add(body);
-        isSelect = false;
-        size = 4;
-    }
 
 }

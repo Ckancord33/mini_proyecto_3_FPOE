@@ -77,6 +77,7 @@ public class WelcomeController {
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mainmusic.wav");
         mainMusic.loopSound();
+
         plainTextFileHandler = new PlainTextFileHandler();
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());
@@ -155,14 +156,16 @@ public class WelcomeController {
             nameCharacter = "Capitana Cordoba";
         }
 
-        plainTextFileHandler.writeToFile("character.txt", newValue);
+
 
     }
 
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
-        GameSelectionStage.getInstance();
+        plainTextFileHandler.writeToFile("character.txt", nameCharacter + "," + " " + "," + "0");
         WelcomeStage.deleteInstance();
+        GameSelectionStage.getInstance();
+
     }
 
     public void doesExist(String path){
