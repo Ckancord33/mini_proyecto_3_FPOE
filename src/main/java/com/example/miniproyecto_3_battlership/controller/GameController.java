@@ -280,7 +280,9 @@ public class GameController implements Serializable {
                 playerBot.changeMatrix(row -1, column -1, -1);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event2 -> {
-                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                  int brow =  playerBot.botIntelligence(playerPerson.getMatrix())[0];
+                    int bcol =  playerBot.botIntelligence(playerPerson.getMatrix())[1];
+                    botAttack(brow+1,  bcol+1 );
                 });
                 pause.play();
 
@@ -292,7 +294,9 @@ public class GameController implements Serializable {
                 playerBot.changeMatrix(row -1, column -1, 2);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event2 -> {
-                    botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
+                    int brow =  playerBot.botIntelligence(playerPerson.getMatrix())[0];
+                    int bcol =  playerBot.botIntelligence(playerPerson.getMatrix())[1];
+                    botAttack(brow+1,  bcol+1 );
                 });
                 pause.play();
             }
@@ -349,6 +353,7 @@ public class GameController implements Serializable {
     void botAttack(int row, int column) {
 
         matriz = playerPerson.getMatrix();
+
         if(row != 0 && column != 0) {
             if (matriz.get(row-1).get(column-1) != 0 && matriz.get(row-1).get(column-1) != 2 && matriz.get(row-1).get(column-1) != -1) {
                 System.out.println("PUM LE ATINASTE");
@@ -399,7 +404,7 @@ public class GameController implements Serializable {
         fuse.setStrokeWidth(3);
 
         Polygon spark = new Polygon(
-                28, -8,  // Pico superior largo
+                28, -12,  // Pico superior largo
                 30, -6,  // Pico superior derecho corto
                 33, -4,  // Pico derecho largo
                 30, -2,  // Pico inferior derecho corto
@@ -408,15 +413,14 @@ public class GameController implements Serializable {
                 23, -4,  // Pico izquierdo largo
                 26, -6   // Pico superior izquierdo corto
         );
-        spark.setFill(Color.YELLOW); // Color amarillo brillante
-        spark.setStroke(Color.ORANGE); // Bordes naranjas
+        spark.setFill(Color.YELLOW);
+        spark.setStroke(Color.ORANGE);
         spark.setStrokeWidth(0.5);
 
-// Ajustar la posición moviéndolo más a la derecha
         spark.setScaleX(1.2);
         spark.setScaleY(1.2);
-        spark.setTranslateX(15); // Desplazar 5 píxeles hacia la derecha
-        spark.setTranslateY(0); // Sin cambio en la posición vertical
+        spark.setTranslateX(15);
+        spark.setTranslateY(0);
 
 
         group.getChildren().addAll(bombBody,fuse,spark);

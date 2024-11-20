@@ -150,8 +150,24 @@ public class PlayerBot extends APlayer implements Serializable {
 
     };
 
-    public void botIntelligence(){
-        System.out.println("Bot Intelligence");
+    public int[] botIntelligence(ArrayList matrix){
+       int[]  dpos= new int[2];
+       dpos[0]=(int)(Math.random()*9);
+       dpos[1]=(int)(Math.random()*9);
+        int[] pos = new int[2];
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+               // if(shipsMatrix.get(i).get(j)==)
+                if(shipsMatrix.get(i).get(j) ==1){
+                    System.out.println("halle un barco");
+                    pos[0]=i+1;
+                    pos[1]=j;
+                    return pos;
+                }
+
+            }
+        }
+        return dpos;
     }
 
 

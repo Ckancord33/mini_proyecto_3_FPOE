@@ -12,5 +12,8 @@ public interface IPlayer extends Serializable {
     void setChosenMatrix(int[][] matrix);
     void generateBotGame();
     void botIntelligence();
+
+
+
     boolean verifyWinner();
 }
