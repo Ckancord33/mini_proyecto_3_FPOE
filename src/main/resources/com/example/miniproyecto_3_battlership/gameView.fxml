@@ -3,6 +3,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ImageInput?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -162,6 +163,21 @@
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
             </Label>
+            <Button layoutX="99.0" layoutY="945.0" mnemonicParsing="false" onAction="#onHandlePutEnemyShips" prefHeight="75.0" prefWidth="76.0" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <ImageInput>
+                     <source>
+                        <Image url="@Image/random_button.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
          </children>
       </AnchorPane>
    </right>

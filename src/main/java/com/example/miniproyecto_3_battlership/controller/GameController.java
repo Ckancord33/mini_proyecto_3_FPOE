@@ -12,26 +12,19 @@ import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
-import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.util.Duration;
 
-import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,7 +71,8 @@ public class GameController implements Serializable {
     private Label infoLabel;
 
     private ArrayList<ArrayList<Integer>> matriz;
-    private ArrayList<Ship> ship = new ArrayList<>();
+    private ArrayList<Ship> playerShips = new ArrayList<>();
+    private ArrayList<Ship> enemyShips = new ArrayList<>();
     private Rectangle[][] enemyShadow = new Rectangle[10][10];
     private Save save;
 
@@ -117,8 +111,6 @@ public class GameController implements Serializable {
 
         gameBorderPane.setBackground(new Background(background));
 
-        createEnemuShadows();
-
     }
 
     public void setGridPaneShips(ArrayList <int[]> shipsPositions, int[][] shipsSelected){
@@ -130,22 +122,13 @@ public class GameController implements Serializable {
         playerPerson.setMatrix();
         playerBot.setMatrix();
         playerPerson.setChosenMatrix(shipsSelected);
-        boolean error = true;
-        do {
-            try {
-                playerBot.generateBotGame();
-                error = false;
-            } catch (IndexOutOfBoundsException e) {
-                playerBot.clearMatrix();
-                System.out.println("Error, intentando nuevamente");
-            }
-        } while (error);
+        playerBot.generateBotGame();
 
         setCharacter();
         setEnemy();
 
         save = new Save(shipsPositions);
-        ship = save.getShip();
+        playerShips = save.getShip();
         createGridPaneGame();
         
         gridPaneShips.setStyle("-fx-cursor: default;");
@@ -156,6 +139,7 @@ public class GameController implements Serializable {
         playerPerson.showMatrix();
         System.out.println();
         playerBot.showMatrix();
+        createEnemuShadows();
     }
 
     public void Continue(){
@@ -163,11 +147,12 @@ public class GameController implements Serializable {
         game = (Game) serializableFileHandler.deserialize("game.ser");
         playerBot = game.getPlayerBot();
         playerPerson = game.getPlayerPerson();
-        ship = save.getShip();
+        playerShips = save.getShip();
         setCharacter();
         setEnemy();
         createGridPaneGame();
         gridPaneShips.setStyle("-fx-cursor: default;");
+        createEnemuShadows();
         loadGridPaneShips();
         loadGridPaneGame();
 
@@ -186,8 +171,8 @@ public class GameController implements Serializable {
             }
         }
 
-        for(int i = 0; i < ship.size(); i++){
-            Ship shipSelected = this.ship.get(i);
+        for(int i = 0; i < playerShips.size(); i++){
+            Ship shipSelected = this.playerShips.get(i);
             int row = shipSelected.getPosition()[0] + 1;
             int col = shipSelected.getPosition()[1] + 1;
             try {
@@ -205,6 +190,17 @@ public class GameController implements Serializable {
             }
         }
 
+    }
+
+    @FXML
+    public void onHandlePutEnemyShips(){
+        for(int i = 0; i < enemyShips.size(); i++){
+            if(enemyShips.get(i).isVisible()) {
+                enemyShips.get(i).setVisible(false);
+            }else{
+                enemyShips.get(i).setVisible(true);
+            }
+        }
     }
 
     private void setEnemy() {
@@ -330,8 +326,7 @@ public class GameController implements Serializable {
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
                 }else if(matriz.get(i).get(j) == -1){
-                    Circle circle = new Circle(0,0,20, Color.RED);
-                    gridPaneGame.add(circle, j+1, i+1);
+                    gridPaneGame.add(successSymbol(), j+1, i+1);
                     enemyShadow[i][j].setOnMouseClicked(null);
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
@@ -493,6 +488,26 @@ public class GameController implements Serializable {
         double cellWidth = 63.7;
         double cellHeight = 63.7;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
+        enemyShips = playerBot.getEnemyShips();
+        for(int i = 0; i < enemyShips.size(); i++){
+            Ship shipSelected = enemyShips.get(i);
+            int row = shipSelected.getPosition()[0] + 1;
+            int col = shipSelected.getPosition()[1] + 1;
+            try {
+                if (shipSelected.isHorizontal()) {
+                    gridPaneGame.add(shipSelected, col - shipSelected.getSize() + 1, row);
+                    GridPane.setRowSpan(shipSelected, 0);
+                    GridPane.setColumnSpan(shipSelected, shipSelected.getSize());
+                } else {
+                    gridPaneGame.add(shipSelected, col, row - shipSelected.getSize() + 1);
+                    GridPane.setColumnSpan(shipSelected, 0);
+                    GridPane.setRowSpan(shipSelected, shipSelected.getSize());
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+            shipSelected.setVisible(false);
+        }
         for (int rows = 1; rows <= 10; rows++) {
             for (int col = 1; col <= 10; col++) {
                 Rectangle cell = new Rectangle(cellWidth, cellHeight);
@@ -507,6 +522,7 @@ public class GameController implements Serializable {
                 gridPaneGame.add(enemyShadow[rows - 1][col - 1], col, rows);
             }
         }
+
     }
 
     public void onHandleMouseEnteredShips(int row, int col) {
