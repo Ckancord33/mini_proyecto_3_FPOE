@@ -71,8 +71,12 @@ public class WelcomeController {
 
     private PlainTextFileHandler plainTextFileHandler;
 
+    private Sounds mainMusic;
     @FXML
     public void initialize() {
+        mainMusic = new Sounds();
+        mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mainmusic.wav");
+        mainMusic.loopSound();
         plainTextFileHandler = new PlainTextFileHandler();
         //IMAGEN DE FONDO
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());

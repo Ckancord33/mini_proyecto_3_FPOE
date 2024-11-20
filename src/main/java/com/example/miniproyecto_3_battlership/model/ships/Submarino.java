@@ -1,105 +1,144 @@
 package com.example.miniproyecto_3_battlership.model.ships;
 
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.QuadCurve;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 
+import java.util.Collection;
 import java.util.Objects;
 
 public class Submarino extends Ship {
 
     public Submarino() {
-        double scaleX = 63.0 / 88.0;
-        double scaleY = 189.0 / 260.0;
-
-        double centerX = 63.0 / 2;
-        double centerY = 189.0 / 2;
-
-        Ellipse ellipse = new Ellipse(35.0 * scaleX, 130.0 * scaleY);
-        Image image1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/texture5.png")));
-        ImagePattern imagePattern = new ImagePattern(image1);
-        ellipse.setFill(imagePattern);
-
+        this.setWidth(190);
+        this.setHeight(63);
+        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/texture2.png")));
+        ImagePattern imagePattern2 = new ImagePattern(image2);
+        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/texture3.png")));
+        ImagePattern imagePattern3 = new ImagePattern(image3);
+        Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/textureFragata3.png")));
+        ImagePattern imagePattern4 = new ImagePattern(image4);
+        Image image5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/texture5.png")));
+        ImagePattern imagePattern5 = new ImagePattern(image5);
+        Image image6 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/texture6.png")));
+        ImagePattern imagePattern6 = new ImagePattern(image6);
+        size =  3;
+        Ellipse ellipse = new Ellipse(91.0, 29.0, 63.0, 22.0);
+        ellipse.setFill(Color.web("#57595b"));
         ellipse.setStroke(Color.BLACK);
-        ellipse.setStrokeWidth(0.0);
-        ellipse.setLayoutX(centerX + (70.0 - 88.0 / 2) * scaleX);
-        ellipse.setLayoutY(centerY + (136.0 - 260.0 / 2) * scaleY);
+        ellipse.setStrokeWidth(1.5);
+        ellipse.setFill(imagePattern2);
 
-        Polygon polygon1 = new Polygon(
-                95.0 * scaleX, 23.0 * scaleY,
-                122.0 * scaleX, 11.0 * scaleY,
-                104.0 * scaleX, -23.0 * scaleY
-        );
-        polygon1.setFill(Color.DARKGRAY);
+        // Rectangle 1
+        Rectangle rectangle1 = new Rectangle(23.0, 17.0, 11.0, 24.0);
+        rectangle1.setFill(Color.web("#444e57"));
+        rectangle1.setStroke(Color.BLACK);
+        rectangle1.setStrokeWidth(1.0);
+        rectangle1.setFill(imagePattern2);
+        // Polygon 1
+        Polygon polygon1 = new Polygon(-13.0, -25.0, -5.25, -18.75, -13.0, -13.5);
+        polygon1.setLayoutX(47.0);
+        polygon1.setLayoutY(34.0);
+        polygon1.setFill(Color.web("#292b2c"));
         polygon1.setStroke(Color.BLACK);
         polygon1.setStrokeWidth(0.0);
-        polygon1.setLayoutX(centerX + (-62.0 - 88.0 / 2) * scaleX + 2);
-        polygon1.setLayoutY(centerY + (255.0 - 260.0 / 2) * scaleY);
 
-        Polygon polygon2 = new Polygon(
-                131.0 * scaleX, 14.0 * scaleY,
-                106.0 * scaleX, 4.0 * scaleY,
-                122.0 * scaleX, -31.0 * scaleY
-        );
-        polygon2.setFill(Color.DARKGRAY);
+        // Rectangle 2
+        Rectangle rectangle2 = new Rectangle(22.0, 9.0, 12.0, 5.0);
+        rectangle2.setFill(Color.web("#4c5257"));
+        rectangle2.setStroke(Color.BLACK);
+        rectangle2.setStrokeWidth(0.0);
+        rectangle2.setFill(imagePattern4);
+        // Polygon 2
+        Polygon polygon2 = new Polygon(-10.0, -25.75, -1.5, -20.0, -10.0, -15.0);
+        polygon2.setLayoutX(44.0);
+        polygon2.setLayoutY(63.0);
+        polygon2.setFill(Color.web("#292b2c"));
         polygon2.setStroke(Color.BLACK);
         polygon2.setStrokeWidth(0.0);
-        polygon2.setLayoutX(centerX + (-26.0 - 88.0 / 2) * scaleX - 2);
-        polygon2.setLayoutY(centerY + (263.0 - 260.0 / 2) * scaleY);
 
-        Polygon polygon3 = new Polygon(
-                84.0 * scaleX, 21.0 * scaleY,
-                108.0 * scaleX, 15.0 * scaleY,
-                108.0 * scaleX, -32.0 * scaleY
-        );
-        Image image2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/textureFragata1.png")));
-        ImagePattern imagePatter2  = new ImagePattern(image2);
-        ellipse.setFill(imagePatter2);
-        polygon3.setStroke(Color.BLACK);
-        polygon3.setStrokeWidth(0.0);
-        polygon3.setLayoutX(centerX + (-80.0 - 88.0 / 2) * scaleX +5);
-        polygon3.setLayoutY(centerY + (130.0 - 260.0 / 2) * scaleY);
+        // Rectangle 3
+        Rectangle rectangle3 = new Rectangle(22.0, 43.0, 12.0, 5.0);
+        rectangle3.setFill(Color.web("#4c5257"));
+        rectangle3.setStroke(Color.BLACK);
+        rectangle3.setStrokeWidth(0.0);
+        rectangle3.setFill(imagePattern4);
 
-        Polygon polygon4 = new Polygon(
-                95.0 * scaleX, 23.0 * scaleY,
-                122.0 * scaleX, 29.0 * scaleY,
-                95.0 * scaleX, -26.0 * scaleY
-        );
-        Image image3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/textureFragata1.png")));
-        ImagePattern imagePatter3  = new ImagePattern(image3);
-        ellipse.setFill(imagePatter3);
-        polygon4.setStrokeWidth(0.0);
-        polygon4.setLayoutX(centerX + (16.0 - 88.0 / 2) * scaleX - 5);
-        polygon4.setLayoutY(centerY + (120.0 - 260.0 / 2) * scaleY);
+        // Circle
+        Circle circle = new Circle(91.0, 29.0, 9.0);
+        circle.setFill(Color.web("#5a6168"));
+        circle.setStroke(Color.BLACK);
+        circle.setStrokeWidth(0.0);
+        circle.setFill(imagePattern3);
 
-        QuadCurve quadCurve = new QuadCurve(
-                -28.0 * scaleX, -4.0 * scaleY,
-                -10.0 * scaleX, -54.0 * scaleY,
-                10.0 * scaleX, -4.0 * scaleY
-        );
-        quadCurve.setFill(Color.web("#5a5a5b"));
-        quadCurve.setStroke(Color.BLACK);
-        quadCurve.setStrokeWidth(0.0);
-        quadCurve.setLayoutX(centerX + (78.0 - 88.0 / 2) * scaleX);
-        quadCurve.setLayoutY(centerY + (278.0 - 260.0 / 2) * scaleY);
+        // Line 1
+        Line line1 = new Line(90.0, 29.0, 34.0, 29.0);
+        line1.setStroke(Color.web("#9e8707"));
+
+        // Line 2
+        Line line2 = new Line(150.0, 29.0, 100.25, 29.0);
+        line2.setStroke(Color.web("#9e8707"));
+
+        // Rectangle 4
+        Rectangle rectangle4 = new Rectangle(78.0, 5.0, 24.0, 4.0);
+        rectangle4.setFill(Color.web("#57595b"));
+        rectangle4.setStroke(Color.BLACK);
+        rectangle4.setStrokeWidth(0.0);
+        rectangle4.setFill(imagePattern4);
+        // Rectangle 5
+        Rectangle rectangle5 = new Rectangle(79.0, 49.0, 24.0, 4.0);
+        rectangle5.setFill(Color.web("#57595b"));
+        rectangle5.setStroke(Color.BLACK);
+        rectangle5.setStrokeWidth(0.0);
+        rectangle5.setFill(imagePattern4);
+        // QuadCurve 1
+        QuadCurve quadCurve1 = new QuadCurve(-1.0, -28.5, -16.5, -33.5, -1.0, -38.25);
+        quadCurve1.setLayoutX(148.0);
+        quadCurve1.setLayoutY(49.0);
+        quadCurve1.setFill(Color.web("#373a3c"));
+        quadCurve1.setStroke(Color.BLACK);
+        quadCurve1.setStrokeWidth(1.0);
+        quadCurve1.setFill(imagePattern5);
+        // QuadCurve 2
+        QuadCurve quadCurve2 = new QuadCurve(-1.0, -28.5, -16.5, -33.5, -1.0, -38.25);
+        quadCurve2.setLayoutX(148.0);
+        quadCurve2.setLayoutY(75.0);
+        quadCurve2.setFill(Color.web("#373a3c"));
+        quadCurve2.setStroke(Color.BLACK);
+        quadCurve2.setStrokeWidth(1.0);
+        quadCurve2.setFill(imagePattern5);
 
 
-        shapesGroup = new Group(ellipse, polygon1, polygon2, polygon3, polygon4, quadCurve);
-        shapesGroup.setScaleX(0.85);
-        shapesGroup.setScaleY(0.85);
-        shapesGroup.setRotate(90);
-        shapesGroup.setLayoutX(45);
-        shapesGroup.setLayoutY(-70);
+
+
+
+
+
+
+        DropShadow glow = new DropShadow();
+        glow.setColor(Color.CADETBLUE);
+        glow.setRadius(10);
+        glow.setSpread(0.3);
+        shapesGroup.setEffect(glow);
+        shapesGroup.setStyle("-fx-cursor: hand");
+        shapesGroup.setLayoutX(10);
+        shapesGroup.setLayoutY(2);
+        shapesGroup.setScaleX(1.1);
+        shapesGroup.setScaleY(1.1);
+
+        shapesGroup.getChildren().addAll(ellipse, rectangle1, polygon1, rectangle2, polygon2, rectangle3,
+                circle, line1, line2, rectangle4, rectangle5, quadCurve1, quadCurve2);
+
+        shapesGroup.setScaleX(1.1);
+        shapesGroup.setScaleY(1.1);
         this.getChildren().add(shapesGroup);
         isSelect = false;
         size = 3;
-        isHorizontal = true;
     }
 
     public Submarino(boolean b) {
@@ -113,5 +152,17 @@ public class Submarino extends Ship {
         this.getChildren().add(body);
         isSelect = false;
         size = 3;
+    }
+
+    public void selectDesing() {
+        body.setFill(javafx.scene.paint.Color.BLACK);
+        body.setStroke(Color.TRANSPARENT);
+        isSelect = true;
+    }
+
+    public void originDesing() {
+        body.setFill(javafx.scene.paint.Color.DARKGRAY);
+        body.setStroke(Color.TRANSPARENT);
+        isSelect = false;
     }
 }
