@@ -3,6 +3,7 @@ package com.example.miniproyecto_3_battlership.controller;
 import com.example.miniproyecto_3_battlership.model.Player.PlayerBot;
 import com.example.miniproyecto_3_battlership.model.Player.PlayerPerson;
 import com.example.miniproyecto_3_battlership.model.game.Game;
+import com.example.miniproyecto_3_battlership.model.planeTextFile.PlainTextFileHandler;
 import com.example.miniproyecto_3_battlership.model.serializable.Save;
 import com.example.miniproyecto_3_battlership.model.serializable.SerializableFileHandler;
 import com.example.miniproyecto_3_battlership.model.ships.*;
@@ -20,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -29,6 +31,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -70,18 +75,20 @@ public class GameController implements Serializable {
     @FXML
     private Label infoLabel;
 
-    Fragata[] fragatas = new Fragata[4];
-    Destructor[] destructores = new Destructor[3];
-    Submarino[] submarinos = new Submarino[2];
-    Portaaviones[] portaaviones = new Portaaviones[1];
     private ArrayList<ArrayList<Integer>> matriz;
     private ArrayList<Ship> ship = new ArrayList<>();
     private Rectangle[][] enemyShadow = new Rectangle[10][10];
     private Save save;
 
+    private Image image;
+    private ImagePattern imagePatter;
+
 
 
     public void initialize() {
+
+        image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/mira.png")));
+        imagePatter  = new ImagePattern(image);
 
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
 
@@ -96,7 +103,7 @@ public class GameController implements Serializable {
 
         gameBorderPane.setBackground(new Background(background));
 
-        createEnemyShadows();
+        createEnemuShadows();
 
     }
 
@@ -123,13 +130,14 @@ public class GameController implements Serializable {
         setCharacter();
         setEnemy();
 
-        save = new Save(shipsPositions, game, shipsSelected);
+        save = new Save(shipsPositions);
         ship = save.getShip();
         createGridPaneGame();
         
         gridPaneShips.setStyle("-fx-cursor: default;");
 
         serializableFileHandler.serialize("save.ser", save);
+        serializableFileHandler.serialize("game.ser", game);
         
         playerPerson.showMatrix();
         System.out.println();
@@ -138,16 +146,16 @@ public class GameController implements Serializable {
 
     public void Continue(){
         save = (Save) serializableFileHandler.deserialize("save.ser");
-        game = save.getGame();
+        game = (Game) serializableFileHandler.deserialize("game.ser");
         playerBot = game.getPlayerBot();
+        playerPerson = game.getPlayerPerson();
         ship = save.getShip();
         setCharacter();
         setEnemy();
         createGridPaneGame();
         gridPaneShips.setStyle("-fx-cursor: default;");
-        gridPaneShips.setLayoutX(-102);
-        gridPaneShips.setLayoutY(199);
-        anchorPaneLeft.getChildren().add(1,gridPaneShips);
+        loadGridPaneShips();
+        loadGridPaneGame();
 
     }
 
@@ -198,7 +206,9 @@ public class GameController implements Serializable {
     }
 
     public void setCharacter(){
-        String nameCharacterActual = WelcomeController.getNameCharacter();
+        PlainTextFileHandler plainTextFileHandler = new PlainTextFileHandler();
+        String[] data = plainTextFileHandler.readFromFile("character.txt");
+        String nameCharacterActual = data[0];
         Image imageCharacterActual;
         nameCharacter.setText(nameCharacterActual);
         if (nameCharacterActual == "Coronel Sander"){
@@ -242,11 +252,12 @@ public class GameController implements Serializable {
         matriz = playerBot.getMatrix();
         if(row != 0 && column != 0) {
             enemyShadow[row-1][column-1].setOnMouseClicked(null);
+            enemyShadow[row-1][column-1].setOnMouseEntered(null);
+            enemyShadow[row-1][column-1].setOnMouseExited(null);
             enemyShadow[row-1][column-1].setStyle("-fx-cursor: default;");
             if (matriz.get(row-1).get(column-1) != 0) {
                 System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(0,0,30, Color.DARKGRAY);
-                gridPaneGame.add(circle, column, row);
+                gridPaneGame.add(successSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
                 playerBot.changeMatrix(row -1, column -1, -1);
@@ -258,17 +269,10 @@ public class GameController implements Serializable {
 
             } else{
                 System.out.println("NO LE ATINASTE");
-                Group group = new Group();
-                Line line1 = new Line(9, 9, 29, 29);
-                Line line2 = new Line(29, 9, 9, 29);
-                line1.setStroke(Color.RED);
-                line1.setStrokeWidth(5);
-                line2.setStroke(Color.RED);
-                line2.setStrokeWidth(5);
-                group.getChildren().addAll(line1, line2);
-                gridPaneGame.add(group, column, row);
+                gridPaneGame.add(errorSymbol(), column, row);
                 playerTurn();
                 infoLabel.setText("La maquina esta pensando...");
+                playerBot.changeMatrix(row -1, column -1, 2);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event2 -> {
                     botAttack( 1+ (int)(Math.random()*9),  1+ (int)(Math.random()*9));
@@ -276,7 +280,43 @@ public class GameController implements Serializable {
                 pause.play();
             }
         }
+        serializableFileHandler.serialize("game.ser", game);
+        victory(game.verifyWinner(playerBot));
 
+    }
+
+    public void loadGridPaneShips(){
+        matriz = playerPerson.getMatrix();
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                if(matriz.get(i).get(j) == 2){
+                    gridPaneShips.add(errorSymbol(), j+1, i+1);
+                }else if(matriz.get(i).get(j) == -1){
+                    Circle circle = new Circle(0,0,20, Color.RED);
+                    gridPaneShips.add(circle, j+1, i+1);
+                }
+            }
+        }
+    }
+
+    public void loadGridPaneGame(){
+        matriz = playerBot.getMatrix();
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                if(matriz.get(i).get(j) == 2){
+                    gridPaneGame.add(errorSymbol(), j+1, i+1);
+                    enemyShadow[i][j].setOnMouseClicked(null);
+                    enemyShadow[i][j].setOnMouseEntered(null);
+                    enemyShadow[i][j].setOnMouseExited(null);
+                }else if(matriz.get(i).get(j) == -1){
+                    Circle circle = new Circle(0,0,20, Color.RED);
+                    gridPaneGame.add(circle, j+1, i+1);
+                    enemyShadow[i][j].setOnMouseClicked(null);
+                    enemyShadow[i][j].setOnMouseEntered(null);
+                    enemyShadow[i][j].setOnMouseExited(null);
+                }
+            }
+        }
     }
 
     public void playerTurn() {
@@ -287,34 +327,26 @@ public class GameController implements Serializable {
         }
     }
 
-
     @FXML
+
     void botAttack(int row, int column) {
 
         matriz = playerPerson.getMatrix();
         if(row != 0 && column != 0) {
             if (matriz.get(row-1).get(column-1) != 0 && matriz.get(row-1).get(column-1) != 2 && matriz.get(row-1).get(column-1) != -1) {
                 System.out.println("PUM LE ATINASTE");
-                Circle circle = new Circle(0,0,20, Color.RED);
-                gridPaneShips.add(circle, column, row);
+                gridPaneShips.add(successSymbol(), column, row);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event -> {
                     playerTurn();
                 });
                 playerPerson.changeMatrix(row-1, column-1, -1);
                 pause.play();
+                defeat((game.verifyWinner(playerPerson)));
 
             } else{
                 System.out.println("NO LE ATINASTE");
-                Group group = new Group();
-                Line line1 = new Line(9, 9, 29, 29);
-                Line line2 = new Line(29, 9, 9, 29);
-                line1.setStroke(Color.RED);
-                line1.setStrokeWidth(5);
-                line2.setStroke(Color.RED);
-                line2.setStrokeWidth(5);
-                group.getChildren().addAll(line1, line2);
-                gridPaneShips.add(group, column, row);
+                gridPaneShips.add(errorSymbol(), column, row);
                 playerPerson.changeMatrix(row-1, column-1, 2);
                 PauseTransition pause = new PauseTransition(Duration.seconds(0));
                 pause.setOnFinished(event -> {
@@ -323,6 +355,52 @@ public class GameController implements Serializable {
                 pause.play();
             }
         }
+    }
+
+    public Group errorSymbol(){
+        Group group = new Group();
+        Line line1 = new Line(9, 9, 29, 29);
+        Line line2 = new Line(29, 9, 9, 29);
+        line1.setStroke(Color.RED);
+        line1.setStrokeWidth(5);
+        line2.setStroke(Color.RED);
+        line2.setStrokeWidth(5);
+        group.getChildren().addAll(line1, line2);
+        return group;
+    }
+
+    public Group successSymbol(){
+        Group group = new Group();
+        Circle circle = new Circle(0,0,20, Color.RED);
+        group.getChildren().add(circle);
+        return group;
+    }
+
+    public void victory(boolean victory){
+        if (victory){
+            infoLabel.setText("¡Felicidades! Has ganado");
+            gridPaneGame.setDisable(true);
+            Path path = Paths.get("game.ser");
+            Path path2 = Paths.get("save.ser");
+
+            try {
+                Files.delete(path);
+                Files.delete(path2);
+                System.out.println("El archivo ha sido borrado.");
+            } catch (IOException e) {
+                System.err.println("Error al borrar el archivo: " + e.getMessage());
+            }
+
+        }
+
+    }
+
+    public void defeat(boolean defeat){
+        if (defeat){
+            infoLabel.setText("¡Has perdido! Intentalo de nuevo");
+            gridPaneGame.setDisable(true);
+        }
+
     }
 
     public void animationIn(){
@@ -355,7 +433,7 @@ public class GameController implements Serializable {
 
     }
 
-    public void createEnemyShadows() {
+    public void createEnemuShadows() {
         double cellWidth = 63.7;
         double cellHeight = 63.7;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
@@ -376,8 +454,8 @@ public class GameController implements Serializable {
     }
 
     public void onHandleMouseEnteredShips(int row, int col) {
-        Color colorhover = Color.rgb(0, 0, 0, 0.5);
-        enemyShadow[row][col].setFill(colorhover);
+
+        enemyShadow[row][col].setFill(imagePatter);
     }
 
     
@@ -390,6 +468,7 @@ public class GameController implements Serializable {
 
         @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
+        playerBot.showMatrix();
         GameStage.deleteInstance();
         WelcomeStage.getInstance();
     }

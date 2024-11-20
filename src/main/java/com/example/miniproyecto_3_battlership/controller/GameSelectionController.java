@@ -1,6 +1,7 @@
 package com.example.miniproyecto_3_battlership.controller;
 
 import com.example.miniproyecto_3_battlership.model.exeption.CrossedShipsException;
+import com.example.miniproyecto_3_battlership.model.planeTextFile.PlainTextFileHandler;
 import com.example.miniproyecto_3_battlership.model.ships.*;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
@@ -167,7 +168,9 @@ public class GameSelectionController {
     }
 
     public void setCharacter() {
-        String nameCharacterActual = WelcomeController.getNameCharacter();
+        PlainTextFileHandler plainTextFileHandler = new PlainTextFileHandler();
+        String[] data = plainTextFileHandler.readFromFile("character.txt");
+        String nameCharacterActual = data[0];
         Image imageCharacterActual;
         nameCharacter.setText(nameCharacterActual);
         if (nameCharacterActual == "Coronel Sander") {
