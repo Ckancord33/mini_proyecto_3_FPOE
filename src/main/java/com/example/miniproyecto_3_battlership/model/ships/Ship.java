@@ -18,6 +18,7 @@ public class Ship extends Pane implements Serializable {
     protected boolean potentialRotate = true;
     protected int[] position = new int[2];
     protected boolean isPlaced = false;
+    protected boolean isDestroyed = false;
 
     public Ship() {
     }
@@ -103,6 +104,14 @@ public class Ship extends Pane implements Serializable {
         shapesGroup.setScaleY(Y);
         body.setScaleX(X);
         body.setScaleY(Y);
+    }
+
+    public void setIsDestroyed(boolean isDestroyed){
+        this.isDestroyed = isDestroyed;
+    }
+
+    public boolean isDestroyed(){
+        return isDestroyed;
     }
 
 }
