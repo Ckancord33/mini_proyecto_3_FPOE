@@ -41,6 +41,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+import static javafx.scene.paint.Color.ORANGE;
 
 /**
  * Controller class for managing the game logic and interactions in the Battleship game.
@@ -62,6 +63,7 @@ public class GameController implements Serializable {
     private PlayerBot playerBot;
     private PlayerPerson playerPerson;
     private final SerializableFileHandler serializableFileHandler = new SerializableFileHandler();
+
 
 
     @FXML
@@ -108,6 +110,8 @@ public class GameController implements Serializable {
 
     private Image image;
     private ImagePattern imagePatter;
+    private Image expls = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/explosion.png")));
+    ImagePattern imagePattern = new ImagePattern(expls);
 
     private String nameCharacterActual;
     private String nameEnemyActual;
@@ -118,7 +122,9 @@ public class GameController implements Serializable {
     private PlainTextFileHandler plainTextFileHandler;
 
     private Sounds mainMusic;
-
+    private Sounds missed;
+    private Sounds gotcha;
+    private Sounds playclick;
     /**
      * Initializes the game screen for the Battleship game.
      *
@@ -145,6 +151,7 @@ public class GameController implements Serializable {
 
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/gameSound.wav");
+        mainMusic.lowerVolume(0.9);
         mainMusic.loopSound();
 
         rowBot = 0;
@@ -535,7 +542,12 @@ public class GameController implements Serializable {
                     enemyShips.get(i).setIsDestroyed(true);
                     infoLabel.setText("¡Has destruido un barco enemigo!");
                     for (int j = 0; j < enemyShips.get(i).getSize(); j++) {
-                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
+
+
+                        Circle flame = new Circle(25,25,20);
+
+                        flame.setFill(imagePattern);
+                        Group group = new Group(flame);
                         group.setEffect(new DropShadow(4, Color.BLACK));
                         if (enemyShips.get(i).isHorizontal()) {
                             gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -613,7 +625,12 @@ public class GameController implements Serializable {
                 playerShips.get(k).setIsDestroyed(true);
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < playerShips.get(k).getSize(); j++) {
-                    Group group = new Group(new Circle(25, 25, 20, Color.RED));
+
+                    Circle flame = new Circle(25,25,20);
+
+                    flame.setFill(imagePattern);
+                    Group group = new Group(flame);
+
                     group.setEffect(new DropShadow(4, Color.BLACK));
                     if (playerShips.get(k).isHorizontal()) {
                         gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -690,7 +707,10 @@ public class GameController implements Serializable {
                 enemyShips.get(k).setIsDestroyed(true);
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < enemyShips.get(k).getSize(); j++) {
-                    Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                    Circle flame = new Circle(25,25,20);
+
+                    flame.setFill(imagePattern);
+                    Group group = new Group(flame);
                     group.setEffect(new DropShadow(4, Color.BLACK));
                     if (enemyShips.get(k).isHorizontal()) {
                         gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -830,6 +850,9 @@ public class GameController implements Serializable {
         line2.setStroke(Color.RED);
         line2.setStrokeWidth(5);
         group.getChildren().addAll(line1, line2);
+        missed = new Sounds();
+        missed.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/missedsfx.wav");
+        missed.playSound();
         return group;
     }
 
@@ -868,7 +891,7 @@ public class GameController implements Serializable {
                 26, -6   // Pico superior izquierdo corto
         );
         spark.setFill(Color.rgb(239, 196, 64));
-        spark.setStroke(Color.ORANGE);
+        spark.setStroke(ORANGE);
         spark.setStrokeWidth(0.5);
         spark.setEffect(new DropShadow(5, Color.YELLOW));
 
@@ -879,6 +902,10 @@ public class GameController implements Serializable {
 
 
         group.getChildren().addAll(bombBody, fuse, spark);
+        gotcha = new Sounds();
+        gotcha.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/explosionsfx.wav");
+        gotcha.lowerVolume(0.60);
+        gotcha.playSound();
         return group;
     }
 
@@ -1138,6 +1165,9 @@ public class GameController implements Serializable {
     public void onHandleMouseEnteredeShowEnemyShips(javafx.scene.input.MouseEvent mouseEvent) {
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/buttonHoverShowEnemyShips.png")));
         ImageInput imageInput = new ImageInput(newImage);
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         btnShowEnemyShips.setEffect(imageInput);
     }
     /**
@@ -1165,6 +1195,9 @@ public class GameController implements Serializable {
      */
     @FXML
     void onHandleClickResetGame(ActionEvent event) throws IOException {
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         mainMusic.stopSound();
         GameStage.deleteInstance();
         GameSelectionStage.getInstance();
@@ -1182,6 +1215,9 @@ public class GameController implements Serializable {
     @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         playerBot.showMatrix();
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         mainMusic.stopSound();
         GameStage.deleteInstance();
         WelcomeStage.getInstance();

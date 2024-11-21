@@ -120,7 +120,7 @@ public class GameSelectionController {
     private final Rectangle[][] shadowShipsSelection = new Rectangle[10][10];
 
     private Sounds mainMusic;
-
+    private Sounds playclick;
     /**
      * Initializes the game selection screen for the Battleship game.
      *
@@ -635,7 +635,9 @@ public class GameSelectionController {
             infoLabel.setText("Teniente debe seleccionar todos los barcos antes de poder ir a la batalla");
             return;
         }
-
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         mainMusic.stopSound();
         rectangleLabelInfo.setOpacity(0);
         infoLabel.setOpacity(0);
@@ -733,6 +735,9 @@ public class GameSelectionController {
     @FXML
     public void onHandleReturn(ActionEvent actionEvent) throws IOException {
         mainMusic.stopSound();
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         GameSelectionStage.deleteInstance();
         WelcomeStage.getInstance();
     }
