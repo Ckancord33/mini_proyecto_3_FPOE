@@ -124,6 +124,7 @@ public class GameController implements Serializable {
     private Sounds mainMusic;
     private Sounds missed;
     private Sounds gotcha;
+    private Sounds playclick;
     /**
      * Initializes the game screen for the Battleship game.
      *
@@ -1164,6 +1165,9 @@ public class GameController implements Serializable {
     public void onHandleMouseEnteredeShowEnemyShips(javafx.scene.input.MouseEvent mouseEvent) {
         Image newImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/buttonHoverShowEnemyShips.png")));
         ImageInput imageInput = new ImageInput(newImage);
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         btnShowEnemyShips.setEffect(imageInput);
     }
     /**
@@ -1191,6 +1195,9 @@ public class GameController implements Serializable {
      */
     @FXML
     void onHandleClickResetGame(ActionEvent event) throws IOException {
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         mainMusic.stopSound();
         GameStage.deleteInstance();
         GameSelectionStage.getInstance();
@@ -1208,6 +1215,9 @@ public class GameController implements Serializable {
     @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {
         playerBot.showMatrix();
+        playclick = new Sounds();
+        playclick.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
+        playclick.playSound();
         mainMusic.stopSound();
         GameStage.deleteInstance();
         WelcomeStage.getInstance();
