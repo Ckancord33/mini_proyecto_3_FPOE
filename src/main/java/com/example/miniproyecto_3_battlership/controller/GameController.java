@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -24,6 +25,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.*;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -269,6 +272,8 @@ public class GameController implements Serializable {
         row += 1;
         column += 1;
 
+        playVideoVictory();
+
         matriz = playerBot.getMatrix();
         if (row != 0 && column != 0) {
             enemyShadow[row - 1][column - 1].setOnMouseClicked(null);
@@ -276,23 +281,21 @@ public class GameController implements Serializable {
             enemyShadow[row - 1][column - 1].setOnMouseExited(null);
             enemyShadow[row - 1][column - 1].setStyle("-fx-cursor: default;");
             if (matriz.get(row - 1).get(column - 1) != 0) {
+                infoLabel.setText("Felicidad capitan le atinaste, tira nuevamente! ");
                 gridPaneGame.add(successSymbol(), column, row);
-                playerTurn();
-                infoLabel.setText("La maquina esta pensando...");
                 playerBot.changeMatrix(row - 1, column - 1, -1);
-                PauseTransition pause = new PauseTransition(Duration.seconds(0));
+                PauseTransition pause = new PauseTransition(Duration.seconds(.5));
                 pause.setOnFinished(event2 -> {
-
-                    botAttack();
+                    playerTurn();
                 });
                 pause.play();
-
+                playerTurn();
             } else {
+                infoLabel.setText("Oh fallaste, deja a tu openete atacar");
                 gridPaneGame.add(errorSymbol(), column, row);
                 playerTurn();
-                infoLabel.setText("La maquina esta pensando...");
                 playerBot.changeMatrix(row - 1, column - 1, 2);
-                PauseTransition pause = new PauseTransition(Duration.seconds(0));
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(event2 -> {
                     botAttack();
                 });
@@ -346,6 +349,7 @@ public class GameController implements Serializable {
 
     @FXML
     void botAttack() {
+        infoLabel.setText("La maquina esta pensando...");
         playerBot.generatePositionRandom(playerPerson.getMatrix());
         rowBot = playerBot.getPositionRandom()[0];
         columnbot = playerBot.getPositionRandom()[1];
@@ -353,21 +357,22 @@ public class GameController implements Serializable {
         System.out.print("row: " + rowBot + " column: " + columnbot);
 
         if (matriz.get(rowBot - 1).get(columnbot - 1) != 0) {
-            System.out.println("PUM LE ATINASTE");
+            infoLabel.setText("Tu opente ha acertado, atacara nuevamente");
             gridPaneShips.add(successSymbol(), columnbot, rowBot);
-            PauseTransition pause = new PauseTransition(Duration.seconds(0));
-            pause.setOnFinished(event -> {
-                playerTurn();
-            });
             playerPerson.changeMatrix(rowBot - 1, columnbot - 1, -1);
-            pause.play();
             defeat((game.verifyWinner(playerPerson)));
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(event2 -> {
+                infoLabel.setText("La maquina esta pensando...");
+                botAttack();
+            });
+            pause.play();
 
         } else {
-            System.out.println("NO LE ATINASTE");
+            infoLabel.setText("Tu oponente ha fallado, es tu turno");
             gridPaneShips.add(errorSymbol(), columnbot, rowBot);
             playerPerson.changeMatrix(rowBot - 1, columnbot - 1, 2);
-            PauseTransition pause = new PauseTransition(Duration.seconds(0));
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(event -> {
                 playerTurn();
             });
@@ -448,6 +453,22 @@ public class GameController implements Serializable {
     }
 
     private void playVideoVictory() {
+        Pane pane = new Pane();
+        pane.setPrefSize(1920, 1080);
+        Image video = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/gifs/victory.gif")));
+        ImageView imageView = new ImageView(video);
+        imageView.setFitWidth(1920);
+        imageView.setFitHeight(1080);
+        imageView.setPreserveRatio(true);
+
+        pane.getChildren().add(imageView);
+
+        Stage paneStage = new Stage();
+        Scene paneScene = new Scene(pane);
+        paneStage.initStyle(StageStyle.UNDECORATED);
+        paneStage.setScene(paneScene);
+        paneStage.setTitle("Pane con Imagen");
+        paneStage.show();
     }
 
     public void defeat(boolean defeat) {
