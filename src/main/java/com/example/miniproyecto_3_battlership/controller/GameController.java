@@ -151,7 +151,7 @@ public class GameController implements Serializable {
 
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/gameSound.wav");
-        mainMusic.lowerVolume(0.9);
+        mainMusic.lowerVolume(25.0f);
         mainMusic.loopSound();
 
         rowBot = 0;
@@ -542,17 +542,10 @@ public class GameController implements Serializable {
                     enemyShips.get(i).setIsDestroyed(true);
                     infoLabel.setText("¡Has destruido un barco enemigo!");
                     for (int j = 0; j < enemyShips.get(i).getSize(); j++) {
-
-
-                        Circle flame = new Circle(25,25,20);
-
-                        flame.setFill(imagePattern);
-                        Group group = new Group(flame);
-                        group.setEffect(new DropShadow(4, Color.BLACK));
                         if (enemyShips.get(i).isHorizontal()) {
-                            gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
+                            gridPaneGame.add(destroyerFlame(), columnSelected + 1 - j, rowSelected + 1);
                         } else {
-                            gridPaneGame.add(group, columnSelected + 1, rowSelected + 1 - j);
+                            gridPaneGame.add(destroyerFlame(), columnSelected + 1, rowSelected + 1 - j);
                         }
                     }
                     enemyShips.remove(i);
@@ -564,6 +557,41 @@ public class GameController implements Serializable {
         serializableFileHandler.serialize("save.ser", save);
         serializableFileHandler.serialize("game.ser", game);
         victory(game.verifyWinner(playerBot));
+    }
+
+    public Group destroyerFlame(){
+        Polygon flame = new Polygon();
+        flame.getPoints().addAll(25.0, 0.0,   // Punta superior de la llama
+                30.0, 8.0,   // Curva derecha superior
+                35.0, 5.0,   // Pico derecho alto
+                33.0, 15.0,  // Curva intermedia derecha
+                40.0, 25.0,  // Pico derecho medio
+                30.0, 28.0,  // Base derecha
+                35.0, 40.0,  // Extremo inferior derecho
+                25.0, 35.0,  // Centro inferior
+                15.0, 40.0,  // Extremo inferior izquierdo
+                20.0, 28.0,  // Base izquierda
+                10.0, 25.0,  // Pico izquierdo medio
+                17.0, 15.0,  // Curva intermedia izquierda
+                15.0, 5.0,   // Pico izquierdo alto
+                20.0, 8.0);
+        flame.setScaleX(1.6);
+        flame.setScaleY(1.6);
+        flame.setRotate(180);
+        flame.setFill(imagePattern); // Naranja rojizo
+        flame.setStrokeWidth(0);
+        Group group = new Group(flame);
+        group.setEffect(new DropShadow(4, Color.BLACK));
+
+
+
+
+
+
+        Image expls = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/explosion.png")));
+        ImagePattern imagePattern = new ImagePattern(expls);
+        flame.setFill(imagePattern);
+        return group;
     }
 
     /**
@@ -626,16 +654,10 @@ public class GameController implements Serializable {
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < playerShips.get(k).getSize(); j++) {
 
-                    Circle flame = new Circle(25,25,20);
-
-                    flame.setFill(imagePattern);
-                    Group group = new Group(flame);
-
-                    group.setEffect(new DropShadow(4, Color.BLACK));
                     if (playerShips.get(k).isHorizontal()) {
-                        gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
+                        gridPaneShips.add(destroyerFlame(), columnSelected + 1 - j, rowSelected + 1);
                     } else {
-                        gridPaneShips.add(group, columnSelected + 1, rowSelected + 1 - j);
+                        gridPaneShips.add(destroyerFlame(), columnSelected + 1, rowSelected + 1 - j);
                     }
                 }
                 playerShips.remove(k);
@@ -707,15 +729,10 @@ public class GameController implements Serializable {
                 enemyShips.get(k).setIsDestroyed(true);
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < enemyShips.get(k).getSize(); j++) {
-                    Circle flame = new Circle(25,25,20);
-
-                    flame.setFill(imagePattern);
-                    Group group = new Group(flame);
-                    group.setEffect(new DropShadow(4, Color.BLACK));
                     if (enemyShips.get(k).isHorizontal()) {
-                        gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
+                        gridPaneGame.add(destroyerFlame(), columnSelected + 1 - j, rowSelected + 1);
                     } else {
-                        gridPaneGame.add(group, columnSelected + 1, rowSelected + 1 - j);
+                        gridPaneGame.add(destroyerFlame(), columnSelected + 1, rowSelected + 1 - j);
                     }
                 }
                 enemyShips.remove(k);
@@ -814,12 +831,10 @@ public class GameController implements Serializable {
                     playerShips.get(i).setIsDestroyed(true);
                     infoLabel.setText("¡El enemigo destruyo un barco!");
                     for (int j = 0; j < playerShips.get(i).getSize(); j++) {
-                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
-                        group.setEffect(new DropShadow(4, Color.BLACK));
                         if (playerShips.get(i).isHorizontal()) {
-                            gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
+                            gridPaneShips.add(destroyerFlame(), columnSelected + 1 - j, rowSelected + 1);
                         } else {
-                            gridPaneShips.add(group, columnSelected + 1, rowSelected + 1 - j);
+                            gridPaneShips.add(destroyerFlame(), columnSelected + 1, rowSelected + 1 - j);
                         }
                     }
                     playerShips.remove(i);
@@ -843,13 +858,37 @@ public class GameController implements Serializable {
 
     public Group errorSymbol() {
         Group group = new Group();
-        Line line1 = new Line(9, 9, 29, 29);
-        Line line2 = new Line(29, 9, 9, 29);
-        line1.setStroke(Color.RED);
-        line1.setStrokeWidth(5);
-        line2.setStroke(Color.RED);
-        line2.setStrokeWidth(5);
-        group.getChildren().addAll(line1, line2);
+        Polygon xShape = new Polygon(
+                // Coordenadas para la parte superior izquierda de la "X"
+                10, 0,
+                20, 0,
+                30, 20,
+                40, 0,
+                50, 0,
+                35, 30,
+                50, 60,
+                40, 60,
+                30, 40,
+                20, 60,
+                10, 60,
+                25, 30
+        );
+
+        // Estilo estético pirata
+        xShape.setFill(Color.DARKRED); // Rojo oscuro que recuerda a un mapa antiguo
+        xShape.setStroke(Color.BLACK); // Borde negro
+        xShape.setStrokeWidth(2);
+
+        // Efectos: Sombra
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.BLACK);
+        shadow.setRadius(5);
+        shadow.setOffsetX(3);
+        shadow.setOffsetY(3);
+        xShape.setEffect(shadow);
+        group.getChildren().addAll(xShape);
+        group.setScaleX(0.7);
+        group.setScaleY(0.7);
         missed = new Sounds();
         missed.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/missedsfx.wav");
         missed.playSound();
@@ -904,7 +943,7 @@ public class GameController implements Serializable {
         group.getChildren().addAll(bombBody, fuse, spark);
         gotcha = new Sounds();
         gotcha.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/explosionsfx.wav");
-        gotcha.lowerVolume(0.60);
+        gotcha.lowerVolume(6.0f);
         gotcha.playSound();
         return group;
     }
@@ -960,7 +999,12 @@ public class GameController implements Serializable {
         pause.setOnFinished(event2 -> {
 
             mediaPlayer.stop();
-            GameStage.deleteInstance();
+            try {
+                GameStage.deleteInstance();
+            }catch (NullPointerException e2){
+                System.out.println("No se pudo borrar la instancia");
+            }
+
             try {
                 WelcomeStage.getInstance();
             } catch (IOException e) {

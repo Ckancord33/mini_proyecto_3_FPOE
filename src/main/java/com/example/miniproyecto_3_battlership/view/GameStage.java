@@ -4,11 +4,13 @@ import com.example.miniproyecto_3_battlership.controller.GameController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Represents the main game stage in the Battleship application.
@@ -44,6 +46,8 @@ public class GameStage extends Stage {
         gameController = loader.getController();
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/favicon.png")).toExternalForm());
+        getIcons().add(icon);
         setWidth(screenWidth * 1);
         setHeight(screenHeight * 1);
         setTitle("BattleShip");
