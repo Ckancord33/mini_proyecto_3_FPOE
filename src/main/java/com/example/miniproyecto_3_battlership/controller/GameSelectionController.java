@@ -3,6 +3,7 @@ package com.example.miniproyecto_3_battlership.controller;
 import com.example.miniproyecto_3_battlership.model.exeption.CrossedShipsException;
 import com.example.miniproyecto_3_battlership.model.planeTextFile.PlainTextFileHandler;
 import com.example.miniproyecto_3_battlership.model.ships.*;
+import com.example.miniproyecto_3_battlership.model.sound.Sounds;
 import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
@@ -17,6 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -101,10 +105,15 @@ public class GameSelectionController {
 
     private final Rectangle[][] shadowShipsSelection = new Rectangle[10][10];
 
+    private Sounds mainMusic;
+
 
     public void initialize() {
+        mainMusic = new Sounds();
+        mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/gameSelectionSound.wav");
+        mainMusic.loopSound();
 
-        Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game_battleship.png").toExternalForm());
+        Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/backgroundSelection.png").toExternalForm());
 
 
         BackgroundImage background = new BackgroundImage(
@@ -465,6 +474,7 @@ public class GameSelectionController {
 
     @FXML
     void onHandleStartGame(ActionEvent event) throws IOException {
+        mainMusic.stopSound();
         int totalSum = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -485,35 +495,14 @@ public class GameSelectionController {
         rectangleLabelSelection.setOpacity(0);
         lbSelecction.setOpacity(0);
 
-        Timeline timeline = new Timeline();
-
-        int duration = 2000;
-        int frames = 30;
-
-        for (int i = 0; i < frames; i++) {
-
-            KeyFrame keyFrame = new KeyFrame(
-                    Duration.millis(i * (duration / frames)),
-                    e -> {
-
-                        double offsetX = Math.random() * 4 - 4;
-                        double offsetY = Math.random() * 4 - 5;
-
-                        gameBorderPane.setTranslateX(offsetX);
-                        gameBorderPane.setTranslateY(offsetY);
-                    }
-            );
-            timeline.getKeyFrames().add(keyFrame);
-        }
-
-        timeline.setOnFinished(e -> {
-            gameBorderPane.setTranslateX(0);
-            gameBorderPane.setTranslateY(0);
-        });
+        shipPositions();
+        playVideoLoading();
+        animation();
 
 
-        timeline.play();
+    }
 
+    private void animation(){
         FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.8), anchorPaneLeft);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.5);
@@ -525,33 +514,34 @@ public class GameSelectionController {
         ParallelTransition transitionLeft = new ParallelTransition(fadeOut, moveRight);
         transitionLeft.play();
 
-        FadeTransition fadeOut2 = new FadeTransition(Duration.seconds(0.8), anchorPaneMiddle);
-        fadeOut2.setFromValue(1.0);
-        fadeOut2.setToValue(0.7);
-
-        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(1.5), anchorPaneMiddle);
-        moveLeft.setFromX(0);
-        moveLeft.setToX(140);
-
-        ParallelTransition transitionMiddle = new ParallelTransition(fadeOut2, moveLeft);
-        transitionMiddle.play();
-        moveLeft.setInterpolator(Interpolator.EASE_BOTH);
-
-        shipPositions();
-
-        fadeOut.setOnFinished(event2 -> {
-            Platform.runLater(() -> {
-                try {
-                    GameStage.getInstance().getGameController().setGridPaneShips(shipsPosition, shipsSelected);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        Platform.runLater(() -> {
+            try {
+                GameStage.getInstance().getGameController().setGridPaneShips(shipsPosition, shipsSelected);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
-        moveLeft.setOnFinished(event3 -> {
+    }
+
+    private void playVideoLoading() {
+        String videoPath = getClass().getResource("/com/example/miniproyecto_3_battlership/media/videoloading.mp4").toExternalForm();
+        Media media = new Media(videoPath);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        MediaView mediaView = new MediaView(mediaPlayer);
+        mediaView.setLayoutX(0);
+        mediaView.setLayoutY(0);
+        mediaView.setFitHeight(1080);
+        mediaView.setFitWidth(1920);
+        mediaPlayer.play();
+        gameBorderPane.getChildren().add(mediaView);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event2 -> {
+            mediaPlayer.stop();
             GameSelectionStage.deleteInstance();
         });
+        pause.play();
 
 
     }
@@ -567,6 +557,7 @@ public class GameSelectionController {
 
     @FXML
     public void onHandleReturn(ActionEvent actionEvent) throws IOException {
+        mainMusic.stopSound();
         GameSelectionStage.deleteInstance();
         WelcomeStage.getInstance();
     }

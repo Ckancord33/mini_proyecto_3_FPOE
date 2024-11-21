@@ -163,7 +163,7 @@
                   <Font name="Berlin Sans FB" size="35.0" />
                </font>
             </Label>
-            <Button layoutX="99.0" layoutY="945.0" mnemonicParsing="false" onAction="#onHandlePutEnemyShips" prefHeight="75.0" prefWidth="76.0" textFill="WHITE">
+            <Button fx:id="btnShowEnemyShips" layoutX="244.0" layoutY="969.0" mnemonicParsing="false" onAction="#onHandlePutEnemyShips" onMouseEntered="#onHandleMouseEnteredeShowEnemyShips" onMouseExited="#onHandleMouseExitedShowEnemyShips" prefHeight="75.0" prefWidth="76.0" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="30.0" />
                </font>
@@ -173,7 +173,7 @@
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="@Image/random_button.png" />
+                        <Image url="@Image/buttonShowEnemyShips.png" />
                      </source>
                   </ImageInput>
                </effect>
@@ -206,6 +206,14 @@
             <Button layoutX="101.0" layoutY="648.0" mnemonicParsing="false" onAction="#onHandleReturn" prefHeight="70.0" prefWidth="280.0" styleClass="buttonReturn" stylesheets="@Css/css.css" text="Abandonar flota" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="25.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button layoutX="111.0" layoutY="567.0" mnemonicParsing="false" onAction="#onHandleClickResetGame" prefHeight="70.0" prefWidth="280.0" style="-fx-background-color: #7D3434; -fx-border-radius: 30; -fx-background-radius: 30; -fx-border-width: 3; -fx-border-color: #373F51;" styleClass="buttonRed" stylesheets="@Css/css.css" text="Reiniciar flota!" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="30.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

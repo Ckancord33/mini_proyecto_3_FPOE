@@ -72,11 +72,15 @@ public class WelcomeController {
     private PlainTextFileHandler plainTextFileHandler;
 
     private Sounds mainMusic;
+    private Sounds buttonHoverSound;
     @FXML
     public void initialize() {
         mainMusic = new Sounds();
-        mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mainmusic.wav");
+        mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/welcome_theme.wav");
         mainMusic.loopSound();
+        mainMusic.lowerVolume();
+        buttonHoverSound = new Sounds();
+        buttonHoverSound.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
 
         plainTextFileHandler = new PlainTextFileHandler();
         //IMAGEN DE FONDO
@@ -97,8 +101,12 @@ public class WelcomeController {
         selectionCharacter("Coronel Sander");
 
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            buttonHoverSound.playSound();
             selectionCharacter(newValue);
+
         });
+
+
 
 
         // METODO QUE COLOCA LA CALAVERA
@@ -248,6 +256,7 @@ public class WelcomeController {
 
     public void btnHoverStyle(Button button, int i) {
         button.setOnMouseEntered(mouseEvent -> {
+            buttonHoverSound.playSound();
             switch (i) {
                 case 1:
                     img1.setOpacity(1);
@@ -267,6 +276,7 @@ public class WelcomeController {
             }
         });
         button.setOnMouseExited(mouseEvent -> {
+            buttonHoverSound.stopSound();
             switch (i) {
                 case 1:
                     img1.setOpacity(0);
