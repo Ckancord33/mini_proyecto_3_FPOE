@@ -3,6 +3,7 @@ package com.example.miniproyecto_3_battlership.model.sound;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Sounds {
@@ -56,6 +57,22 @@ public class Sounds {
     public void loopSound() {
         if (clip != null) {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+
+    public void lowerVolume(){
+        if (clip != null) {
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float currentVolume = volumeControl.getValue();
+            volumeControl.setValue(currentVolume - 15.0f);
+        }
+    }
+
+    public void upperVolume(){
+        if (clip != null) {
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float currentVolume = volumeControl.getValue();
+            volumeControl.setValue(currentVolume + 6.0f);
         }
     }
 }

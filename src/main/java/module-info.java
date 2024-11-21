@@ -3,6 +3,7 @@ module com.example.miniproyecto_3_battlership {
     requires javafx.fxml;
     requires java.desktop;
     requires jdk.xml.dom;
+    requires javafx.media;
 
 
     opens com.example.miniproyecto_3_battlership to javafx.fxml;
