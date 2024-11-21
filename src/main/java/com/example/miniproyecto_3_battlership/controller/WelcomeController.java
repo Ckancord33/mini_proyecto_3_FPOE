@@ -94,7 +94,7 @@ public class WelcomeController {
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/welcome_theme.wav");
         mainMusic.loopSound();
-        mainMusic.lowerVolume(0.60);
+        mainMusic.lowerVolume(15.0f);
 
         buttonHoverSound = new Sounds();
         buttonHoverSound.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -39,6 +40,8 @@ public class WelcomeStage extends Stage {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
         setTitle("BattleShip");
         initStyle(StageStyle.UNDECORATED);
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/favicon.png")).toExternalForm());
+        getIcons().add(icon);
         double screenWidth = Screen.getPrimary().getBounds().getWidth();
         double screenHeight = Screen.getPrimary().getBounds().getHeight();
         setWidth(screenWidth * 1);
