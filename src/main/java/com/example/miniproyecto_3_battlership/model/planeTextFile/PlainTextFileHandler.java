@@ -2,7 +2,20 @@ package com.example.miniproyecto_3_battlership.model.planeTextFile;
 
 import java.io.*;
 
-public class PlainTextFileHandler implements IPlaneTextFileHander {
+/**
+ * Handles file operations for plain text files, including writing text to a file
+ * and reading text from a file. Implements the {@code IPlaneTextFileHandler} interface.
+ *
+ * <p>This class provides utilities to persist and retrieve textual data from files,
+ * with automatic resource management using try-with-resources.</p>
+ *
+ * @author Nicolas Cordoba
+ * @author Samuel Arenas
+ * @author Juan Manuel Ampudia
+ */
+public class PlainTextFileHandler implements IPlaneTextFileHandler {
+
+
     @Override
     public void writeToFile(String fileName, String text) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {

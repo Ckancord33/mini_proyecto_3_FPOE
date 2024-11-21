@@ -10,7 +10,22 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
-public class PlayerBot extends APlayer implements Serializable {
+/**
+ * Represents the bot player in the Battleship game.
+ *
+ * <p>The {@code PlayerBot} class extends {@code APlayer} and implements the bot's logic
+ * for generating its ships, attacking positions, and managing its state.</p>
+ *
+ * <p>The bot uses randomized strategies for ship placement and attacks while adhering to
+ * the game's rules. It also maintains information about its own and the enemy's ships.</p>
+ *
+ * <p>This class is serializable to allow saving and loading of game states.</p>
+ *
+ * @author Nicolas Cordoba
+ * @author Samuel Arenas
+ * @author Juan Manuel Ampudia
+ */
+public class PlayerBot extends APlayer{
 
     int[] positionAttack = new int[2];
     Stack<int[]> shots = new Stack<>();
@@ -76,7 +91,6 @@ public class PlayerBot extends APlayer implements Serializable {
         this.enemyShipsInfo = enemyShipsInfo;
     }
 
-
     public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix) {
         int actualPosition;
         do {
@@ -90,7 +104,6 @@ public class PlayerBot extends APlayer implements Serializable {
     public int[] getPositionRandom() {
         return positionAttack;
     }
-
 
     public ArrayList<Ship> getEnemyShips() {
         ArrayList<Ship> ships = new ArrayList<>();

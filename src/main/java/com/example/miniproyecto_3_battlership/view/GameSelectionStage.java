@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  *
  * @author Nicolás Córdoba
- * @autor Samuel Arenas,
+ * @author Samuel Arenas,
  * @author Juan Manuel Ampudia
  */
 public class GameSelectionStage extends Stage {
