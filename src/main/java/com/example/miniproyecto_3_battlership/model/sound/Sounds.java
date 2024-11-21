@@ -60,7 +60,7 @@ public class Sounds {
         }
     }
 
-    public void lowerVolume(){
+    public void lowerVolume(double v){
         if (clip != null) {
             FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float currentVolume = volumeControl.getValue();

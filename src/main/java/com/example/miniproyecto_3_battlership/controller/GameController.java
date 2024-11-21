@@ -122,7 +122,8 @@ public class GameController implements Serializable {
     private PlainTextFileHandler plainTextFileHandler;
 
     private Sounds mainMusic;
-
+    private Sounds missed;
+    private Sounds gotcha;
     /**
      * Initializes the game screen for the Battleship game.
      *
@@ -149,6 +150,7 @@ public class GameController implements Serializable {
 
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/gameSound.wav");
+        mainMusic.lowerVolume(0.9);
         mainMusic.loopSound();
 
         rowBot = 0;
@@ -847,6 +849,9 @@ public class GameController implements Serializable {
         line2.setStroke(Color.RED);
         line2.setStrokeWidth(5);
         group.getChildren().addAll(line1, line2);
+        missed = new Sounds();
+        missed.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/missedsfx.wav");
+        missed.playSound();
         return group;
     }
 
@@ -896,6 +901,10 @@ public class GameController implements Serializable {
 
 
         group.getChildren().addAll(bombBody, fuse, spark);
+        gotcha = new Sounds();
+        gotcha.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/explosionsfx.wav");
+        gotcha.lowerVolume(0.60);
+        gotcha.playSound();
         return group;
     }
 
