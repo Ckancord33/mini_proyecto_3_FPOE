@@ -41,6 +41,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+import static javafx.scene.paint.Color.ORANGE;
 
 /**
  * Controller class for managing the game logic and interactions in the Battleship game.
@@ -62,6 +63,7 @@ public class GameController implements Serializable {
     private PlayerBot playerBot;
     private PlayerPerson playerPerson;
     private final SerializableFileHandler serializableFileHandler = new SerializableFileHandler();
+
 
 
     @FXML
@@ -108,6 +110,8 @@ public class GameController implements Serializable {
 
     private Image image;
     private ImagePattern imagePatter;
+    private Image expls = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/explosion.png")));
+    ImagePattern imagePattern = new ImagePattern(expls);
 
     private String nameCharacterActual;
     private String nameEnemyActual;
@@ -535,7 +539,12 @@ public class GameController implements Serializable {
                     enemyShips.get(i).setIsDestroyed(true);
                     infoLabel.setText("¡Has destruido un barco enemigo!");
                     for (int j = 0; j < enemyShips.get(i).getSize(); j++) {
-                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
+
+
+                        Circle flame = new Circle(25,25,20);
+
+                        flame.setFill(imagePattern);
+                        Group group = new Group(flame);
                         group.setEffect(new DropShadow(4, Color.BLACK));
                         if (enemyShips.get(i).isHorizontal()) {
                             gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -613,7 +622,12 @@ public class GameController implements Serializable {
                 playerShips.get(k).setIsDestroyed(true);
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < playerShips.get(k).getSize(); j++) {
-                    Group group = new Group(new Circle(25, 25, 20, Color.RED));
+
+                    Circle flame = new Circle(25,25,20);
+
+                    flame.setFill(imagePattern);
+                    Group group = new Group(flame);
+
                     group.setEffect(new DropShadow(4, Color.BLACK));
                     if (playerShips.get(k).isHorizontal()) {
                         gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -690,7 +704,10 @@ public class GameController implements Serializable {
                 enemyShips.get(k).setIsDestroyed(true);
                 infoLabel.setText("¡Has destruido un barco enemigo!");
                 for (int j = 0; j < enemyShips.get(k).getSize(); j++) {
-                    Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                    Circle flame = new Circle(25,25,20);
+
+                    flame.setFill(imagePattern);
+                    Group group = new Group(flame);
                     group.setEffect(new DropShadow(4, Color.BLACK));
                     if (enemyShips.get(k).isHorizontal()) {
                         gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
@@ -868,7 +885,7 @@ public class GameController implements Serializable {
                 26, -6   // Pico superior izquierdo corto
         );
         spark.setFill(Color.rgb(239, 196, 64));
-        spark.setStroke(Color.ORANGE);
+        spark.setStroke(ORANGE);
         spark.setStrokeWidth(0.5);
         spark.setEffect(new DropShadow(5, Color.YELLOW));
 
