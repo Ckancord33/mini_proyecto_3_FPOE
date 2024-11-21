@@ -3,7 +3,19 @@ package com.example.miniproyecto_3_battlership.model.Player;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlayerPerson extends APlayer implements Serializable {
+/**
+ * Represents the human player in the Battleship game.
+ *
+ * <p>The {@code PlayerPerson} class extends {@code APlayer} and implements logic specific
+ * to the human player, such as manually setting the ship matrix based on their choices.</p>
+ *
+ * <p>This class is serializable to allow saving and loading of game states.</p>
+ *
+ * @author Nicolas Cordoba
+ * @author Samuel Arenas
+ * @author Juan Manuel Ampudia
+ */
+public class PlayerPerson extends APlayer{
 
 
     @Override

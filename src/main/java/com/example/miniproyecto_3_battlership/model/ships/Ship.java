@@ -9,7 +9,20 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 
-public class Ship extends Pane implements Serializable {
+/**
+ * Represents a ship in the game.
+ *
+ * <p>The {@code Ship} class is an abstract class that defines the basic properties
+ * and behaviors of a ship in the Battleship game. It includes attributes such as
+ * position, size, orientation (horizontal or vertical), and destruction status.
+ * This class provides methods for manipulating the ship's appearance and state,
+ * including rotation and selection for placement.</p>
+ *
+ * @author Nicolas Cordoba
+ * @author Samuel Arenas
+ * @author Juan Manuel Ampudia
+ */
+public class Ship extends Pane implements IShip{
     protected Group shapesGroup = new Group();
     protected Rectangle body = new Rectangle();
     protected boolean isSelect;
@@ -19,9 +32,6 @@ public class Ship extends Pane implements Serializable {
     protected int[] position = new int[2];
     protected boolean isPlaced = false;
     protected boolean isDestroyed = false;
-
-    public Ship() {
-    }
 
     public void selectDesing() {
         DropShadow glow = new DropShadow();

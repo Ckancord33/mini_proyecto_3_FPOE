@@ -22,6 +22,14 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Controller for the Welcome screen in the Battleship game.
+ * This class manages the UI components and interactions for the welcome stage,
+ * including buttons, choice boxes, background images, and sounds.
+ *
+ * <p>Authors: Nicolás Córdoba, Samuel Arenas, Juan Manuel Ampudia</p>
+ */
+
 public class WelcomeController {
     @FXML
     private Button btnContinue;
@@ -73,20 +81,30 @@ public class WelcomeController {
 
     private Sounds mainMusic;
     private Sounds buttonHoverSound;
+
+    /**
+     * Initializes the WelcomeController.
+     * <p>
+     * This method sets up the background image, loads and plays the main music,
+     * initializes the sounds for button interactions, and populates the choice box
+     * with character options. It also applies hover styles to buttons and sets up
+     * event listeners for user interactions.
+     * </p>
+     */
     @FXML
     public void initialize() {
         mainMusic = new Sounds();
         mainMusic.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/welcome_theme.wav");
         mainMusic.loopSound();
         mainMusic.lowerVolume();
+
         buttonHoverSound = new Sounds();
         buttonHoverSound.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/buttonSound.wav");
 
         plainTextFileHandler = new PlainTextFileHandler();
-        //IMAGEN DE FONDO
+
+        // Sets the background image for the welcome screen.
         Image backgroundImage = new Image(getClass().getResource("/com/example/miniproyecto_3_battlership/Image/background_game.png").toExternalForm());
-
-
         BackgroundImage background = new BackgroundImage(
                 backgroundImage,
                 BackgroundRepeat.NO_REPEAT,
@@ -94,22 +112,19 @@ public class WelcomeController {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, true, false)
         );
-
         welcomeBorderPane.setBackground(new Background(background));
 
-        choiceBox.getItems().addAll("Coronel Sander","Almirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
+        // Populates the choice box with character options and sets the default selection.
+        choiceBox.getItems().addAll("Coronel Sander", "Almirante Zemansky", "Mayor Lovelace", "Coronela Rosalind", "????", "???");
         selectionCharacter("Coronel Sander");
 
+        // Adds a listener to the choice box to play a sound and update the character selection on change.
         choiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             buttonHoverSound.playSound();
             selectionCharacter(newValue);
-
         });
 
-
-
-
-        // METODO QUE COLOCA LA CALAVERA
+        // Applies hover styles to buttons and checks for saved game files.
         btnHoverStyle(btnContinue, 1);
         btnHoverStyle(btnNewGame, 2);
         btnHoverStyle(btnOptions, 3);
@@ -118,13 +133,19 @@ public class WelcomeController {
 
         doesExist("game.ser");
 
+        // Loads a custom sound for the Samuel easter egg.
         samuelVoice = new Sounds();
         samuelVoice.loadSound("src/main/resources/com/example/miniproyecto_3_battlership/Sounds/mivoice2.wav");
-
-
-
-
     }
+
+    /**
+     * Updates the displayed character image and name based on the selected value.
+     *
+     * <p>Loads specific character images and assigns the appropriate image and name to the {@code imgCharacter} and {@code nameCharacter} properties
+     * based on the input string.</p>
+     *
+     * @param newValue the name of the selected character, as chosen from the {@code ChoiceBox}.
+     */
 
     private void selectionCharacter(String newValue) {
 
@@ -167,7 +188,16 @@ public class WelcomeController {
 
 
     }
-
+    /**
+     * Handles the action of starting a new game when the play button is clicked.
+     * <p>
+     * Stops the main music, saves the selected character name to a file, and transitions
+     * from the Welcome Stage to the Game Selection Stage.
+     * </p>
+     *
+     * @param actionEvent the event triggered by clicking the "Play" button.
+     * @throws IOException if there is an issue transitioning to the {@code GameSelectionStage}.
+     */
     @FXML
     public void onHandlePlayGame(javafx.event.ActionEvent actionEvent) throws IOException {
         mainMusic.stopSound();
@@ -176,7 +206,14 @@ public class WelcomeController {
         GameSelectionStage.getInstance();
 
     }
-
+    /**
+     * Checks if a file exists at the specified path and enables or disables the "Continue" button accordingly.
+     *
+     * <p>If the file exists, the "Continue" button is enabled, allowing the user to load a previous game.
+     * Otherwise, the button is disabled.</p>
+     *
+     * @param path the path to the file to check.
+     */
     public void doesExist(String path){
         File file = new File(path);
         if(file.exists()){
@@ -185,6 +222,16 @@ public class WelcomeController {
             btnContinue.setDisable(true);
         }
     }
+
+    /**
+     * Displays the credits dialog with the developers' names and associated actions.
+     *
+     * <p>The method initializes an alert of type {@code INFORMATION}, adds graphical content, and allows interaction with
+     * hyperlinks for each developer. Specific actions include playing a sound for Samuel, adding an easter egg
+     * character for Nicolás, and another for Juan after 5 clicks on their respective hyperlinks.</p>
+     *
+     * @param event the action event triggered when the "Credits" button is clicked.
+     */
 
     @FXML
     public void onHandleCredits(ActionEvent event){
@@ -242,6 +289,15 @@ public class WelcomeController {
 
     }
 
+    /**
+     * Continues a previously saved game.
+     *
+     * <p>Closes the current {@code WelcomeStage} and initializes the {@code GameStage}, invoking the
+     * {@code Continue} method from the {@code GameController} to load the saved state.</p>
+     *
+     * @param event the action event triggered when the "Continue" button is clicked.
+     * @throws IOException if there is an error while initializing the {@code GameStage}.
+     */
 
     @FXML
     void onHandleContinueGame(ActionEvent event) throws IOException {
@@ -249,10 +305,28 @@ public class WelcomeController {
         GameStage.getInstance().getGameController().Continue();
     }
 
+    /**
+     * Exits the application.
+     *
+     * <p>This method is triggered by the "Quit Game" button, terminating the program using {@code System.exit(0)}.</p>
+     *
+     * @param actionEvent the action event triggered when the "Quit Game" button is clicked.
+     */
+
     @FXML
     public void onHandleQuitGame(javafx.event.ActionEvent actionEvent) {
         System.exit(0);
     }
+
+    /**
+     * Adds hover effects and sounds to buttons in the welcome screen.
+     *
+     * <p>When the mouse hovers over a button, a sound is played and the opacity of an associated image increases.
+     * When the mouse leaves, the sound stops and the image opacity returns to its default state.</p>
+     *
+     * @param button the button to which the hover effect is applied.
+     * @param i the index corresponding to the button, used to identify the associated image.
+     */
 
     public void btnHoverStyle(Button button, int i) {
         button.setOnMouseEntered(mouseEvent -> {
