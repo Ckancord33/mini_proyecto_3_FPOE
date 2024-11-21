@@ -7,13 +7,16 @@ import com.example.miniproyecto_3_battlership.model.planeTextFile.PlainTextFileH
 import com.example.miniproyecto_3_battlership.model.serializable.Save;
 import com.example.miniproyecto_3_battlership.model.serializable.SerializableFileHandler;
 import com.example.miniproyecto_3_battlership.model.ships.*;
+import com.example.miniproyecto_3_battlership.view.GameSelectionStage;
 import com.example.miniproyecto_3_battlership.view.GameStage;
 import com.example.miniproyecto_3_battlership.view.WelcomeStage;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -308,8 +311,7 @@ public class GameController implements Serializable {
                 if (matriz.get(i).get(j) == 2) {
                     gridPaneShips.add(errorSymbol(), j + 1, i + 1);
                 } else if (matriz.get(i).get(j) == -1) {
-                    Circle circle = new Circle(0, 0, 20, Color.RED);
-                    gridPaneShips.add(circle, j + 1, i + 1);
+                    gridPaneShips.add(successSymbol(), j+1, i+1);
                 }
             }
         }
@@ -344,18 +346,9 @@ public class GameController implements Serializable {
 
     @FXML
     void botAttack() {
-
-        if(playerBot.getShots().isEmpty()){
-            playerBot.generatePositionRandom(playerPerson.getMatrix());
-            rowBot = playerBot.getPositionRandom()[0];
-            columnbot = playerBot.getPositionRandom()[1];
-            playerBot.addShots(rowBot,columnbot);
-        }else{
-            playerBot.botIntelligence(playerPerson.getMatrix());
-            rowBot = playerBot.getPositionRandom()[0];
-            columnbot = playerBot.getPositionRandom()[1];
-            playerBot.addShots(rowBot,columnbot);
-        }
+        playerBot.generatePositionRandom(playerPerson.getMatrix());
+        rowBot = playerBot.getPositionRandom()[0];
+        columnbot = playerBot.getPositionRandom()[1];
         matriz = playerPerson.getMatrix();
         System.out.print("row: " + rowBot + " column: " + columnbot);
 
@@ -398,13 +391,15 @@ public class GameController implements Serializable {
         Group group = new Group();
         Image image4 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/bombfx.png")));
         ImagePattern imagePattern4 = new ImagePattern(image4);
+        Image image5 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/Image/ropetxt.png")));
+        ImagePattern imagePattern5 = new ImagePattern(image5);
 
         Circle bombBody = new Circle(25, 25, 20);
         bombBody.setFill(Color.DARKSLATEBLUE); // Color gris oscuro con matiz azul
         bombBody.setFill(imagePattern4);
-        Line fuse = new Line(25, 5, 40, 0); // Línea desde la parte superior de la bomba
-        fuse.setStroke(Color.WHITE);
-        fuse.setStrokeWidth(3);
+        bombBody.setEffect(new DropShadow(4, Color.BLACK));
+        Polygon fuse = new Polygon(25, 5, 40, 0,42,2,26,7);
+        fuse.setFill(imagePattern5);
 
         Polygon spark = new Polygon(
                 28, -12,  // Pico superior largo
@@ -416,9 +411,10 @@ public class GameController implements Serializable {
                 23, -4,  // Pico izquierdo largo
                 26, -6   // Pico superior izquierdo corto
         );
-        spark.setFill(Color.YELLOW);
+        spark.setFill(Color.rgb(239,196,64));
         spark.setStroke(Color.ORANGE);
         spark.setStrokeWidth(0.5);
+        spark.setEffect(new DropShadow(5, Color.YELLOW));
 
         spark.setScaleX(1.2);
         spark.setScaleY(1.2);
@@ -544,6 +540,11 @@ public class GameController implements Serializable {
         enemyShadow[row][col].setFill(colorDefault);
     }
 
+    @FXML
+    void onHandleClickResetGame(ActionEvent event) throws IOException {
+        GameStage.deleteInstance();
+        GameSelectionStage.getInstance();
+    }
 
     @FXML
     public void onHandleReturn(javafx.event.ActionEvent actionEvent) throws IOException {

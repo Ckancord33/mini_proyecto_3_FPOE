@@ -8,32 +8,30 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Stack;
 
 public class PlayerBot extends APlayer implements Serializable {
 
-    int [] positionAttack = new int[2];
-    boolean direction = false;
+    int[] positionAttack = new int[2];
     Stack<int[]> shots = new Stack<>();
-    int [] lastShot = new int[2];
-    int verifyShot;
     private ArrayList<int[]> enemyShipsInfo = new ArrayList<>(); // [0] = x, [1] = y, [2] = size, [3] = orientation
 
 
-    public void generateBotGame(){
+    public void generateBotGame() {
         for (int i = 0; i < 4; i++) {
-            enemyShipsInfo.add(new int[]{0,0,1,0});
+            enemyShipsInfo.add(new int[]{0, 0, 1, 0});
         }
 
         for (int i = 0; i < 3; i++) {
-            enemyShipsInfo.add(new int[]{0,0,2,0});
+            enemyShipsInfo.add(new int[]{0, 0, 2, 0});
         }
 
         for (int i = 0; i < 2; i++) {
-            enemyShipsInfo.add(new int[]{0,0,3,0});
+            enemyShipsInfo.add(new int[]{0, 0, 3, 0});
         }
 
         for (int i = 0; i < 1; i++) {
-            enemyShipsInfo.add(new int[]{0,0,4,0});
+            enemyShipsInfo.add(new int[]{0, 0, 4, 0});
         }
 
         int row, col, randomHorientation;
@@ -59,74 +57,40 @@ public class PlayerBot extends APlayer implements Serializable {
                                 tryAgain = true;
                             }
                         }
-                    }catch (IndexOutOfBoundsException e){
+                    } catch (IndexOutOfBoundsException e) {
                         tryAgain = true;
                     }
                 }
             } while (tryAgain);
             for (int j = 0; j < enemyShipsInfo.get(i)[2]; j++) {
-                if(enemyShipsInfo.get(i)[3] == 1){
+                if (enemyShipsInfo.get(i)[3] == 1) {
                     shipsMatrix.get(row).set(col - j, 1);
                 } else {
                     shipsMatrix.get(row - j).set(col, 1);
                 }
             }
         }
-    };
-
-    public int[] botIntelligence(ArrayList<ArrayList<Integer>> matrix){
-       int[]  dpos= new int[2];
-       dpos[0]=(int)(Math.random()*9);
-       dpos[1]=(int)(Math.random()*9);
-        int[] pos = new int[2];
-        for(int i = 0; i < 10; i++){
-            for(int j = 0; j < 10; j++){
-               // if(shipsMatrix.get(i).get(j)==)
-                if(shipsMatrix.get(i).get(j) ==1){
-                    System.out.println("halle un barco");
-                    pos[0]=i+1;
-                    pos[1]=j;
-                    return pos;
-                }
-    public void botIntelligence(ArrayList<ArrayList<Integer>> matrix){
-         lastShot = shots.peek();
-         verifyShot = matrix.get(lastShot[0]).get(lastShot[1]);
-         System.out.print(verifyShot);
-         if(verifyShot == -1){
-             System.out.printf("Le pegue");
-             positionAttack[0]= lastShot[0];
-             positionAttack[1]= lastShot[1]-1;
-         }else{
-             generatePositionRandom(matrix);
-         }
     }
 
-    public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix){
+
+    public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix) {
         int actualPosition;
-        do{
-            positionAttack[0]=(int)(Math.random()*9 +1);
-            positionAttack[1]=(int)(Math.random()*9 +1);
-            actualPosition = matrix.get(positionAttack[0]).get(positionAttack[1]);
+        do {
+            positionAttack[0] = (int) (Math.random() * 10) + 1;;
+            positionAttack[1] = (int) (Math.random() * 10) + 1;;
+            actualPosition = matrix.get(positionAttack[0]-1).get(positionAttack[1]-1);
             System.out.println(actualPosition);
-        }while (actualPosition == 2 || actualPosition == -1);
+        } while (actualPosition != 0 && actualPosition != 1);
     }
 
-    public int[] getPositionRandom(){
+    public int[] getPositionRandom() {
         return positionAttack;
     }
 
-    public Stack<int[]> getShots(){
-        return shots;
-    }
 
-    public void addShots(int rowBot, int ColumnBot){
-        int[] positionBot = {rowBot,ColumnBot};
-        shots.push(positionBot);
-    }
-
-    public ArrayList<Ship> getEnemyShips(){
+    public ArrayList<Ship> getEnemyShips() {
         ArrayList<Ship> ships = new ArrayList<>();
-        for(int i = 0; i < enemyShipsInfo.size(); i++) {
+        for (int i = 0; i < enemyShipsInfo.size(); i++) {
             int[] shipInfo = this.enemyShipsInfo.get(i);
             int row = shipInfo[0];
             int col = shipInfo[1];
@@ -157,11 +121,11 @@ public class PlayerBot extends APlayer implements Serializable {
     }
 
 
-
-    public void clearMatrix(){
+    public void clearMatrix() {
         for (ArrayList<Integer> fila : shipsMatrix) {
             Collections.fill(fila, 0);
         }
         Integer[][] shipsPositionMatrixBot = new Integer[10][10];
     }
 }
+
