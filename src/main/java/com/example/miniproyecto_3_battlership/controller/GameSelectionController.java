@@ -162,7 +162,8 @@ public class GameSelectionController {
             int col = ship.getPosition()[1];
             int size = ship.getSize();
             int horizontal = ship.isHorizontal() ? 1 : 0;
-            shipsPosition.add(new int[]{row, col, size, horizontal});
+            int isDestroyed = ship.isDestroyed() ? 1 : 0;
+            shipsPosition.add(new int[]{row, col, size, horizontal, isDestroyed});
 
         }
     }

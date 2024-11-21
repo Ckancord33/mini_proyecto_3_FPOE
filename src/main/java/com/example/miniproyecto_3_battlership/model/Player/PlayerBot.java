@@ -19,19 +19,19 @@ public class PlayerBot extends APlayer implements Serializable {
 
     public void generateBotGame() {
         for (int i = 0; i < 4; i++) {
-            enemyShipsInfo.add(new int[]{0, 0, 1, 0});
+            enemyShipsInfo.add(new int[]{0, 0, 1, 0, 0});
         }
 
         for (int i = 0; i < 3; i++) {
-            enemyShipsInfo.add(new int[]{0, 0, 2, 0});
+            enemyShipsInfo.add(new int[]{0, 0, 2, 0, 0});
         }
 
         for (int i = 0; i < 2; i++) {
-            enemyShipsInfo.add(new int[]{0, 0, 3, 0});
+            enemyShipsInfo.add(new int[]{0, 0, 3, 0, 0});
         }
 
         for (int i = 0; i < 1; i++) {
-            enemyShipsInfo.add(new int[]{0, 0, 4, 0});
+            enemyShipsInfo.add(new int[]{0, 0, 4, 0, 0});
         }
 
         int row, col, randomHorientation;
@@ -72,6 +72,10 @@ public class PlayerBot extends APlayer implements Serializable {
         }
     }
 
+    public void setEnemyShipsInfo(ArrayList<int[]> enemyShipsInfo) {
+        this.enemyShipsInfo = enemyShipsInfo;
+    }
+
 
     public void generatePositionRandom(ArrayList<ArrayList<Integer>> matrix) {
         int actualPosition;
@@ -96,6 +100,7 @@ public class PlayerBot extends APlayer implements Serializable {
             int col = shipInfo[1];
             int size = shipInfo[2];
             int isHorizontal = shipInfo[3];
+            int isDestroyed = shipInfo[4];
 
             Ship shipSelected = new Ship();
 

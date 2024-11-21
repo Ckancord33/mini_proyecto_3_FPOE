@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -78,7 +79,10 @@ public class GameController implements Serializable {
 
     private ArrayList<ArrayList<Integer>> matriz;
     private ArrayList<Ship> playerShips = new ArrayList<>();
+    private ArrayList<Ship> auxPlayerShips;
     private ArrayList<Ship> enemyShips = new ArrayList<>();
+    private ArrayList<Ship> auxEnemyShips;
+
     private Rectangle[][] enemyShadow = new Rectangle[10][10];
     private Save save;
 
@@ -139,6 +143,7 @@ public class GameController implements Serializable {
 
         save = new Save(shipsPositions);
         playerShips = save.getShip();
+        auxPlayerShips = new ArrayList<>(playerShips);
         createGridPaneGame();
 
         gridPaneShips.setStyle("-fx-cursor: default;");
@@ -158,6 +163,7 @@ public class GameController implements Serializable {
         playerBot = game.getPlayerBot();
         playerPerson = game.getPlayerPerson();
         playerShips = save.getShip();
+        auxPlayerShips = new ArrayList<>(playerShips);
         setCharacter();
         setEnemy();
         createGridPaneGame();
@@ -202,13 +208,29 @@ public class GameController implements Serializable {
 
     }
 
+    public ArrayList<int[]> shipPositions(ArrayList<Ship> ships) {
+        ArrayList<int[]> shipInfo = new ArrayList<>();
+        for (int i = 0; i < ships.size(); i++) {
+            Ship ship = ships.get(i);
+            int row = ship.getPosition()[0];
+            int col = ship.getPosition()[1];
+            int size = ship.getSize();
+            int horizontal = ship.isHorizontal() ? 1 : 0;
+            int isDestroyed = ship.isDestroyed() ? 1 : 0;
+            shipInfo.add(new int[]{row, col, size, horizontal, isDestroyed});
+        }
+        return shipInfo;
+    }
+
     @FXML
     public void onHandlePutEnemyShips(){
         for(int i = 0; i < enemyShips.size(); i++){
-            if(enemyShips.get(i).isVisible()) {
-                enemyShips.get(i).setVisible(false);
-            }else{
-                enemyShips.get(i).setVisible(true);
+            if(!(enemyShips.get(i).isDestroyed())) {
+                if (enemyShips.get(i).isVisible()) {
+                    enemyShips.get(i).setVisible(false);
+                } else {
+                    enemyShips.get(i).setVisible(true);
+                }
             }
         }
     }
@@ -272,8 +294,6 @@ public class GameController implements Serializable {
         row += 1;
         column += 1;
 
-        playVideoVictory();
-
         matriz = playerBot.getMatrix();
         if (row != 0 && column != 0) {
             enemyShadow[row - 1][column - 1].setOnMouseClicked(null);
@@ -302,6 +322,46 @@ public class GameController implements Serializable {
                 pause.play();
             }
         }
+        int rowSelected;
+        int columnSelected;
+        boolean isDestroyed;
+        playerBot.showMatrix();
+        if(playerBot.getMatrix().get(row - 1).get(column - 1) == -1) {
+            for (int i = 0; i < enemyShips.size(); i++) {
+                isDestroyed = true;
+                rowSelected = enemyShips.get(i).getPosition()[0];
+                columnSelected = enemyShips.get(i).getPosition()[1];
+                for (int j = 0; j < enemyShips.get(i).getSize(); j++) {
+                    if(enemyShips.get(i).isHorizontal()){
+                        if(!(playerBot.getMatrix().get(rowSelected).get(columnSelected-j) == -1)){
+                            isDestroyed = false;
+                        }
+                    }else{
+                        if(!(playerBot.getMatrix().get(rowSelected-j).get(columnSelected) == -1)){
+                            isDestroyed = false;
+                        }
+                    }
+                }
+                if(isDestroyed){
+                    enemyShips.get(i).setVisible(true);
+                    enemyShips.get(i).setIsDestroyed(true);
+                    infoLabel.setText("¡Has destruido un barco enemigo!");
+                    for (int j = 0; j < enemyShips.get(i).getSize(); j++) {
+                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                        group.setEffect(new DropShadow(4, Color.BLACK));
+                        if (enemyShips.get(i).isHorizontal()) {
+                            gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
+                        } else {
+                            gridPaneGame.add(group, columnSelected + 1, rowSelected + 1 - j);
+                        }
+                    }
+                    enemyShips.remove(i);
+                }
+            }
+        }
+        save.setShipPositions(shipPositions(auxPlayerShips));
+        playerBot.setEnemyShipsInfo(shipPositions(auxEnemyShips));
+        serializableFileHandler.serialize("save.ser", save);
         serializableFileHandler.serialize("game.ser", game);
         victory(game.verifyWinner(playerBot));
 
@@ -318,7 +378,41 @@ public class GameController implements Serializable {
                 }
             }
         }
-    }
+        int rowSelected;
+        int columnSelected;
+        boolean isDestroyed;
+            for (int k = 0; k < playerShips.size(); k++) {
+                isDestroyed = true;
+                rowSelected = playerShips.get(k).getPosition()[0];
+                columnSelected = playerShips.get(k).getPosition()[1];
+                for (int l = 0; l < playerShips.get(k).getSize(); l++) {
+                    if(playerShips.get(k).isHorizontal()){
+                        if(!(matriz.get(rowSelected).get(columnSelected-l) == -1)){
+                            isDestroyed = false;
+                        }
+                    }else{
+                        if(!(matriz.get(rowSelected-l).get(columnSelected) == -1)){
+                            isDestroyed = false;
+                        }
+                    }
+                }
+                if(isDestroyed){
+                    playerShips.get(k).setVisible(true);
+                    playerShips.get(k).setIsDestroyed(true);
+                    infoLabel.setText("¡Has destruido un barco enemigo!");
+                    for (int j = 0; j < playerShips.get(k).getSize(); j++) {
+                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                        group.setEffect(new DropShadow(4, Color.BLACK));
+                        if (playerShips.get(k).isHorizontal()) {
+                            gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
+                        } else {
+                            gridPaneShips.add(group, columnSelected + 1, rowSelected + 1 - j);
+                        }
+                    }
+                    playerShips.remove(k);
+                }
+            }
+        }
 
     public void loadGridPaneGame() {
         matriz = playerBot.getMatrix();
@@ -329,12 +423,46 @@ public class GameController implements Serializable {
                     enemyShadow[i][j].setOnMouseClicked(null);
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
-                }else if(matriz.get(i).get(j) == -1){
-                    gridPaneGame.add(successSymbol(), j+1, i+1);
+                } else if (matriz.get(i).get(j) == -1) {
+                    gridPaneGame.add(successSymbol(), j + 1, i + 1);
                     enemyShadow[i][j].setOnMouseClicked(null);
                     enemyShadow[i][j].setOnMouseEntered(null);
                     enemyShadow[i][j].setOnMouseExited(null);
                 }
+            }
+        }
+        int rowSelected;
+        int columnSelected;
+        boolean isDestroyed;
+        for (int k = 0; k < enemyShips.size(); k++) {
+            isDestroyed = true;
+            rowSelected = enemyShips.get(k).getPosition()[0];
+            columnSelected = enemyShips.get(k).getPosition()[1];
+            for (int l = 0; l < enemyShips.get(k).getSize(); l++) {
+                if (enemyShips.get(k).isHorizontal()) {
+                    if (!(matriz.get(rowSelected).get(columnSelected - l) == -1)) {
+                        isDestroyed = false;
+                    }
+                } else {
+                    if (!(matriz.get(rowSelected - l).get(columnSelected) == -1)) {
+                        isDestroyed = false;
+                    }
+                }
+            }
+            if (isDestroyed) {
+                enemyShips.get(k).setVisible(true);
+                enemyShips.get(k).setIsDestroyed(true);
+                infoLabel.setText("¡Has destruido un barco enemigo!");
+                for (int j = 0; j < enemyShips.get(k).getSize(); j++) {
+                    Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                    group.setEffect(new DropShadow(4, Color.BLACK));
+                    if (enemyShips.get(k).isHorizontal()) {
+                        gridPaneGame.add(group, columnSelected + 1 - j, rowSelected + 1);
+                    } else {
+                        gridPaneGame.add(group, columnSelected + 1, rowSelected + 1 - j);
+                    }
+                }
+                enemyShips.remove(k);
             }
         }
     }
@@ -378,6 +506,46 @@ public class GameController implements Serializable {
             });
             pause.play();
         }
+        int rowSelected;
+        int columnSelected;
+        boolean isDestroyed;
+        if(playerPerson.getMatrix().get(rowBot - 1).get(columnbot - 1) == -1) {
+            for (int i = 0; i < playerShips.size(); i++) {
+                isDestroyed = true;
+                rowSelected = playerShips.get(i).getPosition()[0];
+                columnSelected = playerShips.get(i).getPosition()[1];
+                for (int j = 0; j < playerShips.get(i).getSize(); j++) {
+                    if(playerShips.get(i).isHorizontal()){
+                        if(!(playerPerson.getMatrix().get(rowSelected).get(columnSelected-j) == -1)){
+                            isDestroyed = false;
+                        }
+                    }else{
+                        if(!(playerPerson.getMatrix().get(rowSelected-j).get(columnSelected) == -1)){
+                            isDestroyed = false;
+                        }
+                    }
+                }
+                if(isDestroyed){
+                    playerShips.get(i).setVisible(true);
+                    playerShips.get(i).setIsDestroyed(true);
+                    infoLabel.setText("¡El enemigo destruyo un barco!");
+                    for (int j = 0; j < playerShips.get(i).getSize(); j++) {
+                        Group group = new Group(new Circle(25, 25, 20, Color.RED));
+                        group.setEffect(new DropShadow(4, Color.BLACK));
+                        if (playerShips.get(i).isHorizontal()) {
+                            gridPaneShips.add(group, columnSelected + 1 - j, rowSelected + 1);
+                        } else {
+                            gridPaneShips.add(group, columnSelected + 1, rowSelected + 1 - j);
+                        }
+                    }
+                    playerShips.remove(i);
+                }
+            }
+        }
+        save.setShipPositions(shipPositions(auxPlayerShips));
+        playerBot.setEnemyShipsInfo(shipPositions(auxEnemyShips));
+        serializableFileHandler.serialize("save.ser", save);
+        serializableFileHandler.serialize("game.ser", game);
     }
 
     public Group errorSymbol() {
@@ -453,22 +621,22 @@ public class GameController implements Serializable {
     }
 
     private void playVideoVictory() {
-        Pane pane = new Pane();
-        pane.setPrefSize(1920, 1080);
-        Image video = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/gifs/victory.gif")));
-        ImageView imageView = new ImageView(video);
-        imageView.setFitWidth(1920);
-        imageView.setFitHeight(1080);
-        imageView.setPreserveRatio(true);
-
-        pane.getChildren().add(imageView);
-
-        Stage paneStage = new Stage();
-        Scene paneScene = new Scene(pane);
-        paneStage.initStyle(StageStyle.UNDECORATED);
-        paneStage.setScene(paneScene);
-        paneStage.setTitle("Pane con Imagen");
-        paneStage.show();
+//        Pane pane = new Pane();
+//        pane.setPrefSize(1920, 1080);
+//        Image video = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/miniproyecto_3_battlership/gifs/victory.gif")));
+//        ImageView imageView = new ImageView(video);
+//        imageView.setFitWidth(1920);
+//        imageView.setFitHeight(1080);
+//        imageView.setPreserveRatio(true);
+//
+//        pane.getChildren().add(imageView);
+//
+//        Stage paneStage = new Stage();
+//        Scene paneScene = new Scene(pane);
+//        paneStage.initStyle(StageStyle.UNDECORATED);
+//        paneStage.setScene(paneScene);
+//        paneStage.setTitle("Pane con Imagen");
+//        paneStage.show();
     }
 
     public void defeat(boolean defeat) {
@@ -514,6 +682,7 @@ public class GameController implements Serializable {
         double cellHeight = 63.7;
         gridPaneGame.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/com/example/miniproyecto_3_battlership/Css/css.css")).toExternalForm());
         enemyShips = playerBot.getEnemyShips();
+        auxEnemyShips = new ArrayList<>(enemyShips);
         for(int i = 0; i < enemyShips.size(); i++){
             Ship shipSelected = enemyShips.get(i);
             int row = shipSelected.getPosition()[0] + 1;
